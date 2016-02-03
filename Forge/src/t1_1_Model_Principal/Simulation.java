@@ -18,7 +18,7 @@ this.etat = etat;
 }
 
 String genererTrames() {
-String trames = "$GPGGA,";
+String trames = "";
 String trame = "";
 Point point;
 
@@ -27,7 +27,7 @@ ArrayList<Point> listePoints;
 listePoints = parcours.getListePoints();
 
 for(int i = 0 ; i < listePoints.size(); i++) {
-trame = "";
+trame = "$GPGGA,";
 point = listePoints.get(i);
 
 trame += point.getDate() + "," + point.getCoordonnes().getLatitude() + ",N," 
