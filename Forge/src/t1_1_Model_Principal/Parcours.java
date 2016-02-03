@@ -5,9 +5,9 @@ import java.util.ArrayList;
 public class Parcours 
 {
 	private TypeSysteme typeSysteme;
-	private  ArrayList<Point2D> listePoints; 
+	private  ArrayList<Point> listePoints; 
 	
-	public Parcours(TypeSysteme typeSysteme, ArrayList<Point2D> listePoints) 
+	public Parcours(TypeSysteme typeSysteme, ArrayList<Point> listePoints) 
 	{
 		this.typeSysteme = typeSysteme;
 		this.listePoints = listePoints;
@@ -26,7 +26,7 @@ public class Parcours
 		return typeSysteme;
 	}
 
-	public ArrayList<Point2D> getListePoints() 
+	public ArrayList<Point> getListePoints() 
 	{
 		return listePoints;
 	}
