@@ -10,7 +10,7 @@ private Parcours parcours;
 private Trame trame;
 private PortSerie portSerie;
 
-public Simulation(Parcours parcours, EtatSimu etat) {
+public Simulation(Parcours parcours) {
 
 this.parcours = parcours;
 this.etat = etat;
@@ -39,7 +39,7 @@ for(int j = 0; j < trame.length(); j++) {
   checksum = checksum ^ Character.codePointAt(trame, j);
 }
 
-trame += checksum;
+trame += "*" + checksum;
 
 trames += trame;
 
