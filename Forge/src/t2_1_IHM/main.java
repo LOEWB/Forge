@@ -4,9 +4,11 @@ public class main {
 	
 	public static void main(String[] args){
 		
-				
 		FenetreForge.fenetreForge = new FenetreForge();
-		new IHMSimulation();
+		//new IHMSimulation();
+		new IHMParcours();
+		//new IHMMenuPrincipal();
+		//new IHMChoixTypeSysteme();
 	}
 
 }

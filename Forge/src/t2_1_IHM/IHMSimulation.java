@@ -1,7 +1,5 @@
 package t2_1_IHM;
 
-
-import java.awt.BorderLayout;
 import java.awt.Color; 
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
@@ -219,7 +217,7 @@ public class IHMSimulation {
 
         
          
-         
+         FenetreForge.fenetreForge.getContentPane().removeAll();
          FenetreForge.fenetreForge.getContentPane().add(splitForge);
 		 FenetreForge.fenetreForge.setVisible(true);
 		 //FenetreForge.fenetreForge.pack();
