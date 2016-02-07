@@ -13,6 +13,11 @@ public class Parcours
 		this.listePoints = listePoints;
 	}
 	
+	public Parcours(TypeSysteme typeSysteme)
+	{
+		this.typeSysteme = typeSysteme;
+	}
+	
 	public boolean verifierParcours()
 	{
 		if (this.listePoints.size()==0)

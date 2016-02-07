@@ -2,21 +2,21 @@ package t1_1_Model_Principal;
 
 public class Coordonnees 
 {
-	float longitude;
-	float latitude;
+	double longitude;
+	double latitude;
 	
-	public Coordonnees(float longitude,float latitude)
+	public Coordonnees(double d,double e)
 	{
-		this.longitude=longitude;
-		this.latitude=latitude;
+		this.longitude=d;
+		this.latitude=e;
 	}
 
-	public float getLongitude() 
+	public double getLongitude() 
 	{
 		return longitude;
 	}
 
-	public float getLatitude() 
+	public double getLatitude() 
 	{
 		return latitude;
 	}

@@ -11,9 +11,9 @@ private Trame trame;
 private PortSerie portSerie;
 
 public Simulation(Parcours parcours) {
-
+	
 this.parcours = parcours;
-this.etat = etat;
+this.etat=EtatSimu.ARRET;
 
 }
 
