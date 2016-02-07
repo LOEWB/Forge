@@ -30,7 +30,7 @@ for(int i = 0 ; i < listePoints.size(); i++) {
 trame = "$GPGGA,";
 point = listePoints.get(i);
 
-trame += point.getDate() + "," + point.getCoordonnes().getLatitude() + ",N," 
+trame += point.getTemps() + "," + point.getCoordonnes().getLatitude() + ",N," 
 + point.getCoordonnes().getLongitude() + ",E,1,08,0.9," +  point.getAltitude() + ",M,"
 + "46.9,M, , ";
 

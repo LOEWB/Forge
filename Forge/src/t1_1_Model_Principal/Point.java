@@ -6,7 +6,7 @@ public class Point
 	private int tempsPassageRelatif;
 	private float altitude;
 	
-	public Point(int sec, Coordonnees coor,int altitude) {
+	public Point(int sec, Coordonnees coor,float altitude) {
 	
 		this.coordonnes = coor;
 	    this.tempsPassageRelatif = sec;
@@ -19,7 +19,7 @@ public class Point
 	}
 	
 
-	public int getDate() 
+	public int getTemps() 
 	{
 		return this.tempsPassageRelatif;
 	}

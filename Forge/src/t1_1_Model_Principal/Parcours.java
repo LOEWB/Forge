@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public class Parcours 
 {
 	private TypeSysteme typeSysteme;
-	private  ArrayList<Point> listePoints; 
+	private  ArrayList<Point> listePoints = new ArrayList<Point>(); 
 	
 	public Parcours(TypeSysteme typeSysteme, ArrayList<Point> listePoints) 
 	{
@@ -23,7 +23,7 @@ public class Parcours
 		if (this.listePoints.size()==0)
 			return false;
 		else
-			return true;			
+			return true;
 	}
 
 	public TypeSysteme getTypeSysteme() 
@@ -36,5 +36,19 @@ public class Parcours
 		return listePoints;
 	}
 
-	
+	public void ajouterPoint(Point p)
+	{
+		int index=0;
+		
+		if (this.listePoints.size()==0)
+			this.listePoints.add(p);
+		else
+		{
+			while(index<=this.listePoints.size()&&this.listePoints.get(index).getTemps()>p.getTemps())
+			{
+				index++;
+			}
+			this.listePoints.add(index, p);
+		}
+	}
 }
