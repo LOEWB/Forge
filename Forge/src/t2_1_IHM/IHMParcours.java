@@ -23,7 +23,7 @@ public class IHMParcours {
 	
 	private JLabel typeSysteme = new JLabel("Type de Système :");
 	    
-    private JLabel typeSystemeCalc = new JLabel("aérien(test)"); // texte par défaut à supprimer
+    private JLabel typeSystemeCalc = new JLabel();
     
     private JLabel vitesseMoy = new JLabel("Vitesse moyenne :");
     
@@ -33,7 +33,7 @@ public class IHMParcours {
     
     private JLabel altitudeMoyCalc = new JLabel("7500m(test)"); // texte par défaut à supprimer
 	
-	public IHMParcours(){
+	public IHMParcours(String typeDeSysteme){
 		
 		JMapViewer api = new JMapViewer();
 	    JPanel parametres = new JPanel();
@@ -41,6 +41,8 @@ public class IHMParcours {
 	    JPanel boutonSauvegarder = new JPanel();
 	    JPanel boutonCharger = new JPanel();
 	    JPanel carte = new JPanel();
+	    
+	    typeSystemeCalc.setText(typeDeSysteme);
 	    
 		JSplitPane splitGauche = new JSplitPane(JSplitPane.VERTICAL_SPLIT, parametres, boutonSimulation);
 		splitGauche.setDividerLocation(400);

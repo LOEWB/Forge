@@ -1,9 +1,10 @@
 package t2_1_IHM;
 
-import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
@@ -17,10 +18,12 @@ import javax.swing.WindowConstants;
  * @author joris
  *
  */
-public class IHMChoixTypeSysteme extends JFrame {
+public class IHMChoixTypeSysteme extends JFrame implements ActionListener {
 	
-	private JButton buttonLancerParcours;
+	private JButton boutonLancerParcours;
 	private JPanel panel;
+	private JRadioButton rboutonTerrestre = new JRadioButton("Terrestre");
+	private JRadioButton rboutonAerien = new JRadioButton("aerien");
 	
 	public IHMChoixTypeSysteme() {
 		initializeWindow();
@@ -47,18 +50,17 @@ public class IHMChoixTypeSysteme extends JFrame {
 	private void addComponentsWindow(){
 		// creation boutons radio
 		ButtonGroup bg = new ButtonGroup();
-		JRadioButton boutonTerrestre = new JRadioButton("Terrestre");
-		JRadioButton boutonAerien = new JRadioButton("Aérien");
 		
-		bg.add(boutonTerrestre);
-		bg.add(boutonAerien);
+		bg.add(rboutonTerrestre);
+		bg.add(rboutonAerien);
 		
-		boutonTerrestre.setSelected(true);
+		rboutonTerrestre.setSelected(true);
 		
 		// creating bouton 'créer'
-		this.buttonLancerParcours = new JButton("Créer");
+		this.boutonLancerParcours = new JButton("Créer");
+		this.boutonLancerParcours.addActionListener(this);
 		
-		this.addGridBagLayout(boutonTerrestre, boutonAerien);
+		this.addGridBagLayout(rboutonTerrestre, rboutonAerien);
 	    
 	    // panel ajouté à la fenetre au debut avec getContentPane()
 	}
@@ -72,7 +74,7 @@ public class IHMChoixTypeSysteme extends JFrame {
 			    cell2.add(boutonAerien);
 			    cell2.setPreferredSize(new Dimension(90, 40));
 			    JPanel cell3 = new JPanel();
-			    cell3.add(this.buttonLancerParcours);
+			    cell3.add(this.boutonLancerParcours);
 			    cell3.setPreferredSize(new Dimension(90, 40));
 			    
 			    this.panel.setPreferredSize(new Dimension(350, 200));
@@ -97,5 +99,14 @@ public class IHMChoixTypeSysteme extends JFrame {
 			    gbc.gridwidth = 1;
 			    gbc.gridheight = 1;	
 			    this.panel.add(cell3, gbc);
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		if (rboutonTerrestre.isSelected())
+			new IHMParcours("terrestre");
+		else
+			new IHMParcours("aérien");
+		this.dispose();
 	}
 }

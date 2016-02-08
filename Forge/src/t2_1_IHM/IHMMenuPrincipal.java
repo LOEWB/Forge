@@ -1,6 +1,8 @@
 package t2_1_IHM;
 
 import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -15,7 +17,7 @@ import javax.swing.JPanel;
  * @author joris
  *
  */
-public class IHMMenuPrincipal {
+public class IHMMenuPrincipal implements ActionListener {
 	
 	private JFrame window;
 
@@ -42,8 +44,12 @@ public class IHMMenuPrincipal {
 		labelForge.setBounds(-45, 0, 350, 200); // adapter manuellement la taille a l'image
 	    JButton boutonParcours = new JButton("Créer un parcours");
 	    boutonParcours.setBounds(25, 220, 200, 35);
+	    boutonParcours.addActionListener(this);
+	    boutonParcours.setActionCommand("Parcours");
 	    JButton boutonSimulation = new JButton("Lancer une simulation");
 	    boutonSimulation.setBounds(25, 330, 200, 35);
+	    boutonSimulation.addActionListener(this);
+	    boutonSimulation.setActionCommand("Simulation");
 	    
 	    panel.add(labelForge);
 	    panel.add(boutonParcours);
@@ -56,5 +62,19 @@ public class IHMMenuPrincipal {
 	    
 	    this.window.add(panel);
 	    this.window.setVisible(true);
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		if (e.getActionCommand() == ""){
+			System.out.println("ah...");
+			return;
+		}
+		FenetreForge.fenetreForge = new FenetreForge();
+		if (e.getActionCommand().equals("Parcours"))
+			new IHMChoixTypeSysteme();
+		else
+			new IHMSimulation();
+		this.window.dispose();
 	}
 }
