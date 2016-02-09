@@ -60,6 +60,14 @@ void diminuerVitesse() {
 	this.vitesse -= 0.5; 
 }
 
+void exportSimulation(String cheminFichier) {
+
+ConteneurFichier conteneurFichier = new ConteneurFichier();
+
+conteneurFichier.ecrire(cheminFichier + ".forge", genererTrames());
+
+}
+
 EtatSimu getEtat() {
 	return this.etat;
 }
