@@ -2,6 +2,7 @@ package t1_1_Model_Principal;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.Random;
 
 public class Simulation {
 private EtatSimu etat;
@@ -17,36 +18,6 @@ this.etat=EtatSimu.ARRET;
 
 }
 
-String genererTrames() {
-String trames = "";
-String trame = "";
-Point point;
-
-ArrayList<Point> listePoints; 
-
-listePoints = parcours.getListePoints();
-
-for(int i = 0 ; i < listePoints.size(); i++) {
-trame = "$GPGGA,";
-point = listePoints.get(i);
-
-trame += point.getTemps() + "," + point.getCoordonnes().getLatitude() + ",N," 
-+ point.getCoordonnes().getLongitude() + ",E,1,08,0.9," +  point.getAltitude() + ",M,"
-+ "46.9,M, , ";
-
-int checksum = 0;
-for(int j = 0; j < trame.length(); j++) {
-  checksum = checksum ^ Character.codePointAt(trame, j);
-}
-
-trame += "*" + checksum;
-
-trames += trame;
-
-}
-
-return trames;
-}
 
 float getVitesse() {
 	return this.vitesse;
@@ -60,16 +31,50 @@ void diminuerVitesse() {
 	this.vitesse -= 0.5; 
 }
 
-void exportSimulation(String cheminFichier) {
-
-ConteneurFichier conteneurFichier = new ConteneurFichier();
-
-conteneurFichier.ecrire(cheminFichier + ".forge", genererTrames());
-
-}
 
 EtatSimu getEtat() {
 	return this.etat;
+}
+
+void importSimulation(String cheminFichier) {
+	
+this.parcours.importerParcours(cheminFichier + ".fGF");
+
+ConteneurFichier conteneurFichier = new ConteneurFichier();
+
+String parcoursBrut = conteneurFichier.lire(cheminFichier + ".fS");
+String temporaire = "";
+
+int i = 0;
+
+i += parcoursBrut.indexOf("$STATE",i)+1;
+
+for(int j=i; j<parcoursBrut.indexOf("$VELOCITY",i); j++) {
+temporaire += parcoursBrut.charAt(j);
+}
+this.etat = EtatSimu.valueOf(temporaire);
+
+i += parcoursBrut.indexOf("$VELOCITY",i)+1;
+
+temporaire = "";
+
+for(int j=i; j<parcoursBrut.indexOf("$GPGGA",i); j++) {
+temporaire += parcoursBrut.charAt(j);
+}
+this.vitesse = Float.parseFloat(temporaire);
+
+}
+
+void exportSimulation(String cheminFichier) {
+	
+	ConteneurFichier conteneurFichier = new ConteneurFichier();
+	
+	String simulationBrut = "";
+	
+	simulationBrut += "$STATE" + this.etat + "$VELOCITY" + this.vitesse + parcours.genererTrames();
+	
+	conteneurFichier.ecrire(cheminFichier, simulationBrut);
+	
 }
 
 
