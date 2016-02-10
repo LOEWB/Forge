@@ -12,7 +12,7 @@ public class MainTest {
 		parcours.ajouterPoint(valence);
 		parcours.ajouterPoint(saintay);
 		Simulation simu = new Simulation(parcours);
-		System.out.println(simu.genererTrames());
+		System.out.println(parcours.genererTrames());
 	}
 }
 
