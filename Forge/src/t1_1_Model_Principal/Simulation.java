@@ -38,7 +38,7 @@ EtatSimu getEtat() {
 
 void importSimulation(String cheminFichier) {
 	
-this.parcours.importerParcours(cheminFichier + ".fGF");
+this.parcours.chargerParcours(cheminFichier + ".fGF");
 
 ConteneurFichier conteneurFichier = new ConteneurFichier();
 

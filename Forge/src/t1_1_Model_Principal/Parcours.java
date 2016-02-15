@@ -94,7 +94,7 @@ public class Parcours
 	return trames;
 	}
 
-	void exporterParcours(String cheminFichier) {
+	void sauvegarderParcours(String cheminFichier) {
 
 		ConteneurFichier conteneurFichier = new ConteneurFichier();
 
@@ -102,7 +102,7 @@ public class Parcours
 
 		}
 	
-	void importerParcours(String cheminFichier) {
+	void chargerParcours(String cheminFichier) {
 
 		int indiceDebut = 0;
 		int indiceFin = 0;
