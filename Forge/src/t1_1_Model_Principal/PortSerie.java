@@ -18,14 +18,14 @@ import java.io.OutputStream;
 
 public class PortSerie
 {
-    static Enumeration ports;
+    private Enumeration ports = null;
 	ArrayList<String> listePorts; 
     int debit;
     
-    static OutputStream outStream;
-    SerialPort serialPort;
-    CommPort commPort;
-    CommPortIdentifier portIdentifier;
+    private OutputStream outStream = null;
+    private SerialPort serialPort = null;
+    private CommPort commPort;
+    private CommPortIdentifier portIdentifier = null;
 
     
     public PortSerie() throws Exception{
