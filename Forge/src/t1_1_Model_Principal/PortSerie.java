@@ -19,8 +19,8 @@ import java.io.OutputStream;
 public class PortSerie
 {
     private Enumeration ports = null;
-	ArrayList<String> listePorts; 
-    int debit;
+	private ArrayList<String> listePorts; 
+    private int debit;
     
     private OutputStream outStream = null;
     private SerialPort serialPort = null;
