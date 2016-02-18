@@ -6,7 +6,10 @@ import java.util.*;
 
 import gnu.io.CommPort;
 import gnu.io.CommPortIdentifier;
+import gnu.io.NoSuchPortException;
+import gnu.io.PortInUseException;
 import gnu.io.SerialPort;
+import gnu.io.UnsupportedCommOperationException;
 
 import java.io.FileDescriptor;
 import java.io.IOException;
@@ -44,7 +47,7 @@ public ArrayList<String> getListePorts()
 	return this.listePorts;
 }
 
-boolean setPort(String port, int Debit) {
+boolean setPort(String port, int Debit) throws PortInUseException, NoSuchPortException, UnsupportedCommOperationException {
 
 	
 	if(Debit == 0) this.debit = 2400;
@@ -56,7 +59,7 @@ boolean setPort(String port, int Debit) {
     
     this.commPort = portIdentifier.open("Forge Software on " + port,10000);
     
-    if (!commPort instanceof SerialPort) return false;
+    if (!(commPort instanceof SerialPort)) return false;
     
     this.serialPort = (SerialPort) commPort;
     
@@ -65,7 +68,7 @@ boolean setPort(String port, int Debit) {
 	return true;
 }
 
-void envoyer(String donnees) {
+void envoyer(String donnees) throws IOException {
 	
     OutputStream outstream = this.serialPort.getOutputStream();
     outstream.write(donnees.getBytes());
