@@ -39,7 +39,7 @@ public class Parcours
 
 	public void ajouterPoint(Point p)
 	{
-/*		int index=0;
+		int index=0;
 		
 		if (this.listePoints.size()==0)
 			this.listePoints.add(p);
@@ -49,11 +49,9 @@ public class Parcours
 			{
 				index++;
 			}
-			this.listePoints.add(index, p);
+			this.listePoints.add(index+1, p);
 			
 		}
-	*/	
-		this.listePoints.add(p);
 
 	}
 	
