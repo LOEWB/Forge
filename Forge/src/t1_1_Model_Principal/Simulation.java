@@ -38,7 +38,7 @@ EtatSimu getEtat() {
 
 void importSimulation(String cheminFichier) {
 	
-this.parcours.chargerParcours(cheminFichier + ".fGF");
+this.parcours.chargerParcours(cheminFichier);
 
 ConteneurFichier conteneurFichier = new ConteneurFichier();
 
@@ -65,15 +65,17 @@ this.vitesse = Float.parseFloat(temporaire);
 
 }
 
-void exportSimulation(String cheminFichier) {
+void exportSimulation(String cheminFuturFichier) {
 	
+	cheminFuturFichier += ".fS";
+
 	ConteneurFichier conteneurFichier = new ConteneurFichier();
 	
 	String simulationBrut = "";
 	
 	simulationBrut += "$STATE" + this.etat + "$VELOCITY" + this.vitesse + parcours.genererTrames();
 	
-	conteneurFichier.ecrire(cheminFichier, simulationBrut);
+	conteneurFichier.ecrire(cheminFuturFichier, simulationBrut);
 	
 }
 

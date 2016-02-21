@@ -94,11 +94,13 @@ public class Parcours
 	return trames;
 	}
 
-	void sauvegarderParcours(String cheminFichier) {
+	void sauvegarderParcours(String cheminFuturFichier) {
 
+		cheminFuturFichier += ".fGF";
+				
 		ConteneurFichier conteneurFichier = new ConteneurFichier();
 
-		conteneurFichier.ecrire(cheminFichier, genererTrames());
+		conteneurFichier.ecrire(cheminFuturFichier, genererTrames());
 
 		}
 	
@@ -115,7 +117,7 @@ public class Parcours
 
 		ConteneurFichier conteneurFichier = new ConteneurFichier();
 	  
-		String parcoursBrut = conteneurFichier.lire(cheminFichier + ".fGF");
+		String parcoursBrut = conteneurFichier.lire(cheminFichier);
 		String temporaire = "";		
 		
 		i += parcoursBrut.indexOf("$GPGGA",i);
