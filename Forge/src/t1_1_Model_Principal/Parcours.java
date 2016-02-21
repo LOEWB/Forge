@@ -77,8 +77,8 @@ public class Parcours
 	point = listePoints.get(i);
 
 	trame += point.getTemps() + "," + point.getCoordonnes().getLatitude() + ",N," 
-	+ point.getCoordonnes().getLongitude() + ",E,1," + randomInteger(12,3) + "," + (0.6 + randomInteger(0,19)) +"," +  point.getAltitude() + ",M,"
-	+ (46.9 + randomInteger(3,1)) + "46.9,M, , ";
+	+ point.getCoordonnes().getLongitude() + ",E,1," + randomInteger(3,12) + "," + (0.6 + randomInteger(0,19)) +"," +  point.getAltitude() + ",M,"
+	+ (46.9 + randomInteger(1,3)) + "46.9,M, , ";
 
 	int checksum = 0;
 	for(int j = 0; j < trame.length(); j++) {
