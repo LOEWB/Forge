@@ -120,7 +120,7 @@ public class Parcours
 		String parcoursBrut = conteneurFichier.lire(cheminFichier);
 		String temporaire = "";		
 		
-		i += parcoursBrut.indexOf("$GPGGA",i);
+		i=7;
 		
 			while(parcoursBrut.charAt(i) != ',')   {
 				tempsPremierPoint += parcoursBrut.charAt(i);
@@ -145,74 +145,86 @@ public class Parcours
 			longitude = Double.parseDouble(temporaire);
 			i+=2;
 			
-			while(parcoursBrut.charAt(i) != ',') i++;	
+			while(parcoursBrut.charAt(i) != ',') i++; // saut du fix	
 			i++;
 
-			while(parcoursBrut.charAt(i) != ',') i++;	
+			while(parcoursBrut.charAt(i) != ',') i++; // saut satellites
 			i++;
 
-			while(parcoursBrut.charAt(i) != ',') i++;	
+			while(parcoursBrut.charAt(i) != ',') i++;	// saut DOP
 			i++;
+			
 			temporaire = "";
 			
 			while(parcoursBrut.charAt(i) != ',')   {
 				temporaire += parcoursBrut.charAt(i);
 				i++;
 			}
+			
 			altitude = Float.parseFloat(temporaire);
 			
+			if((parcoursBrut.indexOf("$GPGGA",i)) != -1) {
+				
+			i = parcoursBrut.indexOf("$GPGGA",i)-1;
 			parcoursBrut = parcoursBrut.substring(0, i);
-			
+			 
+			}
+				
 			listePoints.add(new Point(tempsPremierPoint, new Coordonnees(longitude, latitude), altitude));
 			
 		while(parcoursBrut.indexOf("$GPGGA",0) != -1) {
 			
-			temporaire = "";
+			 temporaire = "";		
 			
-			i += parcoursBrut.indexOf("$GPGGA",i);
+			i=7;
 			
-			
-			while(parcoursBrut.charAt(i) != ',')   {
-				tempsPoint += parcoursBrut.charAt(i);
+				while(parcoursBrut.charAt(i) != ',')   {
+					tempsPoint += parcoursBrut.charAt(i);
+					i++;
+				}
 				i++;
-			}
-			
-			i++;
-			
+				
 
-			while(parcoursBrut.charAt(i) != ',')   {
-				temporaire += parcoursBrut.charAt(i);
+				while(parcoursBrut.charAt(i) != ',')   {
+					temporaire += parcoursBrut.charAt(i);
+					i++;
+				}
 				i++;
-			}
-			i++;
-			latitude = Double.parseDouble(temporaire);
-			i+=2;
-			temporaire = "";
-			while(parcoursBrut.charAt(i) != ',')   {
-				temporaire += parcoursBrut.charAt(i);
+				latitude = Double.parseDouble(temporaire);
+				i+=2;
+				temporaire = "";
+				while(parcoursBrut.charAt(i) != ',')   {
+					temporaire += parcoursBrut.charAt(i);
+					i++;
+				}
 				i++;
-			}
-			i++;
-			longitude = Double.parseDouble(temporaire);
-			i+=2;
-			
-			while(parcoursBrut.charAt(i) != ',') i++;	
-			i++;
+				longitude = Double.parseDouble(temporaire);
+				i+=2;
+				
+				while(parcoursBrut.charAt(i) != ',') i++; // saut du fix	
+				i++;
 
-			while(parcoursBrut.charAt(i) != ',') i++;	
-			i++;
-
-			while(parcoursBrut.charAt(i) != ',') i++;	
-			i++;
-			temporaire = "";
-			
-			while(parcoursBrut.charAt(i) != ',')   {
-				temporaire += parcoursBrut.charAt(i);
+				while(parcoursBrut.charAt(i) != ',') i++; // saut satellites
 				i++;
-			}
-			altitude = Float.parseFloat(temporaire);
-			
-			parcoursBrut = parcoursBrut.substring(0, i);
+
+				while(parcoursBrut.charAt(i) != ',') i++;	// saut DOP
+				i++;
+				
+				temporaire = "";
+				
+				while(parcoursBrut.charAt(i) != ',')   { // offset to go to the next frame : c'est plus facile à dire en anglais :)
+					temporaire += parcoursBrut.charAt(i);
+					i++;
+				}
+				
+				altitude = Float.parseFloat(temporaire);
+				
+				if((parcoursBrut.indexOf("$GPGGA",i)) != -1) {
+					
+				i = parcoursBrut.indexOf("$GPGGA",i)-1;
+				parcoursBrut = parcoursBrut.substring(0, i);
+				 
+				}
 
 			this.listePoints.add(new Point(tempsPoint-tempsPremierPoint, new Coordonnees(longitude, latitude), altitude));
 		}

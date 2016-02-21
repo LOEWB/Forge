@@ -19,7 +19,7 @@ public class MainTest {
 		
 		System.out.println("\nCréation d'un nouveau parcours\nChargement du parcours dans ce nouveau parcours");
 		Parcours newParcours = new Parcours(TypeSysteme.TERRESTRE);
-		newParcours.chargerParcours("ParcoursSteValence");
+		newParcours.chargerParcours("ParcoursSteValence.fGF");
 		
 		
 	}
