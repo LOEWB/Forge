@@ -39,7 +39,7 @@ public class Parcours
 
 	public void ajouterPoint(Point p)
 	{
-		int index=0;
+/*		int index=0;
 		
 		if (this.listePoints.size()==0)
 			this.listePoints.add(p);
@@ -50,7 +50,11 @@ public class Parcours
 				index++;
 			}
 			this.listePoints.add(index, p);
+			
 		}
+	*/	
+		this.listePoints.add(p);
+
 	}
 	
 	public int randomInteger(int min, int max) {
@@ -96,7 +100,7 @@ public class Parcours
 
 	void sauvegarderParcours(String cheminFuturFichier) {
 
-		cheminFuturFichier += ".fGF";
+	//	cheminFuturFichier += ".fGF"; a voir...
 				
 		ConteneurFichier conteneurFichier = new ConteneurFichier();
 
@@ -123,16 +127,20 @@ public class Parcours
 		i=7;
 		
 			while(parcoursBrut.charAt(i) != ',')   {
-				tempsPremierPoint += parcoursBrut.charAt(i);
+				temporaire += parcoursBrut.charAt(i);
 				i++;
 			}
 			i++;
-			
+
+			tempsPremierPoint = Integer.parseInt(temporaire);
+			 
+			temporaire = "";
 
 			while(parcoursBrut.charAt(i) != ',')   {
 				temporaire += parcoursBrut.charAt(i);
 				i++;
 			}
+			
 			i++;
 			latitude = Double.parseDouble(temporaire);
 			i+=2;
@@ -164,25 +172,27 @@ public class Parcours
 			altitude = Float.parseFloat(temporaire);
 			
 			if((parcoursBrut.indexOf("$GPGGA",i)) != -1) {
-				
-			i = parcoursBrut.indexOf("$GPGGA",i)-1;
-			parcoursBrut = parcoursBrut.substring(0, i);
-			 
+			i = parcoursBrut.indexOf("$GPGGA",i);
+			parcoursBrut = parcoursBrut.substring(i);
 			}
 				
 			listePoints.add(new Point(tempsPremierPoint, new Coordonnees(longitude, latitude), altitude));
-			
+	
 		while(parcoursBrut.indexOf("$GPGGA",0) != -1) {
-			
+									
 			 temporaire = "";		
 			
 			i=7;
 			
-				while(parcoursBrut.charAt(i) != ',')   {
-					tempsPoint += parcoursBrut.charAt(i);
-					i++;
-				}
+			while(parcoursBrut.charAt(i) != ',')   {
+				temporaire += parcoursBrut.charAt(i);
 				i++;
+			}
+			i++;
+
+			tempsPoint = Integer.parseInt(temporaire);
+			 			
+			temporaire = "";
 				
 
 				while(parcoursBrut.charAt(i) != ',')   {
@@ -219,13 +229,11 @@ public class Parcours
 				
 				altitude = Float.parseFloat(temporaire);
 				
-				if((parcoursBrut.indexOf("$GPGGA",i)) != -1) {
-					
-				i = parcoursBrut.indexOf("$GPGGA",i)-1;
-				parcoursBrut = parcoursBrut.substring(0, i);
-				 
-				}
+				if((parcoursBrut.indexOf("$GPGGA",i)) != -1) i = parcoursBrut.indexOf("$GPGGA",i);
+				
 
+				parcoursBrut = parcoursBrut.substring(i);				 
+				
 			this.listePoints.add(new Point(tempsPoint-tempsPremierPoint, new Coordonnees(longitude, latitude), altitude));
 		}
 		

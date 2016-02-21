@@ -49,12 +49,15 @@ public class ConteneurFichier {
 	public void ecrire(String cheminFichier, String contenu) {
 		// Création du fichier texte pour le programme
 		File fichierTexte = new File (cheminFichier);
+		
 		// Création de "l'écrivain"
 		FileWriter ecrireFichier;
 		
+		
+		
 		try{
 			// Instanciation de l'objet ecrireFichier qui va écrire dans fichierTexte.txt
-			ecrireFichier = new FileWriter(fichierTexte);
+			ecrireFichier = new FileWriter(fichierTexte, false);
 			// Écriture d'une chaîne de caractères dans le fichier texte
 			ecrireFichier.write(contenu);
 			// "Fermeture" du FileWriter
