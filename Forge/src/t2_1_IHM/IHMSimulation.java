@@ -6,6 +6,8 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.text.DateFormat;
 
 import javax.swing.BorderFactory;
@@ -17,7 +19,13 @@ import javax.swing.JSplitPane;
 
 import org.openstreetmap.gui.jmapviewer.JMapViewer;
 
-public class IHMSimulation {
+import t1_1_Model_Principal.Coordonnees;
+import t1_1_Model_Principal.Parcours;
+import t1_1_Model_Principal.Point;
+import t1_1_Model_Principal.Simulation;
+import t1_1_Model_Principal.TypeSysteme;
+
+public class IHMSimulation implements ActionListener {
 	
     private JButton bcharger = new JButton("Charger");
 
@@ -85,8 +93,14 @@ public class IHMSimulation {
          
          
          bcharger.setBackground(Color.WHITE);
+         bcharger.addActionListener(this);
+         bcharger.setActionCommand("charger");
          bimporter.setBackground(Color.WHITE);
+         bimporter.addActionListener(this);
+         bimporter.setActionCommand("importer");
          bexporter.setBackground(Color.WHITE);
+         bexporter.addActionListener(this);
+         bexporter.setActionCommand("exporter");
          bjouer.setBackground(Color.WHITE);
          vitesse.setBackground(Color.WHITE);
          api.setBackground(Color.WHITE);
@@ -227,7 +241,27 @@ public class IHMSimulation {
 	}
 
 	
-	
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		// test :
+		Point valence = new Point(0,new Coordonnees(44.933014, 4.890892),0);
+		Point saintay = new Point(3600,new Coordonnees(45.446958, 4.383396),0);
+		Parcours parcours = new Parcours(TypeSysteme.TERRESTRE);
+		
+		switch (e.getActionCommand()) {
+		case "charger":
+			new IHMChoixFichier(e.getActionCommand(), parcours);
+			break;
+		case "importer": case "exporter":
+			Simulation simulation = new Simulation(parcours);
+			new IHMChoixFichier(e.getActionCommand(), parcours, simulation);
+			break;
+		default:
+			// les autres boutons
+			break;
+		}
+		
+	}
 	
 	
 

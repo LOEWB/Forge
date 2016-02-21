@@ -36,7 +36,7 @@ EtatSimu getEtat() {
 	return this.etat;
 }
 
-void importSimulation(String cheminFichier) {
+public void importSimulation(String cheminFichier) {
 	
 this.parcours.chargerParcours(cheminFichier);
 
@@ -66,7 +66,7 @@ this.vitesse = Float.parseFloat(temporaire);
 
 }
 
-void exportSimulation(String cheminFuturFichier) {
+public void exportSimulation(String cheminFuturFichier) {
 	
 	ConteneurFichier conteneurFichier = new ConteneurFichier();
 	

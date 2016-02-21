@@ -96,7 +96,7 @@ public class Parcours
 	return trames;
 	}
 
-	void sauvegarderParcours(String cheminFuturFichier) {
+	public void sauvegarderParcours(String cheminFuturFichier) {
 
 	//	cheminFuturFichier += ".fGF"; a voir...
 				
@@ -104,9 +104,9 @@ public class Parcours
 
 		conteneurFichier.ecrire(cheminFuturFichier, genererTrames());
 
-		}
+	}
 	
-	void chargerParcours(String cheminFichier) {
+	public void chargerParcours(String cheminFichier) {
 
 		int indiceDebut = 0;
 		int indiceFin = 0;

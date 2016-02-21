@@ -4,6 +4,8 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -13,7 +15,12 @@ import javax.swing.JSplitPane;
 
 import org.openstreetmap.gui.jmapviewer.JMapViewer;
 
-public class IHMParcours {
+import t1_1_Model_Principal.Coordonnees;
+import t1_1_Model_Principal.Parcours;
+import t1_1_Model_Principal.Point;
+import t1_1_Model_Principal.TypeSysteme;
+
+public class IHMParcours implements ActionListener {
 	
 	private JButton bsimulation = new JButton("LANCER LA SIMULATION");
 	
@@ -64,9 +71,15 @@ public class IHMParcours {
         splitGauche.setContinuousLayout(true);
         splitDroit.setContinuousLayout(true);
         
+        bsimulation.addActionListener(this);
         bsimulation.setBackground(Color.WHITE);
+        bsimulation.setActionCommand("simulation");
+        bsauvegarder.addActionListener(this);
         bsauvegarder.setBackground(Color.WHITE);
+        bsauvegarder.setActionCommand("sauvegarder");
+        bcharger.addActionListener(this);
         bcharger.setBackground(Color.WHITE);
+        bcharger.setActionCommand("charger");
         
         api.setBackground(Color.WHITE);
         parametres.setBackground(Color.WHITE);
@@ -158,6 +171,24 @@ public class IHMParcours {
 		
 	}
 	public void lancerSimulationBouton(){
+		
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		// test :
+		Point valence = new Point(0,new Coordonnees(44.933014, 4.890892),0);
+		Point saintay = new Point(3600,new Coordonnees(45.446958, 4.383396),0);
+		Parcours parcours = new Parcours(TypeSysteme.TERRESTRE);
+		
+		switch (e.getActionCommand()) {
+		case "sauvegarder": case "charger":
+			new IHMChoixFichier(e.getActionCommand(), parcours);
+			break;
+		default:
+			// les autres boutons
+			break;
+		}
 		
 	}
 }
