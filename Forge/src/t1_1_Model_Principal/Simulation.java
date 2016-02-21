@@ -47,33 +47,32 @@ String temporaire = "";
 
 int i = 0;
 
-i += parcoursBrut.indexOf("$STATE",i)+1;
+i = parcoursBrut.indexOf("$STATE,",i)+7;
 
-for(int j=i; j<parcoursBrut.indexOf("$VELOCITY",i); j++) {
+for(int j=i; j<parcoursBrut.indexOf("$VELOCITY,",i)+9; j++) {
 temporaire += parcoursBrut.charAt(j);
 }
+
 this.etat = EtatSimu.valueOf(temporaire);
 
-i += parcoursBrut.indexOf("$VELOCITY",i)+1;
+i += parcoursBrut.indexOf("$VELOCITY,",i)+9;
 
 temporaire = "";
 
-for(int j=i; j<parcoursBrut.indexOf("$GPGGA",i); j++) {
-temporaire += parcoursBrut.charAt(j);
-}
+for(int j=i; j<parcoursBrut.indexOf("$GPGGA",i)+7; j++) temporaire += parcoursBrut.charAt(j);
+
+
 this.vitesse = Float.parseFloat(temporaire);
 
 }
 
 void exportSimulation(String cheminFuturFichier) {
 	
-	cheminFuturFichier += ".fS";
-
 	ConteneurFichier conteneurFichier = new ConteneurFichier();
 	
 	String simulationBrut = "";
 	
-	simulationBrut += "$STATE" + this.etat + "$VELOCITY" + this.vitesse + parcours.genererTrames();
+	simulationBrut += "$STATE," + this.etat + "$VELOCITY," + this.vitesse + parcours.genererTrames();
 	
 	conteneurFichier.ecrire(cheminFuturFichier, simulationBrut);
 	
