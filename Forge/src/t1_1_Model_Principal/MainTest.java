@@ -17,9 +17,12 @@ public class MainTest {
 		System.out.println("\nEnregistrement du parcours dans le fichier ParcoursStValence.fGF\n");
 		parcours.sauvegarderParcours("ParcoursSteValence");
 		
-		System.out.println("\nCréation d'un nouveau parcours\nChargement du parcours dans ce nouveau parcours");
+		System.out.println("\nCréation d'un nouveau parcours\nChargement du parcours depuis le fichier ParcoursStValence.fGF dans ce nouveau parcours\n");
 		Parcours newParcours = new Parcours(TypeSysteme.TERRESTRE);
 		newParcours.chargerParcours("ParcoursSteValence.fGF");
+		System.out.println("\nTrames chargées : \n");
+		System.out.println(newParcours.genererTrames());
+		
 		
 		
 	}
