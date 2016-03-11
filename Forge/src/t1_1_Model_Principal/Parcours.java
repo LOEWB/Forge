@@ -58,7 +58,7 @@ public class Parcours {
 		return randomNum;
 	}
 
-	String genererTrames() {
+	public String genererTrames() {
 		String trames = "";
 		String trame = "";
 		Point point;
@@ -104,8 +104,6 @@ public class Parcours {
 
 	public void chargerParcours(String cheminFichier) {
 
-		int indiceDebut = 0;
-		int indiceFin = 0;
 		int tempsPremierPoint = 0;
 		int tempsPoint = 0;
 		int i = 0;
