@@ -13,8 +13,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSplitPane;
 
-import org.openstreetmap.gui.jmapviewer.JMapViewer;
-
 import t1_1_Model_Principal.Coordonnees;
 import t1_1_Model_Principal.Parcours;
 import t1_1_Model_Principal.Point;
@@ -43,16 +41,20 @@ public class IHMParcours implements ActionListener {
 	private JLabel altitudeMoyCalc = new JLabel("7500m(test)"); // texte par
 																// défaut à
 																// supprimer
-
+	
+	private Parcours parcours;
+	
 	public IHMParcours(String typeDeSysteme) {
-
-		JMapViewer api = new JMapViewer();
+		
+		this.initParcours(typeDeSysteme);
+		
+		PanelAPICarte api = new PanelAPICarte(this.parcours);
 		JPanel parametres = new JPanel();
 		JPanel boutonSimulation = new JPanel();
 		JPanel boutonSauvegarder = new JPanel();
 		JPanel boutonCharger = new JPanel();
 		JPanel carte = new JPanel();
-
+		
 		typeSystemeCalc.setText(typeDeSysteme);
 
 		JSplitPane splitGauche = new JSplitPane(JSplitPane.VERTICAL_SPLIT,
@@ -78,7 +80,7 @@ public class IHMParcours implements ActionListener {
 		splitForge.setContinuousLayout(true);
 		splitGauche.setContinuousLayout(true);
 		splitDroit.setContinuousLayout(true);
-
+		
 		bsimulation.addActionListener(this);
 		bsimulation.setBackground(Color.WHITE);
 		bsimulation.setActionCommand("simulation");
@@ -108,8 +110,7 @@ public class IHMParcours implements ActionListener {
 		altitudeMoyCalc.setPreferredSize(new Dimension(115, 30));
 
 		// panel en haut a gauche (parametres)
-		parametres.setBorder(BorderFactory
-				.createTitledBorder("Paramètres parcours"));
+		parametres.setBorder(BorderFactory.createTitledBorder("Paramètres parcours"));
 		parametres.setLayout(new GridBagLayout());
 		GridBagConstraints gbcParametres = new GridBagConstraints();
 		gbcParametres.gridx = 0;
@@ -156,6 +157,32 @@ public class IHMParcours implements ActionListener {
 		FenetreForge.fenetreForge.getContentPane().add(splitForge);
 		FenetreForge.fenetreForge.setVisible(true);
 	}
+	
+	/**
+	 * initialisation du parcours au lancement de l'IHM
+	 * @param typeDeSysteme
+	 */
+	private void initParcours(String typeDeSysteme) {
+		switch(typeDeSysteme){
+		case "terrestre":
+			this.parcours = new Parcours(TypeSysteme.TERRESTRE);
+			//test
+			Point valence = new Point(0, new Coordonnees(44.933014, 4.890892), 0);
+			Point saintay = new Point(3600, new Coordonnees(45.446958, 4.383396), 0);
+			parcours.ajouterPoint(valence);
+			parcours.ajouterPoint(saintay);
+			break;
+		case "aérien":
+			this.parcours = new Parcours(TypeSysteme.AERIEN);
+			//test
+			valence = new Point(0, new Coordonnees(44.933014, 4.890892), 100);
+			saintay = new Point(3600, new Coordonnees(45.446958, 4.383396), 100);
+			parcours.ajouterPoint(valence);
+			parcours.ajouterPoint(saintay);
+		default:
+			break;
+		}
+	}
 
 	public void traceParcours() {
 
@@ -195,6 +222,8 @@ public class IHMParcours implements ActionListener {
 		Point valence = new Point(0, new Coordonnees(44.933014, 4.890892), 0);
 		Point saintay = new Point(3600, new Coordonnees(45.446958, 4.383396), 0);
 		Parcours parcours = new Parcours(TypeSysteme.TERRESTRE);
+		parcours.ajouterPoint(valence);
+		parcours.ajouterPoint(saintay);
 
 		switch (e.getActionCommand()) {
 		case "sauvegarder":
