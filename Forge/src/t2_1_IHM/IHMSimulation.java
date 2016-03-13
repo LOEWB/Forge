@@ -12,7 +12,9 @@ import java.text.DateFormat;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFormattedTextField;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
 import javax.swing.JSplitPane;
@@ -27,210 +29,307 @@ import t1_1_Model_Principal.TypeSysteme;
 
 public class IHMSimulation implements ActionListener {
 
-	private JButton bcharger = new JButton("Charger");
+    private JButton bcharger = new JButton("Charger");
 
-	private JButton bimporter = new JButton("Importer");
+    private JButton bimporter = new JButton("Importer");
 
-	private JButton bexporter = new JButton("Exporter");
+    private JButton bexporter = new JButton("Exporter");
+        
+    private JButton bjouer = new JButton("JOUER");
+    
+    private JButton bMenu = new JButton("MENU");
+    
+    private JLabel vitActuelle = new JLabel("Vitesse actuelle");    
+    private JLabel vitActuelleDisplay = new JLabel("");
+    
+    private JLabel vitMoyenne = new JLabel("Vitesse moyenne");
+    private JLabel vitMoyenneDisplay = new JLabel("");
+    
+    private JLabel heureDepart = new JLabel("Heure de départ");
+    private JLabel heureDepartDisplay = new JLabel("");
+    
+    private JLabel heureArrivee = new JLabel("Heure d'arrivée");
+    private JLabel heureArriveeDisplay = new JLabel("");
+    
+    private JLabel heureActuelle = new JLabel("Heure actuelle");
+    private JLabel heureActuelleDisplay = new JLabel("");
+    
+    private JLabel dateActuelle = new JLabel("Date actuelle");
+    private JLabel dateActuelleDisplay = new JLabel("");
+    
+    private JLabel dateLabel = new JLabel("Date");
+    private JLabel heureLabel = new JLabel("Heure");
+    private JLabel dateLabel2 = new JLabel("Date");
+    private JLabel heureLabel2 = new JLabel("Heure");
+    private JLabel debutLabel = new JLabel("Début");
+    private JLabel finLabel = new JLabel("Fin");
+    
+    private JFormattedTextField date = new JFormattedTextField(DateFormat.getDateInstance());
+	
+    private JFormattedTextField date2 = new JFormattedTextField(DateFormat.getDateInstance());
 
-	private JButton bjouer = new JButton("JOUER");
-
-	private JFormattedTextField date = new JFormattedTextField(
-			DateFormat.getDateInstance());
-
-	private JFormattedTextField date2 = new JFormattedTextField(
-			DateFormat.getDateInstance());
-
-	private JFormattedTextField date3 = new JFormattedTextField(
-			DateFormat.getDateInstance());
-
-	private JFormattedTextField date4 = new JFormattedTextField(
-			DateFormat.getDateInstance());
-
-	private JFormattedTextField date5 = new JFormattedTextField(
-			DateFormat.getDateInstance());
-
-	private JFormattedTextField date6 = new JFormattedTextField(
-			DateFormat.getDateInstance());
+    private JFormattedTextField date3 = new JFormattedTextField(DateFormat.getDateInstance());
+    
+    private JFormattedTextField date4 = new JFormattedTextField(DateFormat.getDateInstance());
+    
+    private JFormattedTextField date5 = new JFormattedTextField(DateFormat.getDateInstance());
+    
+    private JFormattedTextField date6 = new JFormattedTextField(DateFormat.getDateInstance());
+    
+    private String[] listeLiaisonSerie = { "Liaison série 1", "Liaison série 2", "Liaison série 3" };
+    
+    private JComboBox<String> comboBoxliaisonSerie = new JComboBox<String>(listeLiaisonSerie);
 
 	public IHMSimulation() {
 
-		JMapViewer api = new JMapViewer();
+		JMapViewer api = new JMapViewer();		
 		JPanel informations = new JPanel();
-		JPanel departArriveePlage = new JPanel();
-		JPanel jouer = new JPanel();
-		JPanel bas = new JPanel();
-		JPanel boutons = new JPanel();
-		JPanel carte = new JPanel();
-		JPanel depart = new JPanel();
-		JPanel arrivee = new JPanel();
-		JPanel plage = new JPanel();
-		JSlider vitesse = new JSlider();
+        JPanel departArriveePlage = new JPanel();
+        JPanel jouer = new JPanel();
+        JPanel bas = new JPanel();
+        JPanel boutons = new JPanel();
+        JPanel carte = new JPanel();      
+        JPanel depart = new JPanel();
+        JPanel arrivee = new JPanel();
+        JPanel plage = new JPanel();
+        JSlider vitesse = new JSlider(); 
+        
 
-		JSplitPane splitMilieuGauche = new JSplitPane(
-				JSplitPane.VERTICAL_SPLIT, boutons, departArriveePlage);
-		splitMilieuGauche.setDividerLocation(200);
-		splitMilieuGauche.setDividerSize(0);
+        
+        JSplitPane splitMilieuGauche = new JSplitPane(JSplitPane.VERTICAL_SPLIT, boutons, departArriveePlage);
+        splitMilieuGauche.setDividerLocation(200);
+        splitMilieuGauche.setDividerSize(0);
+        
+        JSplitPane splitBasGauche = new JSplitPane(JSplitPane.VERTICAL_SPLIT, splitMilieuGauche, jouer);
+        splitBasGauche.setDividerLocation(600);
+        splitBasGauche.setDividerSize(0);
+        
+        JSplitPane splitMilieuDroit = new JSplitPane(JSplitPane.VERTICAL_SPLIT, informations, carte);
+        splitMilieuDroit.setDividerLocation(200);
+        splitMilieuDroit.setDividerSize(0);
+        
+        JSplitPane splitBasDroit = new JSplitPane(JSplitPane.VERTICAL_SPLIT, splitMilieuDroit, bas);
+        splitBasDroit.setDividerLocation(680);
+        splitBasDroit.setDividerSize(0);
 
-		JSplitPane splitBasGauche = new JSplitPane(JSplitPane.VERTICAL_SPLIT,
-				splitMilieuGauche, jouer);
-		splitBasGauche.setDividerLocation(600);
-		splitBasGauche.setDividerSize(0);
+        JSplitPane splitForge = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, splitBasGauche,splitBasDroit);
+        splitForge.setDividerLocation(400);
+        splitForge.setDividerSize(0);         
+        
+        splitForge.setContinuousLayout(true);
+        splitMilieuGauche.setContinuousLayout(true);
+        splitBasGauche.setContinuousLayout(true);
+        splitMilieuDroit.setContinuousLayout(true);
+        splitBasDroit.setContinuousLayout(true);         
+        
+        
+        bcharger.setBackground(Color.WHITE);
+        bimporter.setBackground(Color.WHITE);
+        bexporter.setBackground(Color.WHITE);
+        comboBoxliaisonSerie.setBackground(Color.WHITE);
+        bjouer.setBackground(Color.WHITE);
+        bMenu.setBackground(Color.WHITE);
+        vitesse.setBackground(Color.WHITE);
+        api.setBackground(Color.WHITE);
+        
+        informations.setBackground(Color.WHITE);
+        departArriveePlage.setBackground(Color.WHITE);
+        jouer.setBackground(Color.WHITE);
+        bas.setBackground(Color.WHITE);
+        boutons.setBackground(Color.WHITE);
+        carte.setBackground(Color.WHITE);
+        depart.setBackground(Color.WHITE);
+        arrivee.setBackground(Color.WHITE);
+        plage.setBackground(Color.WHITE);
+        
+        
+        bcharger.setPreferredSize(new Dimension(150, 40));
+        bimporter.setPreferredSize(new Dimension(150, 40));
+        bexporter.setPreferredSize(new Dimension(150, 40));
+        comboBoxliaisonSerie.setPreferredSize(new Dimension(150, 40));
+        bjouer.setPreferredSize(new Dimension(150, 40));
+        bMenu.setPreferredSize(new Dimension(150, 40));
+        date.setPreferredSize(new Dimension(150, 30));
+        date2.setPreferredSize(new Dimension(150, 30));
+        date3.setPreferredSize(new Dimension(150, 30));
+        date4.setPreferredSize(new Dimension(150, 30));
+        date5.setPreferredSize(new Dimension(150, 30));
+        date6.setPreferredSize(new Dimension(150, 30));
+        vitActuelle.setPreferredSize(new Dimension(150, 30));
+        vitMoyenne.setPreferredSize(new Dimension(150, 30));
+        heureDepart.setPreferredSize(new Dimension(150, 30));
+        heureArrivee.setPreferredSize(new Dimension(150, 30));
+        heureActuelle.setPreferredSize(new Dimension(150, 30));
+        dateActuelle.setPreferredSize(new Dimension(150, 30));
+        vitActuelleDisplay.setPreferredSize(new Dimension(150, 30));
+        vitMoyenneDisplay.setPreferredSize(new Dimension(150, 30));
+        heureDepartDisplay.setPreferredSize(new Dimension(150, 30));
+        heureArriveeDisplay.setPreferredSize(new Dimension(150, 30));
+        heureActuelleDisplay.setPreferredSize(new Dimension(150, 30));
+        dateActuelleDisplay.setPreferredSize(new Dimension(150, 30));
+        
+        
+        boutons.setLayout(new GridBagLayout());
+        GridBagConstraints gbcBoutons = new GridBagConstraints();     
+        gbcBoutons.insets = new Insets(1,1,1,1);
+        gbcBoutons.gridx = 0;       
+        gbcBoutons.gridy = 0;
+        boutons.add(bcharger, gbcBoutons);              
+        gbcBoutons.gridy = 2;
+        boutons.add(bimporter, gbcBoutons);         
+        gbcBoutons.gridy = 3;
+        boutons.add(bexporter, gbcBoutons);
+        gbcBoutons.gridy = 4;
+        boutons.add(comboBoxliaisonSerie, gbcBoutons);         
 
-		JSplitPane splitMilieuDroit = new JSplitPane(JSplitPane.VERTICAL_SPLIT,
-				informations, carte);
-		splitMilieuDroit.setDividerLocation(200);
-		splitMilieuDroit.setDividerSize(0);
+        
+        GridLayout departArriveePlageGL = new GridLayout(3, 1);
+        departArriveePlageGL.setHgap(5); 
+        departArriveePlageGL.setVgap(5);
+        departArriveePlage.setLayout(departArriveePlageGL);         
+        departArriveePlage.add(depart);
+        departArriveePlage.add(arrivee);
+        departArriveePlage.add(plage);         
+        depart.setBorder(BorderFactory.createTitledBorder("Départ"));
+        arrivee.setBorder(BorderFactory.createTitledBorder("Arrivée"));
+        plage.setBorder(BorderFactory.createTitledBorder("Plage Horaire relatif de la simulation (en heure)"));
+        
+        depart.setLayout(new GridBagLayout());
+        GridBagConstraints gbcDepart = new GridBagConstraints();             
+        gbcDepart.insets = new Insets(4,4,4,4);
+        gbcDepart.gridx = 0;       
+        gbcDepart.gridy = 0;
+        depart.add(dateLabel, gbcDepart);
+        gbcDepart.gridx = 2;
+        depart.add(heureLabel, gbcDepart);
+        gbcDepart.gridx = 0;
+        gbcDepart.gridy = 1;
+        depart.add(date, gbcDepart);         
+        gbcDepart.gridx = 2; 
+        depart.add(date2, gbcDepart);
+        
+        arrivee.setLayout(new GridBagLayout());
+        GridBagConstraints gbcArrivee = new GridBagConstraints();             
+        gbcArrivee.insets = new Insets(4,4,4,4);
+        gbcArrivee.gridx = 0;       
+        gbcArrivee.gridy = 0;
+        arrivee.add(dateLabel2, gbcArrivee);
+        gbcArrivee.gridx = 2;
+        arrivee.add(heureLabel2, gbcArrivee);
+        gbcArrivee.gridx = 0;       
+        gbcArrivee.gridy = 1;
+        arrivee.add(date3, gbcArrivee);                
+        gbcArrivee.gridx = 2; 
+        arrivee.add(date4, gbcArrivee);
+        
+        plage.setLayout(new GridBagLayout());
+        GridBagConstraints gbcPlage = new GridBagConstraints();      
+        gbcPlage.insets = new Insets(4,4,4,4);
+        gbcPlage.gridx = 0;       
+        gbcPlage.gridy = 0;
+        plage.add(debutLabel, gbcPlage);
+        gbcPlage.gridx = 2;
+        plage.add(finLabel, gbcPlage);
+        gbcPlage.gridx = 0;       
+        gbcPlage.gridy = 1;
+        plage.add(date5, gbcPlage);         
+        gbcPlage.gridx = 2; 
+        plage.add(date6, gbcPlage);
 
-		JSplitPane splitBasDroit = new JSplitPane(JSplitPane.VERTICAL_SPLIT,
-				splitMilieuDroit, bas);
-		splitBasDroit.setDividerLocation(680);
-		splitBasDroit.setDividerSize(0);
+        
+        
+        jouer.setLayout(new GridBagLayout());
+        GridBagConstraints gbcJouer = new GridBagConstraints();  
+        gbcJouer.gridx = 1;
+        gbcJouer.gridy = 0;     
+        jouer.add(bjouer,gbcJouer);
+        gbcJouer.gridx = 0;
+        jouer.add(bMenu,gbcJouer);
+                
+        vitesse.setMaximum(3);
+        vitesse.setMinimum(0);
+        vitesse.setValue(1);
+        vitesse.setPaintTicks(true);
+        vitesse.setPaintLabels(true);
+        vitesse.setMinorTickSpacing(0);
+        vitesse.setMajorTickSpacing(1);
+        bas.add(vitesse);
+        
+        
+        carte.add(api); 
+        
+        informations.setLayout(new GridBagLayout());
+        GridBagConstraints gbcInformations = new GridBagConstraints();             
+        gbcInformations.insets = new Insets(4,4,4,4);
+        gbcInformations.gridx = 0;       
+        gbcInformations.gridy = 0;
+        informations.add(vitActuelle, gbcInformations);
+        gbcInformations.gridy = 2;
+        informations.add(vitActuelleDisplay, gbcInformations);
+        gbcInformations.gridy = 3;
+        informations.add(vitMoyenne, gbcInformations);
+        gbcInformations.gridy = 4;
+        informations.add(vitMoyenneDisplay, gbcInformations);
+        gbcInformations.gridx = 2; 
+        gbcInformations.gridy = 0;
+        informations.add(heureDepart, gbcInformations);
+        gbcInformations.gridy = 2;
+        informations.add(heureDepartDisplay, gbcInformations);
+        gbcInformations.gridy = 3;
+        informations.add(heureArrivee, gbcInformations);
+        gbcInformations.gridy = 4;
+        informations.add(heureArriveeDisplay, gbcInformations);
+        gbcInformations.gridx = 3; 
+        gbcInformations.gridy = 0;
+        informations.add(heureActuelle, gbcInformations);
+        gbcInformations.gridy = 2;
+        informations.add(heureActuelleDisplay, gbcInformations);
+        gbcInformations.gridy = 3;
+        informations.add(dateActuelle, gbcInformations);
+        gbcInformations.gridy = 4;
+        informations.add(dateActuelleDisplay, gbcInformations);
+        
+        informations.setBorder(BorderFactory.createTitledBorder("Informations"));
+        vitActuelleDisplay.setBorder(BorderFactory.createEtchedBorder(Color.BLACK, Color.GRAY));
+        vitMoyenneDisplay.setBorder(BorderFactory.createEtchedBorder(Color.BLACK, Color.GRAY));
+        heureDepartDisplay.setBorder(BorderFactory.createEtchedBorder(Color.BLACK, Color.GRAY));
+        heureArriveeDisplay.setBorder(BorderFactory.createEtchedBorder(Color.BLACK, Color.GRAY));
+        heureActuelleDisplay.setBorder(BorderFactory.createEtchedBorder(Color.BLACK, Color.GRAY));
+        dateActuelleDisplay.setBorder(BorderFactory.createEtchedBorder(Color.BLACK, Color.GRAY));
+        
 
-		JSplitPane splitForge = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,
-				splitBasGauche, splitBasDroit);
-		splitForge.setDividerLocation(400);
-		splitForge.setDividerSize(0);
+        bas.setPreferredSize(new Dimension(800,120));
+        bas.setMaximumSize(new Dimension(800,120));
+        bas.setMinimumSize(new Dimension(200,30));         
+        jouer.setPreferredSize(new Dimension(400,200));
+        carte.setPreferredSize(new Dimension(800,480));
+        carte.setMaximumSize(new Dimension(1600,800));
+        api.setPreferredSize(new Dimension(775,480));
+        api.setMaximumSize(new Dimension(1600,800));
+        boutons.setPreferredSize(new Dimension(400,200));
+        informations.setPreferredSize(new Dimension(800,200));
+        departArriveePlage.setPreferredSize(new Dimension(400,200));
+        
 
-		splitForge.setContinuousLayout(true);
-		splitMilieuGauche.setContinuousLayout(true);
-		splitBasGauche.setContinuousLayout(true);
-		splitMilieuDroit.setContinuousLayout(true);
-		splitBasDroit.setContinuousLayout(true);
+       
+        
+        FenetreForge.fenetreForge.getContentPane().removeAll();
+        FenetreForge.fenetreForge.getContentPane().add(splitForge);
+		 FenetreForge.fenetreForge.setVisible(true);
+		 //FenetreForge.fenetreForge.pack();
+        
 
-		bcharger.setBackground(Color.WHITE);
-		bcharger.addActionListener(this);
-		bcharger.setActionCommand("charger");
-		bimporter.setBackground(Color.WHITE);
-		bimporter.addActionListener(this);
-		bimporter.setActionCommand("importer");
-		bexporter.setBackground(Color.WHITE);
-		bexporter.addActionListener(this);
-		bexporter.setActionCommand("exporter");
-		bjouer.setBackground(Color.WHITE);
-		vitesse.setBackground(Color.WHITE);
-		api.setBackground(Color.WHITE);
+		 this.bMenu.addActionListener(new ActionListener()
+        {
 
-		informations.setBackground(Color.WHITE);
-		departArriveePlage.setBackground(Color.WHITE);
-		jouer.setBackground(Color.WHITE);
-		bas.setBackground(Color.WHITE);
-		boutons.setBackground(Color.WHITE);
-		carte.setBackground(Color.WHITE);
-		depart.setBackground(Color.WHITE);
-		arrivee.setBackground(Color.WHITE);
-		plage.setBackground(Color.WHITE);
-
-		bcharger.setPreferredSize(new Dimension(150, 40));
-		bimporter.setPreferredSize(new Dimension(150, 40));
-		bexporter.setPreferredSize(new Dimension(150, 40));
-		bjouer.setPreferredSize(new Dimension(150, 40));
-		date.setPreferredSize(new Dimension(150, 30));
-		date2.setPreferredSize(new Dimension(150, 30));
-		date3.setPreferredSize(new Dimension(150, 30));
-		date4.setPreferredSize(new Dimension(150, 30));
-		date5.setPreferredSize(new Dimension(150, 30));
-		date6.setPreferredSize(new Dimension(150, 30));
-		api.setPreferredSize(new Dimension(775, 480));
-
-		boutons.setLayout(new GridBagLayout());
-		GridBagConstraints gbcBoutons = new GridBagConstraints();
-		gbcBoutons.insets = new Insets(1, 1, 1, 1);
-		gbcBoutons.gridx = 0;
-		gbcBoutons.gridy = 0;
-		boutons.add(bcharger, gbcBoutons);
-		gbcBoutons.gridy = 2;
-		boutons.add(bimporter, gbcBoutons);
-		gbcBoutons.gridy = 3;
-		boutons.add(bexporter, gbcBoutons);
-
-		GridLayout departArriveePlageGL = new GridLayout(3, 1);
-		departArriveePlageGL.setHgap(5);
-		departArriveePlageGL.setVgap(5);
-		departArriveePlage.setLayout(departArriveePlageGL);
-		departArriveePlage.add(depart);
-		departArriveePlage.add(arrivee);
-		departArriveePlage.add(plage);
-		depart.setBorder(BorderFactory.createTitledBorder("Départ"));
-		arrivee.setBorder(BorderFactory.createTitledBorder("Arrivée"));
-		plage.setBorder(BorderFactory
-				.createTitledBorder("Plage Horaire relatif de la simulation (en heure)"));
-
-		depart.setLayout(new GridBagLayout());
-		GridBagConstraints gbcDepart = new GridBagConstraints();
-		gbcDepart.insets = new Insets(4, 4, 4, 4);
-		gbcDepart.gridx = 0;
-		gbcDepart.gridy = 0;
-		depart.add(date, gbcDepart);
-		gbcDepart.gridx = 2;
-		depart.add(date2, gbcDepart);
-
-		arrivee.setLayout(new GridBagLayout());
-		GridBagConstraints gbcArrivee = new GridBagConstraints();
-		gbcArrivee.insets = new Insets(4, 4, 4, 4);
-		gbcArrivee.gridx = 0;
-		gbcArrivee.gridy = 0;
-		arrivee.add(date3, gbcArrivee);
-		gbcArrivee.gridx = 2;
-		arrivee.add(date4, gbcArrivee);
-
-		plage.setLayout(new GridBagLayout());
-		GridBagConstraints gbcPlage = new GridBagConstraints();
-		gbcPlage.insets = new Insets(4, 4, 4, 4);
-		gbcPlage.gridx = 0;
-		gbcPlage.gridy = 0;
-		plage.add(date5, gbcPlage);
-		gbcPlage.gridx = 2;
-		plage.add(date6, gbcPlage);
-
-		jouer.setLayout(new GridBagLayout());
-		GridBagConstraints gbcJouer = new GridBagConstraints();
-		gbcJouer.gridx = 1;
-		gbcJouer.gridy = 1;
-		jouer.add(bjouer);
-
-		vitesse.setMaximum(3);
-		vitesse.setMinimum(0);
-		vitesse.setValue(1);
-		vitesse.setPaintTicks(true);
-		vitesse.setPaintLabels(true);
-		vitesse.setMinorTickSpacing(0);
-		vitesse.setMajorTickSpacing(1);
-		bas.add(vitesse);
-
-		carte.add(api);
-
-		// informations.setLayout(new GridBagLayout());
-		// GridBagConstraints gbcInformations = new GridBagConstraints();
-		//
-		// gbcInformations.insets = new Insets(4,4,4,4);
-		// gbcInformations.gridx = 0;
-		// gbcInformations.gridy = 0;
-		// informations.add(date, gbcInformations);
-		//
-		// gbcInformations.gridx = 2;
-		// gbcInformations.gridy = 2;
-		// informations.add(date2, gbcInformations);
-		//
-		// gbcInformations.gridx = 3;
-		// gbcInformations.gridy = 3;
-		// informations.add(date3, gbcInformations);
-		informations
-				.setBorder(BorderFactory.createTitledBorder("Informations"));
-
-		bas.setPreferredSize(new Dimension(800, 120));
-		bas.setMaximumSize(new Dimension(800, 120));
-		bas.setMinimumSize(new Dimension(200, 30));
-		jouer.setPreferredSize(new Dimension(400, 200));
-		carte.setPreferredSize(new Dimension(800, 480));
-		boutons.setPreferredSize(new Dimension(400, 200));
-		informations.setPreferredSize(new Dimension(800, 200));
-		departArriveePlage.setPreferredSize(new Dimension(400, 200));
-
-		FenetreForge.fenetreForge.getContentPane().removeAll();
-		FenetreForge.fenetreForge.getContentPane().add(splitForge);
-		FenetreForge.fenetreForge.setVisible(true);
-		// FenetreForge.fenetreForge.pack();
+			@Override
+			public void actionPerformed(ActionEvent e) 
+			{				
+				FenetreForge.fenetreForge.dispose();
+				new IHMMenuPrincipal();				
+			}
+			 
+        });
 
 	}
 

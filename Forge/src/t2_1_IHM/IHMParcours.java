@@ -21,6 +21,8 @@ import t1_1_Model_Principal.TypeSysteme;
 public class IHMParcours implements ActionListener {
 
 	private JButton bsimulation = new JButton("LANCER LA SIMULATION");
+	
+	private JButton bmenu = new JButton("MENU");
 
 	private JButton bsauvegarder = new JButton("SAUVEGARDER LE PARCOURS");
 
@@ -84,6 +86,7 @@ public class IHMParcours implements ActionListener {
 		bsimulation.addActionListener(this);
 		bsimulation.setBackground(Color.WHITE);
 		bsimulation.setActionCommand("simulation");
+		bmenu.setBackground(Color.WHITE);
 		bsauvegarder.addActionListener(this);
 		bsauvegarder.setBackground(Color.WHITE);
 		bsauvegarder.setActionCommand("sauvegarder");
@@ -99,6 +102,7 @@ public class IHMParcours implements ActionListener {
 		carte.setBackground(Color.WHITE);
 
 		bsimulation.setPreferredSize(new Dimension(210, 40));
+		bmenu.setPreferredSize(new Dimension(210, 40));
 		bsauvegarder.setPreferredSize(new Dimension(210, 40));
 		bcharger.setPreferredSize(new Dimension(210, 40));
 		api.setPreferredSize(new Dimension(775, 580));
@@ -131,12 +135,14 @@ public class IHMParcours implements ActionListener {
 		gbcParametres.gridx = 1;
 		parametres.add(altitudeMoyCalc, gbcParametres);
 
-		// panel en bas a gauche (bouton simulation)
+		// panel en bas a gauche (bouton simulation & menu)
 		boutonSimulation.setLayout(new GridBagLayout());
 		GridBagConstraints gbcSimulation = new GridBagConstraints();
 		gbcSimulation.gridx = 0;
 		gbcSimulation.gridy = 0;
 		boutonSimulation.add(bsimulation, gbcSimulation);
+        gbcSimulation.gridy = 1;
+        boutonSimulation.add(bmenu, gbcSimulation);
 
 		// panel en haut a droite (api carte)
 		carte.add(api);
@@ -156,6 +162,30 @@ public class IHMParcours implements ActionListener {
 		FenetreForge.fenetreForge.getContentPane().removeAll();
 		FenetreForge.fenetreForge.getContentPane().add(splitForge);
 		FenetreForge.fenetreForge.setVisible(true);
+		
+		this.bsimulation.addActionListener(new ActionListener()
+	    {
+
+			@Override
+			public void actionPerformed(ActionEvent e) 
+			{				
+				FenetreForge.fenetreForge.dispose();
+				new IHMSimulation();				
+			}
+			 
+	    });
+		
+		 this.bmenu.addActionListener(new ActionListener()
+	     {
+
+			@Override
+			public void actionPerformed(ActionEvent e) 
+			{				
+				FenetreForge.fenetreForge.dispose();
+				new IHMMenuPrincipal();				
+			}
+			 
+	     });
 	}
 	
 	/**
@@ -235,5 +265,6 @@ public class IHMParcours implements ActionListener {
 			break;
 		}
 
-	}
+	}	
+	
 }
