@@ -51,6 +51,7 @@ public class IHMParcours implements ActionListener {
 		this.initParcours(typeDeSysteme);
 		
 		PanelAPICarte api = new PanelAPICarte(this.parcours);
+		api.setZoom(8, new java.awt.Point(-25,40));
 		JPanel parametres = new JPanel();
 		JPanel boutonSimulation = new JPanel();
 		JPanel boutonSauvegarder = new JPanel();

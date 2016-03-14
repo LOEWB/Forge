@@ -79,6 +79,10 @@ public class IHMSimulation implements ActionListener {
     private String[] listeLiaisonSerie = { "Liaison série 1", "Liaison série 2", "Liaison série 3" };
     
     private JComboBox<String> comboBoxliaisonSerie = new JComboBox<String>(listeLiaisonSerie);
+    
+    private String[] listeDebit = { "Débit : 1200 bit/s","Débit : 2400 bit/s","Débit : 3600 bit/s" };
+    
+    private JComboBox<String> comboBoxDebit = new JComboBox<String>(listeDebit);
 
 	public IHMSimulation() {
 
@@ -127,6 +131,7 @@ public class IHMSimulation implements ActionListener {
         bimporter.setBackground(Color.WHITE);
         bexporter.setBackground(Color.WHITE);
         comboBoxliaisonSerie.setBackground(Color.WHITE);
+        comboBoxDebit.setBackground(Color.WHITE);
         bjouer.setBackground(Color.WHITE);
         bMenu.setBackground(Color.WHITE);
         vitesse.setBackground(Color.WHITE);
@@ -147,6 +152,7 @@ public class IHMSimulation implements ActionListener {
         bimporter.setPreferredSize(new Dimension(150, 40));
         bexporter.setPreferredSize(new Dimension(150, 40));
         comboBoxliaisonSerie.setPreferredSize(new Dimension(150, 40));
+        comboBoxDebit.setPreferredSize(new Dimension(150, 40));
         bjouer.setPreferredSize(new Dimension(150, 40));
         bMenu.setPreferredSize(new Dimension(150, 40));
         date.setPreferredSize(new Dimension(150, 30));
@@ -172,6 +178,8 @@ public class IHMSimulation implements ActionListener {
         boutons.setLayout(new GridBagLayout());
         GridBagConstraints gbcBoutons = new GridBagConstraints();     
         gbcBoutons.insets = new Insets(1,1,1,1);
+        gbcBoutons.gridwidth = 2;
+        gbcBoutons.fill = GridBagConstraints.BOTH;
         gbcBoutons.gridx = 0;       
         gbcBoutons.gridy = 0;
         boutons.add(bcharger, gbcBoutons);              
@@ -180,7 +188,11 @@ public class IHMSimulation implements ActionListener {
         gbcBoutons.gridy = 3;
         boutons.add(bexporter, gbcBoutons);
         gbcBoutons.gridy = 4;
-        boutons.add(comboBoxliaisonSerie, gbcBoutons);         
+        gbcBoutons.gridwidth = 1;
+        boutons.add(comboBoxliaisonSerie, gbcBoutons);
+        gbcBoutons.gridx = 1;
+        boutons.add(comboBoxDebit, gbcBoutons);
+        
 
         
         GridLayout departArriveePlageGL = new GridLayout(3, 1);

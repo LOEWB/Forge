@@ -41,6 +41,16 @@ public class MainTest {
 			System.out.println(trame);
 		}
 		
+		PortSerie portTest;
+		try {
+			portTest = new PortSerie();
+			for(String s: portTest.getListePorts())
+				System.out.println(s);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
 
 	}
 }
