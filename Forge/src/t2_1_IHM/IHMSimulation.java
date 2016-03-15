@@ -35,7 +35,7 @@ public class IHMSimulation implements ActionListener {
 
     private JButton bexporter = new JButton("Exporter");
         
-    private JButton bjouer = new JButton("JOUER");
+    private JButton bJouer = new JButton("JOUER");
     
     private JButton bMenu = new JButton("MENU");
     
@@ -132,7 +132,7 @@ public class IHMSimulation implements ActionListener {
         bexporter.setBackground(Color.WHITE);
         comboBoxliaisonSerie.setBackground(Color.WHITE);
         comboBoxDebit.setBackground(Color.WHITE);
-        bjouer.setBackground(Color.WHITE);
+        bJouer.setBackground(Color.WHITE);
         bMenu.setBackground(Color.WHITE);
         vitesse.setBackground(Color.WHITE);
         api.setBackground(Color.WHITE);
@@ -153,14 +153,14 @@ public class IHMSimulation implements ActionListener {
         bexporter.setPreferredSize(new Dimension((int)(FenetreForge.height*0.27), (int)(FenetreForge.height*0.30/5)));
         comboBoxliaisonSerie.setPreferredSize(new Dimension((int)(FenetreForge.height*0.27/2), (int)(FenetreForge.height*0.30/5)));
         comboBoxDebit.setPreferredSize(new Dimension((int)(FenetreForge.height*0.27/2), (int)(FenetreForge.height*0.30/5)));
-        bjouer.setPreferredSize(new Dimension((int)(FenetreForge.height*0.27), (int)(FenetreForge.height*0.20/2)));
-        bMenu.setPreferredSize(new Dimension((int)(FenetreForge.height*0.27), (int)(FenetreForge.height*0.20/2)));
-        date.setPreferredSize(new Dimension((int)(FenetreForge.height*0.27)/2, 30));
-        date2.setPreferredSize(new Dimension((int)(FenetreForge.height*0.27/2), 30));
-        date3.setPreferredSize(new Dimension((int)(FenetreForge.height*0.27/2), 30));
-        date4.setPreferredSize(new Dimension((int)(FenetreForge.height*0.27/2), 30));
-        date5.setPreferredSize(new Dimension((int)(FenetreForge.height*0.27/2), 30));
-        date6.setPreferredSize(new Dimension((int)(FenetreForge.height*0.27/2), 30));
+        bJouer.setPreferredSize(new Dimension((int)(FenetreForge.height*0.27), (int)(FenetreForge.height*0.18/3)));
+        bMenu.setPreferredSize(new Dimension((int)(FenetreForge.height*0.27), (int)(FenetreForge.height*0.18/3)));
+        date.setPreferredSize(new Dimension((int)(FenetreForge.height*0.27)/2, (int)(FenetreForge.height*0.50/3/4)));
+        date2.setPreferredSize(new Dimension((int)(FenetreForge.height*0.27/2), (int)(FenetreForge.height*0.50/3/4)));
+        date3.setPreferredSize(new Dimension((int)(FenetreForge.height*0.27/2), (int)(FenetreForge.height*0.50/3/4)));
+        date4.setPreferredSize(new Dimension((int)(FenetreForge.height*0.27/2), (int)(FenetreForge.height*0.50/3/4)));
+        date5.setPreferredSize(new Dimension((int)(FenetreForge.height*0.27/2), (int)(FenetreForge.height*0.50/3/4)));
+        date6.setPreferredSize(new Dimension((int)(FenetreForge.height*0.27/2), (int)(FenetreForge.height*0.50/3/4)));
         vitActuelle.setPreferredSize(new Dimension(150, 30));
         vitMoyenne.setPreferredSize(new Dimension(150, 30));
         heureDepart.setPreferredSize(new Dimension(150, 30));
@@ -255,7 +255,7 @@ public class IHMSimulation implements ActionListener {
         gbcJouerMenu.insets = new Insets(1,1,1,1);
         gbcJouerMenu.gridx = 0;
         gbcJouerMenu.gridy = 0;     
-        jouerMenu.add(bjouer,gbcJouerMenu);
+        jouerMenu.add(bJouer,gbcJouerMenu);
         gbcJouerMenu.gridy = 1;
         jouerMenu.add(bMenu,gbcJouerMenu);
                 
@@ -315,7 +315,6 @@ public class IHMSimulation implements ActionListener {
         FenetreForge.fenetreForge.getContentPane().removeAll();
         FenetreForge.fenetreForge.getContentPane().add(splitForge);
 		 FenetreForge.fenetreForge.setVisible(true);
-		 //FenetreForge.fenetreForge.pack();
         
 
 		 this.bMenu.addActionListener(new ActionListener()
