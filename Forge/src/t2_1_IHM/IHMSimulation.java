@@ -86,10 +86,10 @@ public class IHMSimulation implements ActionListener {
 
 	public IHMSimulation() {
 
-		JMapViewer api = new JMapViewer();		
+		JMapViewer api = new JMapViewer();	
 		JPanel informations = new JPanel();
         JPanel departArriveePlage = new JPanel();
-        JPanel jouer = new JPanel();
+        JPanel jouerMenu = new JPanel();
         JPanel bas = new JPanel();
         JPanel boutons = new JPanel();
         JPanel carte = new JPanel();      
@@ -101,23 +101,23 @@ public class IHMSimulation implements ActionListener {
 
         
         JSplitPane splitMilieuGauche = new JSplitPane(JSplitPane.VERTICAL_SPLIT, boutons, departArriveePlage);
-        splitMilieuGauche.setDividerLocation(200);
+        splitMilieuGauche.setDividerLocation((int)(FenetreForge.height*0.30));
         splitMilieuGauche.setDividerSize(0);
         
-        JSplitPane splitBasGauche = new JSplitPane(JSplitPane.VERTICAL_SPLIT, splitMilieuGauche, jouer);
-        splitBasGauche.setDividerLocation(600);
+        JSplitPane splitBasGauche = new JSplitPane(JSplitPane.VERTICAL_SPLIT, splitMilieuGauche, jouerMenu);
+        splitBasGauche.setDividerLocation((int)(FenetreForge.height*0.8));
         splitBasGauche.setDividerSize(0);
         
         JSplitPane splitMilieuDroit = new JSplitPane(JSplitPane.VERTICAL_SPLIT, informations, carte);
-        splitMilieuDroit.setDividerLocation(200);
+        splitMilieuDroit.setDividerLocation((int)(FenetreForge.height*0.20));
         splitMilieuDroit.setDividerSize(0);
         
         JSplitPane splitBasDroit = new JSplitPane(JSplitPane.VERTICAL_SPLIT, splitMilieuDroit, bas);
-        splitBasDroit.setDividerLocation(680);
+        splitBasDroit.setDividerLocation((int)(FenetreForge.height*0.90));
         splitBasDroit.setDividerSize(0);
 
         JSplitPane splitForge = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, splitBasGauche,splitBasDroit);
-        splitForge.setDividerLocation(400);
+        splitForge.setDividerLocation((int)(FenetreForge.height*0.35));
         splitForge.setDividerSize(0);         
         
         splitForge.setContinuousLayout(true);
@@ -139,7 +139,7 @@ public class IHMSimulation implements ActionListener {
         
         informations.setBackground(Color.WHITE);
         departArriveePlage.setBackground(Color.WHITE);
-        jouer.setBackground(Color.WHITE);
+        jouerMenu.setBackground(Color.WHITE);
         bas.setBackground(Color.WHITE);
         boutons.setBackground(Color.WHITE);
         carte.setBackground(Color.WHITE);
@@ -147,20 +147,20 @@ public class IHMSimulation implements ActionListener {
         arrivee.setBackground(Color.WHITE);
         plage.setBackground(Color.WHITE);
         
-        
-        bcharger.setPreferredSize(new Dimension(150, 40));
-        bimporter.setPreferredSize(new Dimension(150, 40));
-        bexporter.setPreferredSize(new Dimension(150, 40));
-        comboBoxliaisonSerie.setPreferredSize(new Dimension(150, 40));
-        comboBoxDebit.setPreferredSize(new Dimension(150, 40));
-        bjouer.setPreferredSize(new Dimension(150, 40));
-        bMenu.setPreferredSize(new Dimension(150, 40));
-        date.setPreferredSize(new Dimension(150, 30));
-        date2.setPreferredSize(new Dimension(150, 30));
-        date3.setPreferredSize(new Dimension(150, 30));
-        date4.setPreferredSize(new Dimension(150, 30));
-        date5.setPreferredSize(new Dimension(150, 30));
-        date6.setPreferredSize(new Dimension(150, 30));
+        api.setPreferredSize(new Dimension((int)(FenetreForge.height*1.42), (int)(FenetreForge.height*0.7)));
+        bcharger.setPreferredSize(new Dimension((int)(FenetreForge.height*0.27), (int)(FenetreForge.height*0.30/5)));
+        bimporter.setPreferredSize(new Dimension((int)(FenetreForge.height*0.27), (int)(FenetreForge.height*0.30/5)));
+        bexporter.setPreferredSize(new Dimension((int)(FenetreForge.height*0.27), (int)(FenetreForge.height*0.30/5)));
+        comboBoxliaisonSerie.setPreferredSize(new Dimension((int)(FenetreForge.height*0.27/2), (int)(FenetreForge.height*0.30/5)));
+        comboBoxDebit.setPreferredSize(new Dimension((int)(FenetreForge.height*0.27/2), (int)(FenetreForge.height*0.30/5)));
+        bjouer.setPreferredSize(new Dimension((int)(FenetreForge.height*0.27), (int)(FenetreForge.height*0.20/2)));
+        bMenu.setPreferredSize(new Dimension((int)(FenetreForge.height*0.27), (int)(FenetreForge.height*0.20/2)));
+        date.setPreferredSize(new Dimension((int)(FenetreForge.height*0.27)/2, 30));
+        date2.setPreferredSize(new Dimension((int)(FenetreForge.height*0.27/2), 30));
+        date3.setPreferredSize(new Dimension((int)(FenetreForge.height*0.27/2), 30));
+        date4.setPreferredSize(new Dimension((int)(FenetreForge.height*0.27/2), 30));
+        date5.setPreferredSize(new Dimension((int)(FenetreForge.height*0.27/2), 30));
+        date6.setPreferredSize(new Dimension((int)(FenetreForge.height*0.27/2), 30));
         vitActuelle.setPreferredSize(new Dimension(150, 30));
         vitMoyenne.setPreferredSize(new Dimension(150, 30));
         heureDepart.setPreferredSize(new Dimension(150, 30));
@@ -183,11 +183,11 @@ public class IHMSimulation implements ActionListener {
         gbcBoutons.gridx = 0;       
         gbcBoutons.gridy = 0;
         boutons.add(bcharger, gbcBoutons);              
-        gbcBoutons.gridy = 2;
+        gbcBoutons.gridy = 1;
         boutons.add(bimporter, gbcBoutons);         
-        gbcBoutons.gridy = 3;
+        gbcBoutons.gridy = 2;
         boutons.add(bexporter, gbcBoutons);
-        gbcBoutons.gridy = 4;
+        gbcBoutons.gridy = 3;
         gbcBoutons.gridwidth = 1;
         boutons.add(comboBoxliaisonSerie, gbcBoutons);
         gbcBoutons.gridx = 1;
@@ -212,12 +212,12 @@ public class IHMSimulation implements ActionListener {
         gbcDepart.gridx = 0;       
         gbcDepart.gridy = 0;
         depart.add(dateLabel, gbcDepart);
-        gbcDepart.gridx = 2;
+        gbcDepart.gridx = 1;
         depart.add(heureLabel, gbcDepart);
         gbcDepart.gridx = 0;
         gbcDepart.gridy = 1;
         depart.add(date, gbcDepart);         
-        gbcDepart.gridx = 2; 
+        gbcDepart.gridx = 1; 
         depart.add(date2, gbcDepart);
         
         arrivee.setLayout(new GridBagLayout());
@@ -226,12 +226,12 @@ public class IHMSimulation implements ActionListener {
         gbcArrivee.gridx = 0;       
         gbcArrivee.gridy = 0;
         arrivee.add(dateLabel2, gbcArrivee);
-        gbcArrivee.gridx = 2;
+        gbcArrivee.gridx = 1;
         arrivee.add(heureLabel2, gbcArrivee);
         gbcArrivee.gridx = 0;       
         gbcArrivee.gridy = 1;
         arrivee.add(date3, gbcArrivee);                
-        gbcArrivee.gridx = 2; 
+        gbcArrivee.gridx = 1; 
         arrivee.add(date4, gbcArrivee);
         
         plage.setLayout(new GridBagLayout());
@@ -240,23 +240,24 @@ public class IHMSimulation implements ActionListener {
         gbcPlage.gridx = 0;       
         gbcPlage.gridy = 0;
         plage.add(debutLabel, gbcPlage);
-        gbcPlage.gridx = 2;
+        gbcPlage.gridx = 1;
         plage.add(finLabel, gbcPlage);
         gbcPlage.gridx = 0;       
         gbcPlage.gridy = 1;
         plage.add(date5, gbcPlage);         
-        gbcPlage.gridx = 2; 
+        gbcPlage.gridx = 1; 
         plage.add(date6, gbcPlage);
 
         
         
-        jouer.setLayout(new GridBagLayout());
-        GridBagConstraints gbcJouer = new GridBagConstraints();  
-        gbcJouer.gridx = 1;
-        gbcJouer.gridy = 0;     
-        jouer.add(bjouer,gbcJouer);
-        gbcJouer.gridx = 0;
-        jouer.add(bMenu,gbcJouer);
+        jouerMenu.setLayout(new GridBagLayout());
+        GridBagConstraints gbcJouerMenu = new GridBagConstraints();
+        gbcJouerMenu.insets = new Insets(1,1,1,1);
+        gbcJouerMenu.gridx = 0;
+        gbcJouerMenu.gridy = 0;     
+        jouerMenu.add(bjouer,gbcJouerMenu);
+        gbcJouerMenu.gridy = 1;
+        jouerMenu.add(bMenu,gbcJouerMenu);
                 
         vitesse.setMaximum(3);
         vitesse.setMinimum(0);
@@ -267,7 +268,7 @@ public class IHMSimulation implements ActionListener {
         vitesse.setMajorTickSpacing(1);
         bas.add(vitesse);
         
-        
+        api.setZoom(8, new java.awt.Point(-25,40));
         carte.add(api); 
         
         informations.setLayout(new GridBagLayout());
@@ -309,21 +310,7 @@ public class IHMSimulation implements ActionListener {
         heureActuelleDisplay.setBorder(BorderFactory.createEtchedBorder(Color.BLACK, Color.GRAY));
         dateActuelleDisplay.setBorder(BorderFactory.createEtchedBorder(Color.BLACK, Color.GRAY));
         
-
-        bas.setPreferredSize(new Dimension(800,120));
-        bas.setMaximumSize(new Dimension(800,120));
-        bas.setMinimumSize(new Dimension(200,30));         
-        jouer.setPreferredSize(new Dimension(400,200));
-        carte.setPreferredSize(new Dimension(800,480));
-        carte.setMaximumSize(new Dimension(1600,800));
-        api.setPreferredSize(new Dimension(775,480));
-        api.setMaximumSize(new Dimension(1600,800));
-        boutons.setPreferredSize(new Dimension(400,200));
-        informations.setPreferredSize(new Dimension(800,200));
-        departArriveePlage.setPreferredSize(new Dimension(400,200));
-        
-
-       
+     
         
         FenetreForge.fenetreForge.getContentPane().removeAll();
         FenetreForge.fenetreForge.getContentPane().add(splitForge);

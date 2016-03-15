@@ -6,19 +6,24 @@ import java.awt.Dimension;
 public class FenetreForge extends JFrame {
 
 	public static FenetreForge fenetreForge;
-
+	
+	public static int height;
+	
+	public static int width;
+	
 	public FenetreForge() {
 
 		
 		Dimension dimension = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
-		int height = (int)dimension.getHeight();	
-		int width  = (int)dimension.getWidth();
+		this.height = (int)dimension.getHeight();	
+		this.width  = (int)dimension.getWidth();
 		
-		height = (int) (height - (height*0.1));
-		width = (int) (width - (width*0.1));
+		this.height = (int) (this.height - (this.height*0.1));
+		this.width = (int) (this.width - (this.width*0.1));
 		
 		this.setTitle("Forge");
-		this.setSize(width,height);
+		this.setSize(this.width,this.height);
+	    this.setResizable(false);
 		this.setLocationRelativeTo(null);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
