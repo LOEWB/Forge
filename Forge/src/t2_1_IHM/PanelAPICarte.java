@@ -1,10 +1,16 @@
 package t2_1_IHM;
 
+import java.awt.Color;
+import java.awt.Rectangle;
 import java.awt.event.MouseEvent;
+
 import org.openstreetmap.gui.jmapviewer.Coordinate;
 import org.openstreetmap.gui.jmapviewer.DefaultMapController;
 import org.openstreetmap.gui.jmapviewer.JMapViewer;
+import org.openstreetmap.gui.jmapviewer.MapMarkerDot;
 import org.openstreetmap.gui.jmapviewer.interfaces.ICoordinate;
+import org.openstreetmap.gui.jmapviewer.interfaces.MapMarker;
+
 import t1_1_Model_Principal.Coordonnees;
 import t1_1_Model_Principal.Parcours;
 import t1_1_Model_Principal.Point;
@@ -24,21 +30,37 @@ public class PanelAPICarte extends JMapViewer {
 			// événement click sur la map => création point de parcours
 		    @Override
 		    public void mouseClicked(MouseEvent e) {
-		    	checkAddPoint(map.getPosition(e.getPoint()));
+		    	if (checkAddPoint(map.getPosition(e.getPoint())))
+		    		addPoint((Coordinate)map.getPosition(e.getPoint()));
+		    	else{
+		    		// TODO --> cas du click sur un marker 
+		    	}
 		    }
 		};
 	}
 	
 	/**
-	 * vérifie si le point n'existe pas encore et l'ajoute ou alors ouvre IHM modification point
+	 * vérifie si l'emplacement clické sur la carte est vide (true) ou s'il s'y trouve un marqueur (false)
 	 * @param coord
+	 * @return true si emplacement vide ; false sinon
 	 */
-	private void checkAddPoint(ICoordinate coord){
+	private boolean checkAddPoint(ICoordinate coord){
 		Coordinate pointCoord = new Coordinate(coord.getLat(),coord.getLon());
 		// cas du click sur un Point déjà placé
-		
+		for (MapMarker marker : this.mapMarkerList){
+			// point sur l'écran
+			if (this.getMapPosition(marker.getCoordinate()) != null){
+				int monX = ((int) this.getMapPosition(marker.getCoordinate()).getX()) - AffichagePoint.MARKER_SIZE*3;
+				int monY = ((int) this.getMapPosition(marker.getCoordinate()).getY()) - AffichagePoint.MARKER_SIZE*5;
+				Rectangle rect = new Rectangle(monX,monY,AffichagePoint.MARKER_SIZE*6,AffichagePoint.MARKER_SIZE*6);
+				if (rect.contains(this.getMapPosition(pointCoord).getX(),this.getMapPosition(pointCoord).getY())){
+					// on a clické sur le point 'marker'
+					return false;
+				}
+			}
+		}
 		// cas d'un click ailleurs sur la carte => ajout point
-		this.addPoint(pointCoord);
+		return true;
 	}
 	
 	/**
