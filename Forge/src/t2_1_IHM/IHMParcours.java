@@ -62,22 +62,22 @@ public class IHMParcours implements ActionListener {
 
 		JSplitPane splitGauche = new JSplitPane(JSplitPane.VERTICAL_SPLIT,
 				parametres, boutonSimulation);
-		splitGauche.setDividerLocation(400);
+		splitGauche.setDividerLocation((int)(FenetreForge.height*0.80));
 		splitGauche.setDividerSize(0);
 
 		JSplitPane splitBasDroit = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,
 				boutonSauvegarder, boutonCharger);
-		splitBasDroit.setDividerLocation(400);
+		splitBasDroit.setDividerLocation((int)(FenetreForge.height*1.35/2));
 		splitBasDroit.setDividerSize(0);
 
 		JSplitPane splitDroit = new JSplitPane(JSplitPane.VERTICAL_SPLIT,
 				carte, splitBasDroit);
-		splitDroit.setDividerLocation(600);
+		splitDroit.setDividerLocation((int)(FenetreForge.height*0.90));
 		splitDroit.setDividerSize(0);
 
 		JSplitPane splitForge = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,
 				splitGauche, splitDroit);
-		splitForge.setDividerLocation(400);
+		splitForge.setDividerLocation((int)(FenetreForge.height*0.35));
 		splitForge.setDividerSize(0);
 
 		splitForge.setContinuousLayout(true);
@@ -106,7 +106,7 @@ public class IHMParcours implements ActionListener {
 		bmenu.setPreferredSize(new Dimension(210, 40));
 		bsauvegarder.setPreferredSize(new Dimension(210, 40));
 		bcharger.setPreferredSize(new Dimension(210, 40));
-		api.setPreferredSize(new Dimension(775, 580));
+		api.setPreferredSize(new Dimension((int)(FenetreForge.height*1.42), (int)(FenetreForge.height*1.25)));
 		typeSysteme.setPreferredSize(new Dimension(115, 30));
 		typeSystemeCalc.setPreferredSize(new Dimension(115, 30));
 		vitesseMoy.setPreferredSize(new Dimension(115, 30));
