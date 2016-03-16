@@ -32,18 +32,18 @@ public class Parcours {
 	}
 
 	public void ajouterPoint(Point p) {
-		int index = 0;
-
-		if (this.listePoints.size() == 0)
-			this.listePoints.add(p);
-		else {
-			while (index <= this.listePoints.size()
-					&& this.listePoints.get(index).getTemps() > p.getTemps()) {
-				index++;
-			}
-			this.listePoints.add(index + 1, p);
-
-		}
+//		int index = 0;
+//
+//		if (this.listePoints.size() == 0)
+//			this.listePoints.add(p);
+//		else {
+//			while (index <= this.listePoints.size()
+//					&& this.listePoints.get(index).getTemps() > p.getTemps()) {
+//				index++;
+//			}
+//			this.listePoints.add(index + 1, p);
+//		}
+		this.listePoints.add(p);
 
 	}
 
@@ -104,8 +104,8 @@ public class Parcours {
 
 	public void chargerParcours(String cheminFichier) {
 
-		int tempsPremierPoint = 0;
-		int tempsPoint = 0;
+		double tempsPremierPoint = 0;
+		double tempsPoint = 0;
 		int i = 0;
 		double longitude;
 		double latitude;
@@ -124,7 +124,7 @@ public class Parcours {
 		}
 		i++;
 
-		tempsPremierPoint = Integer.parseInt(temporaire);
+		tempsPremierPoint = Double.parseDouble(temporaire);
 
 		temporaire = "";
 
@@ -186,7 +186,7 @@ public class Parcours {
 			}
 			i++;
 
-			tempsPoint = Integer.parseInt(temporaire);
+			tempsPoint = Double.parseDouble(temporaire);
 
 			temporaire = "";
 

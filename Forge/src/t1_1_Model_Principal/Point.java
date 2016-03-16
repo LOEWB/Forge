@@ -2,10 +2,10 @@ package t1_1_Model_Principal;
 
 public class Point {
 	private Coordonnees coordonnes;
-	private int tempsPassageRelatif;
+	private double tempsPassageRelatif;
 	private float altitude;
 
-	public Point(int sec, Coordonnees coor, float altitude) {
+	public Point(double sec, Coordonnees coor, float altitude) {
 
 		this.coordonnes = coor;
 		this.tempsPassageRelatif = sec;
@@ -16,7 +16,7 @@ public class Point {
 		return this.coordonnes;
 	}
 
-	public int getTemps() {
+	public double getTemps() {
 		return this.tempsPassageRelatif;
 	}
 

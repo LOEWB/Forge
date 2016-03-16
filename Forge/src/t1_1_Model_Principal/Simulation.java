@@ -15,7 +15,7 @@ public class Simulation {
 		this.parcours = parcours;
 		this.etat = EtatSimu.ARRET;
 		this.tramesArray=new ArrayList<String>();
-
+		this.chargerTramesBrutes(parcours.genererTrames());
 	}
 
 	public ArrayList<String> getTramesArray() {
@@ -43,15 +43,26 @@ public class Simulation {
 		ConteneurFichier conteneurFichier = new ConteneurFichier();
 		String simulationBrut = conteneurFichier.lire(cheminFichier);
 		
-		String[] tramesTable = simulationBrut.split("(?=\\$)");
-		
-		this.tramesArray=new ArrayList<String>(Arrays.asList(tramesTable));
+		chargerTramesBrutes(simulationBrut);
 	}
 	
 	public void exportSimulation(String cheminFichier)
 	{
 		ConteneurFichier conteneurFichier = new ConteneurFichier();
 		conteneurFichier.ecrire(cheminFichier, this.parcours.genererTrames());
+	}
+	
+	public void chargerTramesBrutes(String tramesBrutes)
+	{
+		String[] tramesTable = tramesBrutes.split("(?=\\$)");
+		
+		this.tramesArray=new ArrayList<String>(Arrays.asList(tramesTable));
+	}
+	
+	public void jouerSimulation()
+	{
+		ThreadLecture threadLecture = new ThreadLecture(this.tramesArray);
+		threadLecture.start();
 	}
 	
 }
