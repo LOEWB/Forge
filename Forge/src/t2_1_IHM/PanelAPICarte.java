@@ -31,9 +31,14 @@ public class PanelAPICarte extends JMapViewer {
 		    @Override
 		    public void mouseClicked(MouseEvent e) {
 		    	if (checkAddPoint(map.getPosition(e.getPoint())))
+		    	{
+		    		new IHMInformationsPoints("Création du point");
 		    		addPoint((Coordinate)map.getPosition(e.getPoint()));
+		    	}
 		    	else{
-		    		// TODO --> cas du click sur un marker 
+		    		// TODO --> cas du click sur un marker
+		    		Point point = new Point(0,new Coordonnees(((Coordinate)map.getPosition(e.getPoint())).getLat(), ((Coordinate)map.getPosition(e.getPoint())).getLon()),0);
+		    		new IHMInformationsPoints(point);
 		    	}
 		    }
 		};
