@@ -20,11 +20,11 @@ public class ThreadLecture extends Thread
 			//pour toutes les trames sauf la derniere
 			if(i+1<this.listeTrames.size())
 			{
-				tempsAttente=Float.parseFloat(this.listeTrames.get(i+1).split(",")[1])-Float.parseFloat(this.listeTrames.get(i).split(",")[1]);
+				tempsAttente=(Float.parseFloat(this.listeTrames.get(i+1).split(",")[1])-Float.parseFloat(this.listeTrames.get(i).split(",")[1]))*1000;
 				System.out.println(this.listeTrames.get(i));
 				
 				try {
-					Thread.sleep((long) tempsAttente*1000);
+					Thread.sleep((long) tempsAttente);
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}

@@ -8,25 +8,14 @@ public class MainTest {
 		System.out.println("\t\tPARCOURS\n\n");
 		System.out.println("Création d'un nouveau parcours avec deux points\n");
 		Point valence = new Point(180823, new Coordonnees(4.890892, 44.933014),0);
-		Point valence2 = new Point(180828, new Coordonnees(44.933014, 4.890892),150);
+		Point valence2 = new Point(180828, new Coordonnees(4.950892, 45.933014),150);
 		Point saintay = new Point(180833, new Coordonnees(45.446958, 4.383396),0);
-		Point p4 = new Point(180833, new Coordonnees(45.446958, 4.383396),0);
-		Point p5 = new Point(180834, new Coordonnees(45.446958, 4.383396),0);
-		Point p6 = new Point(180835, new Coordonnees(45.446958, 4.383396),0);
-		Point p7 = new Point(180835.5, new Coordonnees(45.446958, 4.383396),0);
-		Point p8 = new Point(180835.6, new Coordonnees(45.446958, 4.383396),0);
-		Point p9 = new Point(180835.7, new Coordonnees(45.446958, 4.383396),0);
 		Parcours parcours = new Parcours(TypeSysteme.TERRESTRE);
 		parcours.ajouterPoint(valence);
 		parcours.ajouterPoint(valence2);
 		parcours.ajouterPoint(saintay);
-		parcours.ajouterPoint(p4);
-		parcours.ajouterPoint(p5);
-		parcours.ajouterPoint(p6);
-		parcours.ajouterPoint(p7);
-		parcours.ajouterPoint(p8);
-		parcours.ajouterPoint(p9);
 
+		parcours.setDebit(5);
 		System.out.println(parcours.genererTrames());
 
 		System.out.println("\nEnregistrement du parcours dans le fichier ParcoursStValence.fGF\n");
@@ -55,6 +44,5 @@ public class MainTest {
 		
 		System.out.println("\n\nDébut simulation :");
 		simu.jouerSimulation();
-
 	}
 }

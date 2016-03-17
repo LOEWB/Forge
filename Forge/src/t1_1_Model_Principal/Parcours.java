@@ -6,10 +6,18 @@ import java.util.Random;
 public class Parcours {
 	private TypeSysteme typeSysteme;
 	private ArrayList<Point> listePoints = new ArrayList<Point>();
+	private float GPSdebit;
 
 	public Parcours(TypeSysteme typeSysteme, ArrayList<Point> listePoints) {
 		this.typeSysteme = typeSysteme;
 		this.listePoints = listePoints;
+		this.GPSdebit=1;
+	}
+	
+	public Parcours(TypeSysteme typeSysteme, ArrayList<Point> listePoints, float debit) {
+		this.typeSysteme = typeSysteme;
+		this.listePoints = listePoints;
+		this.GPSdebit=debit;
 	}
 
 	public Parcours(TypeSysteme typeSysteme) {
@@ -46,6 +54,11 @@ public class Parcours {
 		this.listePoints.add(p);
 
 	}
+	
+	public void supprimerPoint(Point p)
+	{
+		this.listePoints.remove(p);
+	}
 
 	public int randomInteger(int min, int max) {
 
@@ -65,7 +78,7 @@ public class Parcours {
 
 		ArrayList<Point> listePoints;
 
-		listePoints = this.getListePoints();
+		listePoints = this.genererListePointsIntermediaires(this.GPSdebit,this.getListePoints());
 
 		for (int i = 0; i < listePoints.size(); i++) {
 			trame = "$GPGGA,";
@@ -246,7 +259,45 @@ public class Parcours {
 			this.listePoints.add(new Point(tempsPoint - tempsPremierPoint,
 					new Coordonnees(longitude, latitude), altitude));
 		}
+	}
+	
+	/**
+	 * 
+	 * @param debit en trame/seconde
+	 * @param listePoints placés par l'utilisateur sur la carte
+	 * @return la liste de points avec tous les points intermédiaires générés
+	 */
+	public ArrayList<Point> genererListePointsIntermediaires(float debit,ArrayList<Point> listePoints)
+	{
+		ArrayList<Point> listeFinale=new ArrayList<Point>();
+		double periodeTrame = 1/(double)debit;
+		//traitement pour tous les points sauf le dernier
+		for (int i=0;i+1<listePoints.size();i++)
+		{
+			double nbPeriodeIntermediaire = (listePoints.get(i+1).getTemps()-listePoints.get(i).getTemps())*debit;
+			//correspond à la translation de la longitude en une periode 
+			double transLongitudePeriode = (listePoints.get(i+1).getCoordonnes().getLongitude()-listePoints.get(i).getCoordonnes().getLongitude())/nbPeriodeIntermediaire;
+			double transLatitudePeriode = (listePoints.get(i+1).getCoordonnes().getLatitude()-listePoints.get(i).getCoordonnes().getLatitude())/nbPeriodeIntermediaire;
+			double transAltitudePeriode = (listePoints.get(i+1).getAltitude()-listePoints.get(i).getAltitude())/nbPeriodeIntermediaire;
 
+			for(int p=0;p<nbPeriodeIntermediaire;p++)
+			{
+				Point pointCourant = new Point(listePoints.get(i).getTemps()+p*periodeTrame, new Coordonnees(listePoints.get(i).getCoordonnes().getLongitude()+p*transLongitudePeriode, listePoints.get(i).getCoordonnes().getLatitude()+p*transLatitudePeriode), listePoints.get(i).getAltitude()+p*transAltitudePeriode);
+				listeFinale.add(pointCourant);
+			}
+		}
+		listeFinale.add(listePoints.get(listePoints.size()-1));
+		return listeFinale;
+	}
+	
+	public void setDebit(float debit)
+	{
+		this.GPSdebit=debit;
+	}
+	
+	public float getDebit()
+	{
+		return this.GPSdebit;
 	}
 
 }
