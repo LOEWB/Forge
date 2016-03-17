@@ -70,14 +70,23 @@ public class Parcours {
 		for (int i = 0; i < listePoints.size(); i++) {
 			trame = "$GPGGA,";
 			point = listePoints.get(i);
-
+			if(point.getCoordonnes().getLatitude() < 0) {
 			trame += point.getTemps() + ","
-					+ point.getCoordonnes().getLatitude() + ",N,"
+					+ Math.abs(point.getCoordonnes().getLatitude()) + ",S,"
 					+ point.getCoordonnes().getLongitude() + ",E,1,"
 					+ randomInteger(3, 12) + "," + (0.6 + randomInteger(0, 19))
 					+ "," + point.getAltitude() + ",M,"
 					+ (46.9 + randomInteger(1, 3)) + "46.9,M, , ";
+			}
+			else {
+				trame += point.getTemps() + ","
+						+ point.getCoordonnes().getLatitude() + ",N,"
+						+ point.getCoordonnes().getLongitude() + ",E,1,"
+						+ randomInteger(3, 12) + "," + (0.6 + randomInteger(0, 19))
+						+ "," + point.getAltitude() + ",M,"
+						+ (46.9 + randomInteger(1, 3)) + "46.9,M, , ";
 
+			}
 			int checksum = 0;
 			for (int j = 0; j < trame.length(); j++) {
 				checksum = checksum ^ Character.codePointAt(trame, j);
