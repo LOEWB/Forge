@@ -47,6 +47,8 @@ public class PanelAPICarte extends JMapViewer {
 		};
 	}
 
+	
+
 	/**
 	 * vérifie si l'emplacement clické sur la carte est vide (true) ou s'il s'y trouve un marqueur (false)
 	 * @param coord
@@ -114,5 +116,9 @@ public class PanelAPICarte extends JMapViewer {
 	{		
 
 		this.parcours.supprimerPoint(point);		
+	}
+	
+	public Parcours getParcours() {
+		return parcours;
 	}
 }

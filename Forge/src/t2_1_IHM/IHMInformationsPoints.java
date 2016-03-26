@@ -227,11 +227,15 @@ public class IHMInformationsPoints extends JFrame implements ActionListener{
 		else
 		{
 			JOptionPane.showMessageDialog(this,"");			
-
 		}
-
-
-
+		
+		//affiche parcours
+		for(Point i:this.panelAPICarte.getParcours().getListePoints())
+		{
+			System.out.println("Point");
+			System.out.println(i);			
+		}
+		System.out.println("\n\n\n");
 
 	}
 
