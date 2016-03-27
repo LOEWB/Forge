@@ -54,8 +54,14 @@ public class IHMInformationsPoints extends JFrame implements ActionListener{
 		this.panel = (JPanel) this.getContentPane();
 		addComponentsWindow();
 		boutonSupprimerCreerPoint.setText("Supprimer");
-		dataAltitude = Double.toString(panelAPICarte.getParcours().getListePoints().get(2).getAltitude());
-		dataHeure = Double.toString(panelAPICarte.getParcours().getListePoints().get(2).getTemps());
+		for (Point point : panelAPICarte.getParcours().getListePoints())
+		{
+			if(point == modifierPoint)
+			{
+				dataAltitude = Double.toString(point.getAltitude());
+				dataHeure = Double.toString(point.getTemps());
+			}		
+		}
 		passage.setText(dataAltitude);
 		altitude.setText(dataHeure);
 		this.point = modifierPoint;

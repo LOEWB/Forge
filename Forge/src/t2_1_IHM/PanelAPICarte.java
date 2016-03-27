@@ -5,6 +5,7 @@ import java.awt.Rectangle;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Hashtable;
 import java.util.List;
 
 import javax.swing.JOptionPane;
@@ -29,6 +30,8 @@ public class PanelAPICarte extends JMapViewer {
 
 	private PanelAPICarte panelAPICarte = this;
 
+	private Hashtable pointMarker = new Hashtable();
+
 	public PanelAPICarte(Parcours parcours) {
 		super();
 
@@ -45,8 +48,20 @@ public class PanelAPICarte extends JMapViewer {
 				else
 				{
 					// TODO --> cas du click sur un marker
-					Point point = new Point(0,new Coordonnees(((Coordinate)map.getPosition(e.getPoint())).getLat(), ((Coordinate)map.getPosition(e.getPoint())).getLon()),0);
-					new IHMInformationsPoints(point);
+					for (MapMarker marker : mapMarkerList)
+					{
+						// point sur l'écran
+
+						int monX = ((int) getMapPosition(marker.getCoordinate()).getX()) - AffichagePoint.MARKER_SIZE*3;
+						int monY = ((int) getMapPosition(marker.getCoordinate()).getY()) - AffichagePoint.MARKER_SIZE*5;
+						Rectangle rect = new Rectangle(monX,monY,AffichagePoint.MARKER_SIZE*6,AffichagePoint.MARKER_SIZE*6);
+						if(rect.contains(((Coordinate)map.getPosition(e.getPoint())).getLat(), ((Coordinate)map.getPosition(e.getPoint())).getLon()))
+						{
+							new IHMInformationsPoints((Point) pointMarker.get(marker));
+						}
+
+
+					}
 				}
 			}
 		};
@@ -63,13 +78,16 @@ public class PanelAPICarte extends JMapViewer {
 	{
 		Coordinate pointCoord = new Coordinate(coord.getLat(),coord.getLon());
 		// cas du click sur un Point déjà placé
-		for (MapMarker marker : this.mapMarkerList){
+		for (MapMarker marker : this.mapMarkerList)
+		{
 			// point sur l'écran
-			if (this.getMapPosition(marker.getCoordinate()) != null){
+			if (this.getMapPosition(marker.getCoordinate()) != null)
+			{
 				int monX = ((int) this.getMapPosition(marker.getCoordinate()).getX()) - AffichagePoint.MARKER_SIZE*3;
 				int monY = ((int) this.getMapPosition(marker.getCoordinate()).getY()) - AffichagePoint.MARKER_SIZE*5;
 				Rectangle rect = new Rectangle(monX,monY,AffichagePoint.MARKER_SIZE*6,AffichagePoint.MARKER_SIZE*6);
-				if (rect.contains(this.getMapPosition(pointCoord).getX(),this.getMapPosition(pointCoord).getY())){
+				if (rect.contains(this.getMapPosition(pointCoord).getX(),this.getMapPosition(pointCoord).getY()))
+				{
 					// on a clické sur le point 'marker'
 					return false;
 				}
@@ -93,19 +111,14 @@ public class PanelAPICarte extends JMapViewer {
 	void changePoint(double sec, Point point, double altitude)
 	{		
 
-		//		for(int i=0;i<this.parcours.getListePoints().size();i++)
-		//		{
-		//			if(this.parcours.getListePoints().get(i).getCoordonnes() == point.getCoordonnes())
-		//			{
-		//				this.parcours.getListePoints().get(i).setAltitude(altitude);
-		//				this.parcours.getListePoints().get(i).setTempsPassageRelatif(sec);
-		//			}
-		//		}
-
-		this.parcours.getListePoints().get(2).setAltitude(altitude);
-		this.parcours.getListePoints().get(2).setTempsPassageRelatif(sec);
-
-
+		for(int i=0;i<this.parcours.getListePoints().size();i++)
+		{
+			if(this.parcours.getListePoints().get(i).getCoordonnes() == point.getCoordonnes())
+			{
+				this.parcours.getListePoints().get(i).setAltitude(altitude);
+				this.parcours.getListePoints().get(i).setTempsPassageRelatif(sec);
+			}
+		}
 
 	}
 
@@ -149,13 +162,20 @@ public class PanelAPICarte extends JMapViewer {
 	void createMarker()
 	{		
 		this.addMapMarker(new AffichagePoint(new Coordinate(this.parcours.getListePoints().get(0).getCoordonnes().getLatitude(),this.parcours.getListePoints().get(0).getCoordonnes().getLongitude()),"./img/MarqueurDepart.png"));
-		
+
 		for(int i=1;i<this.parcours.getListePoints().size()-1;i++)
 		{		
 			this.addMapMarker(new AffichagePoint(new Coordinate(this.parcours.getListePoints().get(i).getCoordonnes().getLatitude(),this.parcours.getListePoints().get(i).getCoordonnes().getLongitude()),"./img/MarqueurPoint.png"));
 		}
-		
+
 		this.addMapMarker(new AffichagePoint(new Coordinate(this.parcours.getListePoints().get(this.parcours.getListePoints().size()-1).getCoordonnes().getLatitude(),this.parcours.getListePoints().get(this.parcours.getListePoints().size()-1).getCoordonnes().getLongitude()),"./img/MarqueurArrivee.png"));
+
+		for (int j=0;j<this.mapMarkerList.size();j++)
+		{
+			this.pointMarker.put(this.mapMarkerList.get(j), this.parcours.getListePoints().get(j));
+
+		}
+
 	}
-	
+
 }
