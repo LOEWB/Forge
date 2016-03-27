@@ -125,7 +125,6 @@ public class PanelAPICarte extends JMapViewer {
 
 	void deletePoint(Point point)
 	{		
-
 		this.parcours.supprimerPoint(point);		
 	}
 
@@ -147,16 +146,10 @@ public class PanelAPICarte extends JMapViewer {
 
 	void removeSegments()
 	{		
-		if(this.parcours.getListePoints().size() > 4)
+		if(!(this.mapPolygonList.isEmpty()))
 		{
-			for(int i=0;i<this.parcours.getListePoints().size()-1;i++)
-			{
-				Coordinate point1 = new Coordinate(this.parcours.getListePoints().get(i).getCoordonnes().getLatitude(),this.parcours.getListePoints().get(i).getCoordonnes().getLongitude());
-				Coordinate point2 = new Coordinate(this.parcours.getListePoints().get(i+1).getCoordonnes().getLatitude(),this.parcours.getListePoints().get(i+1).getCoordonnes().getLongitude());
-				List<Coordinate> route = new ArrayList<Coordinate>(Arrays.asList(point1,point2,point2));;
-				this.panelAPICarte.removeMapPolygon(new MapPolygonImpl(route));
-
-			}				
+			this.panelAPICarte.removeAllMapPolygons();
+			
 		}
 	}
 
@@ -174,6 +167,18 @@ public class PanelAPICarte extends JMapViewer {
 		for (int j=0;j<this.mapMarkerList.size();j++)
 		{
 			this.pointMarker.put(this.mapMarkerList.get(j), this.parcours.getListePoints().get(j));
+		}
+		
+	}
+	
+	void removeMarker(Point point)
+	{
+		for(MapMarker marker : this.mapMarkerList)
+		{
+			if(this.pointMarker.get(marker)==point)
+			{
+				this.pointMarker.remove(marker);
+			}
 		}
 		
 	}

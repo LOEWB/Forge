@@ -250,7 +250,14 @@ public class IHMInformationsPoints extends JFrame implements ActionListener{
 		}
 		else
 		{
-			JOptionPane.showMessageDialog(this,"");			
+			this.panelAPICarte.removeSegments();
+			panelAPICarte.removeAllMapMarkers();
+			this.panelAPICarte.deletePoint(this.point);
+			this.panelAPICarte.removeMarker(this.point);
+			panelAPICarte.createMarker();	
+			panelAPICarte.traceSegments();			
+			JOptionPane.showMessageDialog(this,"Le point a été supprimé");
+			this.dispose();
 		}
 
 		//affiche parcours
