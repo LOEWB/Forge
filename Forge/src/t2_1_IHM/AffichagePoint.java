@@ -14,14 +14,17 @@ import org.openstreetmap.gui.jmapviewer.interfaces.MapMarker;
 public class AffichagePoint extends MapMarkerDot implements MapMarker {
 	
 	public final static int MARKER_SIZE = 6;
+	public String marker;
+
 	
-	public AffichagePoint(Coordinate coord) {
+	public AffichagePoint(Coordinate coord,String marker) {
 		super(coord);
+		this.marker = marker;
 	}
 
 	@Override
-	public void paint(Graphics graph, Point pos, int arg2) {
-        ImageIcon img = new ImageIcon("./img/Marqueur.png");
+	public void paint(Graphics graph, Point pos, int arg2) {		
+        ImageIcon img = new ImageIcon(marker);
         Image image = img.getImage();
         // ajout du marqueur (image) sur la carte
         graph.drawImage(image, pos.x - MARKER_SIZE*3, pos.y - MARKER_SIZE*5, MARKER_SIZE*6, MARKER_SIZE*6, null);
