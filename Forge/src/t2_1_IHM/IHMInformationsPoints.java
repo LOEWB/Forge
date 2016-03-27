@@ -40,9 +40,9 @@ public class IHMInformationsPoints extends JFrame implements ActionListener{
 	private Point point;
 	private Coordinate coordonnee;	
 	private String type;
-	static PanelAPICarte panelAPICarte;
-	static String dataAltitude;
-	static String dataHeure;
+	private PanelAPICarte panelAPICarte;
+	private String dataAltitude;
+	private String dataHeure;
 
 
 
@@ -78,7 +78,7 @@ public class IHMInformationsPoints extends JFrame implements ActionListener{
 
 			private void Data()
 			{
-				IHMInformationsPoints.dataHeure = passage.getText();
+				dataHeure = passage.getText();
 			}
 		});
 
@@ -226,6 +226,7 @@ public class IHMInformationsPoints extends JFrame implements ActionListener{
 			else
 			{
 				this.panelAPICarte.removeSegments();
+				panelAPICarte.removeAllMapMarkers();
 				if(this.passage.getValue() instanceof Double)
 				{
 					panelAPICarte.addPoint((double)this.passage.getValue(), coordonnee, (double)this.altitude.getValue());
@@ -234,9 +235,9 @@ public class IHMInformationsPoints extends JFrame implements ActionListener{
 				{
 					panelAPICarte.addPoint((double)((long) this.passage.getValue()), coordonnee, (double)((long)this.altitude.getValue()));
 				}
-
 				Collections.sort(panelAPICarte.getParcours().getListePoints(),new PointComp());
-				this.panelAPICarte.traceSegments();
+				panelAPICarte.createMarker();	
+				panelAPICarte.traceSegments();			
 				this.dispose();
 			}
 		}
@@ -246,7 +247,7 @@ public class IHMInformationsPoints extends JFrame implements ActionListener{
 		}
 
 		//affiche parcours
-		for(Point i:IHMInformationsPoints.panelAPICarte.getParcours().getListePoints())
+		for(Point i:panelAPICarte.getParcours().getListePoints())
 		{
 			System.out.println("Point");
 			System.out.println(i);

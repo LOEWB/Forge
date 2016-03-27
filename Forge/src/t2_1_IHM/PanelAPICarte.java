@@ -42,7 +42,8 @@ public class PanelAPICarte extends JMapViewer {
 				{
 					new IHMInformationsPoints((Coordinate)map.getPosition(e.getPoint()), panelAPICarte);		    		
 				}
-				else{
+				else
+				{
 					// TODO --> cas du click sur un marker
 					Point point = new Point(0,new Coordonnees(((Coordinate)map.getPosition(e.getPoint())).getLat(), ((Coordinate)map.getPosition(e.getPoint())).getLon()),0);
 					new IHMInformationsPoints(point);
@@ -83,38 +84,29 @@ public class PanelAPICarte extends JMapViewer {
 	 */
 	void addPoint(double sec, Coordinate coord, double altitude)
 	{
-		this.addMapMarker(new AffichagePoint(coord));
 
-		// TODO ajout mini-IHM 'input box' pour le temps relatif et l'altitude 
-		switch (this.parcours.getTypeSysteme()){
-		case TERRESTRE:
-			Point point = new Point(sec,new Coordonnees(coord.getLat(), coord.getLon()),altitude);
-			this.parcours.ajouterPoint(point);
-			break;
-		case AERIEN:
-			// récuperer ces données via le mini-IHM 'input box'
-			// this.parcours.ajouterPoint(new Point(tempsRelatif,coord,altitude));
-			break;
-		}
+		Point point = new Point(sec,new Coordonnees(coord.getLat(), coord.getLon()),altitude);
+		this.parcours.ajouterPoint(point);
+
 	}
 
 	void changePoint(double sec, Point point, double altitude)
 	{		
 
-//		for(int i=0;i<this.parcours.getListePoints().size();i++)
-//		{
-//			if(this.parcours.getListePoints().get(i).getCoordonnes() == point.getCoordonnes())
-//			{
-//				this.parcours.getListePoints().get(i).setAltitude(altitude);
-//				this.parcours.getListePoints().get(i).setTempsPassageRelatif(sec);
-//			}
-//		}
-		
+		//		for(int i=0;i<this.parcours.getListePoints().size();i++)
+		//		{
+		//			if(this.parcours.getListePoints().get(i).getCoordonnes() == point.getCoordonnes())
+		//			{
+		//				this.parcours.getListePoints().get(i).setAltitude(altitude);
+		//				this.parcours.getListePoints().get(i).setTempsPassageRelatif(sec);
+		//			}
+		//		}
+
 		this.parcours.getListePoints().get(2).setAltitude(altitude);
 		this.parcours.getListePoints().get(2).setTempsPassageRelatif(sec);
-		
-		
-		
+
+
+
 	}
 
 	void deletePoint(Point point)
@@ -153,4 +145,17 @@ public class PanelAPICarte extends JMapViewer {
 			}				
 		}
 	}
+
+	void createMarker()
+	{		
+		this.addMapMarker(new AffichagePoint(new Coordinate(this.parcours.getListePoints().get(0).getCoordonnes().getLatitude(),this.parcours.getListePoints().get(0).getCoordonnes().getLongitude()),"./img/MarqueurDepart.png"));
+		
+		for(int i=1;i<this.parcours.getListePoints().size()-1;i++)
+		{		
+			this.addMapMarker(new AffichagePoint(new Coordinate(this.parcours.getListePoints().get(i).getCoordonnes().getLatitude(),this.parcours.getListePoints().get(i).getCoordonnes().getLongitude()),"./img/MarqueurPoint.png"));
+		}
+		
+		this.addMapMarker(new AffichagePoint(new Coordinate(this.parcours.getListePoints().get(this.parcours.getListePoints().size()-1).getCoordonnes().getLatitude(),this.parcours.getListePoints().get(this.parcours.getListePoints().size()-1).getCoordonnes().getLongitude()),"./img/MarqueurArrivee.png"));
+	}
+	
 }
