@@ -47,24 +47,25 @@ public class IHMInformationsPoints extends JFrame implements ActionListener{
 
 
 
-	public IHMInformationsPoints(Point modifierPoint)
+	public IHMInformationsPoints(Point modifierPoint, PanelAPICarte panelAPICarte)
 	{
 		initializeWindow();
 		this.setTitle("Modifier le point");
 		this.panel = (JPanel) this.getContentPane();
+		this.point = modifierPoint;
+		this.panelAPICarte = panelAPICarte;
 		addComponentsWindow();
 		boutonSupprimerCreerPoint.setText("Supprimer");
-		for (Point point : panelAPICarte.getParcours().getListePoints())
+		for (Point pointListe : this.panelAPICarte.getParcours().getListePoints())
 		{
-			if(point == modifierPoint)
+			if(pointListe == point)
 			{
-				dataAltitude = Double.toString(point.getAltitude());
-				dataHeure = Double.toString(point.getTemps());
+				dataAltitude = Double.toString(pointListe.getAltitude());
+				dataHeure = Double.toString(pointListe.getTemps());
 			}		
 		}
 		passage.setText(dataAltitude);
 		altitude.setText(dataHeure);
-		this.point = modifierPoint;
 		this.type = "Modifier/Supprimer";		
 		this.setVisible(true);
 
@@ -78,7 +79,7 @@ public class IHMInformationsPoints extends JFrame implements ActionListener{
 			}
 			public void insertUpdate(DocumentEvent e) {
 				Data();
-				panelAPICarte.changePoint(Double.parseDouble(dataHeure), modifierPoint, Double.parseDouble(dataAltitude));	
+				panelAPICarte.changePoint(Double.parseDouble(dataHeure), point, Double.parseDouble(dataAltitude));	
 
 			}
 
@@ -97,7 +98,7 @@ public class IHMInformationsPoints extends JFrame implements ActionListener{
 			}
 			public void insertUpdate(DocumentEvent e) {
 				Data();
-				panelAPICarte.changePoint(Double.parseDouble(dataHeure), modifierPoint, Double.parseDouble(dataAltitude));
+				panelAPICarte.changePoint(Double.parseDouble(dataHeure), point, Double.parseDouble(dataAltitude));
 
 			}
 

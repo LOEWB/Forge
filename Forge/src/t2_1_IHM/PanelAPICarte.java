@@ -58,7 +58,7 @@ public class PanelAPICarte extends JMapViewer {
 						Rectangle rect = new Rectangle(monX,monY,AffichagePoint.MARKER_SIZE*6,AffichagePoint.MARKER_SIZE*6);
 						if(rect.contains(getMapPosition((Coordinate)map.getPosition(e.getPoint())).getX(), getMapPosition((Coordinate)map.getPosition(e.getPoint())).getY()))
 						{
-							new IHMInformationsPoints(pointMarker.get(marker));
+							new IHMInformationsPoints(pointMarker.get(marker),panelAPICarte);
 						}
 
 
