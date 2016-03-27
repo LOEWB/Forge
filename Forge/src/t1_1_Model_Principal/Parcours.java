@@ -102,8 +102,8 @@ public class Parcours {
 			tempString2 = "";
 			if(point.getCoordonnes().getLatitude() < 0) lat = "S";
 			else lat = "N";
-			if(point.getCoordonnes().getLongitude() < 0) longi = "E";
-			else longi = "W";
+			if(point.getCoordonnes().getLongitude() < 0) longi = "W";
+			else longi = "E";
 			temp = Math.abs(point.getCoordonnes().getLatitude());
 
 			// latitude 4, 4
