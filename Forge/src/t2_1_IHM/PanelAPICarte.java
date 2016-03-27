@@ -110,8 +110,8 @@ public class PanelAPICarte extends JMapViewer {
 //			}
 //		}
 		
-		this.parcours.getListePoints().get(3).setAltitude(altitude);
-		this.parcours.getListePoints().get(3).setTempsPassageRelatif(sec);
+		this.parcours.getListePoints().get(2).setAltitude(altitude);
+		this.parcours.getListePoints().get(2).setTempsPassageRelatif(sec);
 		
 		
 		

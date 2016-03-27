@@ -54,6 +54,10 @@ public class IHMInformationsPoints extends JFrame implements ActionListener{
 		this.panel = (JPanel) this.getContentPane();
 		addComponentsWindow();
 		boutonSupprimerCreerPoint.setText("Supprimer");
+		dataAltitude = Double.toString(panelAPICarte.getParcours().getListePoints().get(2).getAltitude());
+		dataHeure = Double.toString(panelAPICarte.getParcours().getListePoints().get(2).getTemps());
+		passage.setText(dataAltitude);
+		altitude.setText(dataHeure);
 		this.point = modifierPoint;
 		this.type = "Modifier/Supprimer";		
 		this.setVisible(true);
@@ -61,16 +65,14 @@ public class IHMInformationsPoints extends JFrame implements ActionListener{
 
 		passage.getDocument().addDocumentListener(new DocumentListener() {
 			public void changedUpdate(DocumentEvent e) {
-				Data();
-				if(!(dataHeure.equals(null)))
-				{
-					panelAPICarte.changePoint(Double.parseDouble(dataHeure), modifierPoint, Double.parseDouble(dataAltitude));
-				}				
+
 			}
 			public void removeUpdate(DocumentEvent e) {
 
 			}
 			public void insertUpdate(DocumentEvent e) {
+				Data();
+				panelAPICarte.changePoint(Double.parseDouble(dataHeure), modifierPoint, Double.parseDouble(dataAltitude));	
 
 			}
 
@@ -82,16 +84,14 @@ public class IHMInformationsPoints extends JFrame implements ActionListener{
 
 		altitude.getDocument().addDocumentListener(new DocumentListener() {
 			public void changedUpdate(DocumentEvent e) {
-				Data();
-				if(!(dataAltitude.equals(null)))
-				{
-					panelAPICarte.changePoint(Double.parseDouble(dataHeure), modifierPoint, Double.parseDouble(dataAltitude));
-				}
+
 			}
 			public void removeUpdate(DocumentEvent e) {
 
 			}
 			public void insertUpdate(DocumentEvent e) {
+				Data();
+				panelAPICarte.changePoint(Double.parseDouble(dataHeure), modifierPoint, Double.parseDouble(dataAltitude));
 
 			}
 
@@ -228,14 +228,14 @@ public class IHMInformationsPoints extends JFrame implements ActionListener{
 				this.panelAPICarte.removeSegments();
 				if(this.passage.getValue() instanceof Double)
 				{
-					IHMInformationsPoints.panelAPICarte.addPoint((double)this.passage.getValue(), coordonnee, (double)this.altitude.getValue());
+					panelAPICarte.addPoint((double)this.passage.getValue(), coordonnee, (double)this.altitude.getValue());
 				}
 				else
 				{
-					IHMInformationsPoints.panelAPICarte.addPoint((double)((long) this.passage.getValue()), coordonnee, (double)((long)this.altitude.getValue()));
+					panelAPICarte.addPoint((double)((long) this.passage.getValue()), coordonnee, (double)((long)this.altitude.getValue()));
 				}
 
-				Collections.sort(IHMInformationsPoints.panelAPICarte.getParcours().getListePoints(),new PointComp());
+				Collections.sort(panelAPICarte.getParcours().getListePoints(),new PointComp());
 				this.panelAPICarte.traceSegments();
 				this.dispose();
 			}
