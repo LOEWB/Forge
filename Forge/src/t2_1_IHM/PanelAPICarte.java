@@ -101,19 +101,20 @@ public class PanelAPICarte extends JMapViewer {
 	void changePoint(double sec, Point point, double altitude)
 	{		
 
-		for(int i=0;i<this.parcours.getListePoints().size();i++)
-		{
-			if(this.parcours.getListePoints().get(i).getCoordonnes() == point.getCoordonnes())
-			{
-				this.parcours.getListePoints().get(i).setAltitude(altitude);
-				this.parcours.getListePoints().get(i).setTempsPassageRelatif(sec);
-			}
-		}
-
-		for(int i=0;i<this.parcours.getListePoints().size();i++)
-		{
-			JOptionPane.showMessageDialog(this,this.parcours.getListePoints().get(i).toString());	
-		}
+//		for(int i=0;i<this.parcours.getListePoints().size();i++)
+//		{
+//			if(this.parcours.getListePoints().get(i).getCoordonnes() == point.getCoordonnes())
+//			{
+//				this.parcours.getListePoints().get(i).setAltitude(altitude);
+//				this.parcours.getListePoints().get(i).setTempsPassageRelatif(sec);
+//			}
+//		}
+		
+		this.parcours.getListePoints().get(3).setAltitude(altitude);
+		this.parcours.getListePoints().get(3).setTempsPassageRelatif(sec);
+		
+		
+		
 	}
 
 	void deletePoint(Point point)

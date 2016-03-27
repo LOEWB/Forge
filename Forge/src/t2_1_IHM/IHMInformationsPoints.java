@@ -53,7 +53,7 @@ public class IHMInformationsPoints extends JFrame implements ActionListener{
 		this.setTitle("Modifier le point");
 		this.panel = (JPanel) this.getContentPane();
 		addComponentsWindow();
-		boutonSupprimerCreerPoint.setLabel("Supprimer");
+		boutonSupprimerCreerPoint.setText("Supprimer");
 		this.point = modifierPoint;
 		this.type = "Modifier/Supprimer";		
 		this.setVisible(true);
@@ -62,14 +62,13 @@ public class IHMInformationsPoints extends JFrame implements ActionListener{
 		passage.getDocument().addDocumentListener(new DocumentListener() {
 			public void changedUpdate(DocumentEvent e) {
 				Data();
-				IHMInformationsPoints.panelAPICarte.changePoint(Double.parseDouble(dataHeure), modifierPoint, Double.parseDouble(dataAltitude));
+				if(!(dataHeure.equals(null)))
+				{
+					panelAPICarte.changePoint(Double.parseDouble(dataHeure), modifierPoint, Double.parseDouble(dataAltitude));
+				}				
 			}
 			public void removeUpdate(DocumentEvent e) {
-				Data();
-				if(dataHeure != "")
-					IHMInformationsPoints.panelAPICarte.changePoint(Double.parseDouble(dataHeure), modifierPoint, Double.parseDouble(dataAltitude));
-				else
-					JOptionPane.showMessageDialog(null,"Veuillez renseigner les champs demandés");
+
 			}
 			public void insertUpdate(DocumentEvent e) {
 
@@ -84,18 +83,13 @@ public class IHMInformationsPoints extends JFrame implements ActionListener{
 		altitude.getDocument().addDocumentListener(new DocumentListener() {
 			public void changedUpdate(DocumentEvent e) {
 				Data();
-				IHMInformationsPoints.panelAPICarte.changePoint(Double.parseDouble(dataHeure), modifierPoint, Double.parseDouble(dataAltitude));
+				if(!(dataAltitude.equals(null)))
+				{
+					panelAPICarte.changePoint(Double.parseDouble(dataHeure), modifierPoint, Double.parseDouble(dataAltitude));
+				}
 			}
 			public void removeUpdate(DocumentEvent e) {
-				Data();
-				if(dataAltitude != "")
-				{
-					IHMInformationsPoints.panelAPICarte.changePoint(Double.parseDouble(dataHeure), modifierPoint, Double.parseDouble(dataAltitude));
-				}
-				else
-				{
-					JOptionPane.showMessageDialog(null,"Veuillez renseigner les champs demandés");
-				}
+
 			}
 			public void insertUpdate(DocumentEvent e) {
 
@@ -103,7 +97,7 @@ public class IHMInformationsPoints extends JFrame implements ActionListener{
 
 			private void Data()
 			{
-				IHMInformationsPoints.dataAltitude = altitude.getText();
+				dataAltitude = altitude.getText();
 			}
 		});
 
@@ -118,7 +112,7 @@ public class IHMInformationsPoints extends JFrame implements ActionListener{
 		this.setTitle("Création du point");
 		this.panel = (JPanel) this.getContentPane();
 		addComponentsWindow();
-		boutonSupprimerCreerPoint.setLabel("Créer");
+		boutonSupprimerCreerPoint.setText("Créer");
 		this.coordonnee = creationPoint;
 		this.panelAPICarte = panelAPICarte;
 		this.type = "Créer";
@@ -241,7 +235,7 @@ public class IHMInformationsPoints extends JFrame implements ActionListener{
 					IHMInformationsPoints.panelAPICarte.addPoint((double)((long) this.passage.getValue()), coordonnee, (double)((long)this.altitude.getValue()));
 				}
 
-				Collections.sort(this.panelAPICarte.getParcours().getListePoints(),new PointComp());
+				Collections.sort(IHMInformationsPoints.panelAPICarte.getParcours().getListePoints(),new PointComp());
 				this.panelAPICarte.traceSegments();
 				this.dispose();
 			}
