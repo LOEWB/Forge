@@ -3,6 +3,7 @@ package t2_1_IHM;
 import java.awt.Color;
 import java.awt.Rectangle;
 import java.awt.event.MouseEvent;
+import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Hashtable;
@@ -30,7 +31,7 @@ public class PanelAPICarte extends JMapViewer {
 
 	private PanelAPICarte panelAPICarte = this;
 
-	private Hashtable pointMarker = new Hashtable();
+	private Hashtable<MapMarker,Point> pointMarker = new Hashtable<MapMarker,Point>();
 
 	public PanelAPICarte(Parcours parcours) {
 		super();
@@ -55,9 +56,9 @@ public class PanelAPICarte extends JMapViewer {
 						int monX = ((int) getMapPosition(marker.getCoordinate()).getX()) - AffichagePoint.MARKER_SIZE*3;
 						int monY = ((int) getMapPosition(marker.getCoordinate()).getY()) - AffichagePoint.MARKER_SIZE*5;
 						Rectangle rect = new Rectangle(monX,monY,AffichagePoint.MARKER_SIZE*6,AffichagePoint.MARKER_SIZE*6);
-						if(rect.contains(((Coordinate)map.getPosition(e.getPoint())).getLat(), ((Coordinate)map.getPosition(e.getPoint())).getLon()))
+						if(rect.contains(getMapPosition((Coordinate)map.getPosition(e.getPoint())).getX(), getMapPosition((Coordinate)map.getPosition(e.getPoint())).getY()))
 						{
-							new IHMInformationsPoints((Point) pointMarker.get(marker));
+							new IHMInformationsPoints(pointMarker.get(marker));
 						}
 
 
@@ -173,9 +174,8 @@ public class PanelAPICarte extends JMapViewer {
 		for (int j=0;j<this.mapMarkerList.size();j++)
 		{
 			this.pointMarker.put(this.mapMarkerList.get(j), this.parcours.getListePoints().get(j));
-
 		}
-
+		
 	}
 
 }
