@@ -75,38 +75,86 @@ public class Parcours {
 		String trames = "";
 		String trame = "";
 		Point point;
-
+		String lat = "";
+		String longi = "";
+		String latitude = "";
+		String longitude = "";
+		String tempString = "";
+		String checksumString = "";
 		ArrayList<Point> listePoints;
-
+		double temp;
 		listePoints = this.genererListePointsIntermediaires(this.GPSdebit,this.getListePoints());
-
+		int h = 0;
+		int longueur = 0;
 		for (int i = 0; i < listePoints.size(); i++) {
 			trame = "$GPGGA,";
 			point = listePoints.get(i);
-			if(point.getCoordonnes().getLatitude() < 0) {
-			trame += point.getTemps() + ","
-					+ Math.abs(point.getCoordonnes().getLatitude()) + ",S,"
-					+ point.getCoordonnes().getLongitude() + ",E,1,"
+			h=0;
+			tempString = "";
+			if(point.getCoordonnes().getLatitude() < 0) lat = "S";
+			else lat = "N";
+			if(point.getCoordonnes().getLongitude() < 0) longi = "W";
+			else longi = "E";
+			temp = Math.abs(point.getCoordonnes().getLatitude());
+			
+			// latitude 4, 6
+			// longitude 5, 6
+			latitude = "" + temp + "";
+		//	System.out.println(latitude);
+			while(latitude.charAt(h) != '.') h++;
+			h++;
+			//System.out.println(h);
+			latitude = latitude.substring(0, h);
+			//System.out.println("Latitude 1 " + latitude);
+			for(int m = latitude.length(); m<4+1; m++) tempString += "0";
+			tempString += latitude;
+			temp = Math.abs(point.getCoordonnes().getLatitude());
+			latitude = "" + temp + "";
+			latitude = latitude.substring(h, latitude.length()-1);
+			
+			//latitude = latitude.substring(h, h+7);
+			//tempString += ".";
+			for(int m = latitude.length(); m<6+1; m++) tempString += "0";
+			tempString += latitude;
+			//tempString = tempString.substring(12, tempString.length());
+			latitude = tempString;
+			latitude = latitude.substring(0, 11);
+			//latitude = latitude.substring(5, 11)
+		//	System.out.println("Latitude brute " + point.getCoordonnes().getLatitude() + " Trame " + latitude);
+			temp = Math.abs(point.getCoordonnes().getLongitude());
+
+			longitude = "" + temp + "";
+			h=0;
+			tempString = "";
+			while(longitude.charAt(h) != '.') h++;
+			h++;
+			longitude = longitude.substring(0, h);
+			for(int m = longitude.length(); m<5+1; m++) tempString += "0";
+			tempString += longitude;
+			temp = Math.abs(point.getCoordonnes().getLongitude());
+			longitude = "" + temp + "";
+			longitude = longitude.substring(h, longitude.length()-1);
+			
+			//tempString += ".";
+			for(int m = longitude.length(); m<6+1; m++) tempString += "0";
+			tempString += longitude;
+			longitude = tempString;
+			longitude= longitude.substring(0, 12);
+			
+				trame += Math.round(point.getTemps()) + "," 
+					
+					+ latitude + "," + lat + ","
+					+ longitude + "," + longi + ",1,"
 					+ randomInteger(3, 12) + "," + (0.6 + randomInteger(0, 19))
 					+ "," + point.getAltitude() + ",M,"
 					+ (46.9 + randomInteger(1, 3)) + "46.9,M, , ";
-			}
-			else {
-				trame += point.getTemps() + ","
-						+ point.getCoordonnes().getLatitude() + ",N,"
-						+ point.getCoordonnes().getLongitude() + ",E,1,"
-						+ randomInteger(3, 12) + "," + (0.6 + randomInteger(0, 19))
-						+ "," + point.getAltitude() + ",M,"
-						+ (46.9 + randomInteger(1, 3)) + "46.9,M, , ";
-
-			}
-			int checksum = 0;
+					int checksum = 0;
 			for (int j = 0; j < trame.length(); j++) {
 				checksum = checksum ^ Character.codePointAt(trame, j);
+				
 			}
-
-			trame += "*" + checksum;
-
+			checksumString = "" + Integer.toHexString(checksum) + "";
+			trame += "*" + checksumString.toUpperCase();
 			trames += trame;
 
 		}
