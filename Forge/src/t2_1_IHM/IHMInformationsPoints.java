@@ -7,6 +7,8 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.text.DateFormat;
 import java.text.NumberFormat;
+import java.util.Collections;
+import java.util.List;
 
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
@@ -24,14 +26,15 @@ import org.openstreetmap.gui.jmapviewer.Coordinate;
 
 import t1_1_Model_Principal.Parcours;
 import t1_1_Model_Principal.Point;
+import t1_1_Model_Principal.PointComp;
 
 
 public class IHMInformationsPoints extends JFrame implements ActionListener{
 
 	private JButton boutonSupprimerCreerPoint;
 	private JPanel panel;
-	private JFormattedTextField passage = new JFormattedTextField(NumberFormat.getInstance());
-	private JFormattedTextField altitude = new JFormattedTextField(NumberFormat.getIntegerInstance());
+	private JFormattedTextField passage = new JFormattedTextField(NumberFormat.getNumberInstance());
+	private JFormattedTextField altitude = new JFormattedTextField(NumberFormat.getNumberInstance());
 	private JLabel jlpassage = new JLabel("Passage (h) :");
 	private JLabel jlaltitude = new JLabel("altitude (m) :");
 	private Point point;
@@ -63,11 +66,13 @@ public class IHMInformationsPoints extends JFrame implements ActionListener{
 			}
 			public void removeUpdate(DocumentEvent e) {
 				Data();
-				IHMInformationsPoints.panelAPICarte.changePoint(Double.parseDouble(dataHeure), modifierPoint, Double.parseDouble(dataAltitude));
+				if(dataHeure != "")
+					IHMInformationsPoints.panelAPICarte.changePoint(Double.parseDouble(dataHeure), modifierPoint, Double.parseDouble(dataAltitude));
+				else
+					JOptionPane.showMessageDialog(null,"Veuillez renseigner les champs demandés");
 			}
 			public void insertUpdate(DocumentEvent e) {
-				Data();
-				IHMInformationsPoints.panelAPICarte.changePoint(Double.parseDouble(dataHeure), modifierPoint, Double.parseDouble(dataAltitude));
+
 			}
 
 			private void Data()
@@ -75,7 +80,7 @@ public class IHMInformationsPoints extends JFrame implements ActionListener{
 				IHMInformationsPoints.dataHeure = passage.getText();
 			}
 		});
-		
+
 		altitude.getDocument().addDocumentListener(new DocumentListener() {
 			public void changedUpdate(DocumentEvent e) {
 				Data();
@@ -83,11 +88,17 @@ public class IHMInformationsPoints extends JFrame implements ActionListener{
 			}
 			public void removeUpdate(DocumentEvent e) {
 				Data();
-				IHMInformationsPoints.panelAPICarte.changePoint(Double.parseDouble(dataHeure), modifierPoint, Double.parseDouble(dataAltitude));
+				if(dataAltitude != "")
+				{
+					IHMInformationsPoints.panelAPICarte.changePoint(Double.parseDouble(dataHeure), modifierPoint, Double.parseDouble(dataAltitude));
+				}
+				else
+				{
+					JOptionPane.showMessageDialog(null,"Veuillez renseigner les champs demandés");
+				}
 			}
 			public void insertUpdate(DocumentEvent e) {
-				Data();
-				IHMInformationsPoints.panelAPICarte.changePoint(Double.parseDouble(dataHeure), modifierPoint, Double.parseDouble(dataAltitude));
+
 			}
 
 			private void Data()
@@ -220,7 +231,18 @@ public class IHMInformationsPoints extends JFrame implements ActionListener{
 			}
 			else
 			{
-				IHMInformationsPoints.panelAPICarte.addPoint(Double.parseDouble(this.passage.getText()), coordonnee, Double.parseDouble(this.altitude.getText()));
+				this.panelAPICarte.removeSegments();
+				if(this.passage.getValue() instanceof Double)
+				{
+					IHMInformationsPoints.panelAPICarte.addPoint((double)this.passage.getValue(), coordonnee, (double)this.altitude.getValue());
+				}
+				else
+				{
+					IHMInformationsPoints.panelAPICarte.addPoint((double)((long) this.passage.getValue()), coordonnee, (double)((long)this.altitude.getValue()));
+				}
+
+				Collections.sort(this.panelAPICarte.getParcours().getListePoints(),new PointComp());
+				this.panelAPICarte.traceSegments();
 				this.dispose();
 			}
 		}
@@ -228,12 +250,13 @@ public class IHMInformationsPoints extends JFrame implements ActionListener{
 		{
 			JOptionPane.showMessageDialog(this,"");			
 		}
-		
+
 		//affiche parcours
-		for(Point i:this.panelAPICarte.getParcours().getListePoints())
+		for(Point i:IHMInformationsPoints.panelAPICarte.getParcours().getListePoints())
 		{
 			System.out.println("Point");
-			System.out.println(i);			
+			System.out.println(i);
+
 		}
 		System.out.println("\n\n\n");
 

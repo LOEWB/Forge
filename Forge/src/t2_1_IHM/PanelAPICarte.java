@@ -3,6 +3,9 @@ package t2_1_IHM;
 import java.awt.Color;
 import java.awt.Rectangle;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import javax.swing.JOptionPane;
 
@@ -10,6 +13,7 @@ import org.openstreetmap.gui.jmapviewer.Coordinate;
 import org.openstreetmap.gui.jmapviewer.DefaultMapController;
 import org.openstreetmap.gui.jmapviewer.JMapViewer;
 import org.openstreetmap.gui.jmapviewer.MapMarkerDot;
+import org.openstreetmap.gui.jmapviewer.MapPolygonImpl;
 import org.openstreetmap.gui.jmapviewer.interfaces.ICoordinate;
 import org.openstreetmap.gui.jmapviewer.interfaces.MapMarker;
 
@@ -47,7 +51,7 @@ public class PanelAPICarte extends JMapViewer {
 		};
 	}
 
-	
+
 
 	/**
 	 * vérifie si l'emplacement clické sur la carte est vide (true) ou s'il s'y trouve un marqueur (false)
@@ -105,7 +109,7 @@ public class PanelAPICarte extends JMapViewer {
 				this.parcours.getListePoints().get(i).setTempsPassageRelatif(sec);
 			}
 		}
-		
+
 		for(int i=0;i<this.parcours.getListePoints().size();i++)
 		{
 			JOptionPane.showMessageDialog(this,this.parcours.getListePoints().get(i).toString());	
@@ -117,8 +121,35 @@ public class PanelAPICarte extends JMapViewer {
 
 		this.parcours.supprimerPoint(point);		
 	}
-	
+
 	public Parcours getParcours() {
 		return parcours;
+	}
+
+	void traceSegments()
+	{		
+		for(int i=0;i<this.parcours.getListePoints().size()-1;i++)
+		{
+			Coordinate point1 = new Coordinate(this.parcours.getListePoints().get(i).getCoordonnes().getLatitude(),this.parcours.getListePoints().get(i).getCoordonnes().getLongitude());
+			Coordinate point2 = new Coordinate(this.parcours.getListePoints().get(i+1).getCoordonnes().getLatitude(),this.parcours.getListePoints().get(i+1).getCoordonnes().getLongitude());
+			List<Coordinate> route = new ArrayList<Coordinate>(Arrays.asList(point1,point2,point2));;
+			this.panelAPICarte.addMapPolygon(new MapPolygonImpl(route));
+			this.panelAPICarte.removeMapPolygon(new MapPolygonImpl(route));
+		}				
+	}
+
+	void removeSegments()
+	{		
+		if(this.parcours.getListePoints().size() > 4)
+		{
+			for(int i=0;i<this.parcours.getListePoints().size()-1;i++)
+			{
+				Coordinate point1 = new Coordinate(this.parcours.getListePoints().get(i).getCoordonnes().getLatitude(),this.parcours.getListePoints().get(i).getCoordonnes().getLongitude());
+				Coordinate point2 = new Coordinate(this.parcours.getListePoints().get(i+1).getCoordonnes().getLatitude(),this.parcours.getListePoints().get(i+1).getCoordonnes().getLongitude());
+				List<Coordinate> route = new ArrayList<Coordinate>(Arrays.asList(point1,point2,point2));;
+				this.panelAPICarte.removeMapPolygon(new MapPolygonImpl(route));
+
+			}				
+		}
 	}
 }
