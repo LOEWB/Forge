@@ -7,7 +7,7 @@ public class MainTest {
 		System.out.println("\t\t-- Application de test en cmd de création,sauvegarde et chargement de parcours puis exportation, importation simu--\n\n");
 		System.out.println("\t\tPARCOURS\n\n");
 		System.out.println("Création d'un nouveau parcours avec deux points\n");
-		Point valence = new Point(180823, new Coordonnees(4.890892, 44.933014),0);
+		Point valence = new Point(180820, new Coordonnees(4.890892, 44.933014),0);
 		Point valence2 = new Point(180828, new Coordonnees(4.950892, 45.933014),150);
 		Point saintay = new Point(180833, new Coordonnees(45.446958, 4.383396),0);
 		Parcours parcours = new Parcours(TypeSysteme.TERRESTRE);
@@ -43,6 +43,6 @@ public class MainTest {
 		}
 		
 		System.out.println("\n\nDébut simulation :");
-		simu.jouerSimulation();
+	//	simu.jouerSimulation();
 	}
 }

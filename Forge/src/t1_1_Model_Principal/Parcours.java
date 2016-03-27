@@ -81,75 +81,111 @@ public class Parcours {
 		String longitude = "";
 		String tempString = "";
 		String checksumString = "";
+		String temps = "";
+		String integerPart = "";
+		String decimalPart = "";
+		String tempString2 = "";
 		ArrayList<Point> listePoints;
 		double temp;
 		listePoints = this.genererListePointsIntermediaires(this.GPSdebit,this.getListePoints());
 		int h = 0;
-		int longueur = 0;
+		long longueur = 0;
+		long intPart;
+		long minutes;
+		long secondes;
+		double doublePart;
 		for (int i = 0; i < listePoints.size(); i++) {
 			trame = "$GPGGA,";
 			point = listePoints.get(i);
 			h=0;
 			tempString = "";
+			tempString2 = "";
 			if(point.getCoordonnes().getLatitude() < 0) lat = "S";
 			else lat = "N";
-			if(point.getCoordonnes().getLongitude() < 0) longi = "W";
-			else longi = "E";
+			if(point.getCoordonnes().getLongitude() < 0) longi = "E";
+			else longi = "W";
 			temp = Math.abs(point.getCoordonnes().getLatitude());
-			
-			// latitude 4, 6
-			// longitude 5, 6
-			latitude = "" + temp + "";
-		//	System.out.println(latitude);
-			while(latitude.charAt(h) != '.') h++;
-			h++;
-			//System.out.println(h);
-			latitude = latitude.substring(0, h);
-			//System.out.println("Latitude 1 " + latitude);
-			for(int m = latitude.length(); m<4+1; m++) tempString += "0";
-			tempString += latitude;
-			temp = Math.abs(point.getCoordonnes().getLatitude());
-			latitude = "" + temp + "";
-			latitude = latitude.substring(h, latitude.length()-1);
-			
-			//latitude = latitude.substring(h, h+7);
-			//tempString += ".";
-			for(int m = latitude.length(); m<6+1; m++) tempString += "0";
-			tempString += latitude;
-			//tempString = tempString.substring(12, tempString.length());
-			latitude = tempString;
-			latitude = latitude.substring(0, 11);
-			//latitude = latitude.substring(5, 11)
-		//	System.out.println("Latitude brute " + point.getCoordonnes().getLatitude() + " Trame " + latitude);
-			temp = Math.abs(point.getCoordonnes().getLongitude());
 
+			// latitude 4, 4
+			// longitude 5, 4
+			latitude = "" + temp + "";
+			while(latitude.charAt(h) != '.') h++; // recherche partie int
+			integerPart = latitude.substring(0, h);
+			intPart = Integer.parseInt(integerPart); // d
+			integerPart = "0." + latitude.substring(h+1, latitude.length()-1);
+			doublePart = Double.parseDouble(integerPart);
+			latitude = "" + intPart + doublePart*60 + "";
+			System.out.println("Latitude pre trame : " + latitude);
+			if(latitude.length() > 9) latitude = latitude.substring(0, 9); // on coupe si trop long
+			System.out.println("Latitude pre trame 1 : " + latitude);
+			
+			while(latitude.charAt(h) != '.') h++;
+			tempString2 = latitude.substring(0, h);
+			System.out.println("Latitude pre trame 2 : " + tempString2);
+		//	if(latitude.length() > 4) latitude = latitude.substring(4, latitude.length()-1);
+			if(tempString2.length() != 4) for(int m = tempString2.length(); m<4; m++) tempString += "0";
+			tempString += tempString2;
+			System.out.println("Latitude : " + tempString);
+
+			tempString2 = latitude.substring(h+1, latitude.length());
+			if(tempString2.length() > 4) tempString2 = tempString2.substring(0, 3); 
+			System.out.println("Latitude : " + tempString);
+			tempString += ".";
+			System.out.println("Longueur : " + tempString2.length());
+			if(tempString2.length() != 4) for(int m = tempString2.length(); m<5; m++) tempString += "0";
+			tempString += tempString2;
+			latitude = tempString;
+			System.out.println("Latitude 2 " + latitude); 
+
+			temp = Math.abs(point.getCoordonnes().getLongitude());
+			
 			longitude = "" + temp + "";
 			h=0;
 			tempString = "";
+			tempString2 = "";
+			System.out.println("Longitude brut : " + longitude);
+			while(longitude.charAt(h) != '.') h++; // recherche partie int
+			integerPart = longitude.substring(0, h);
+			intPart = Integer.parseInt(integerPart); // d
+			integerPart = "0." + longitude.substring(h+1, longitude.length()-1);
+			doublePart = Double.parseDouble(integerPart);
+			longitude = "" + intPart + doublePart*60 + "";
+			System.out.println("Longitude pre trame : " + longitude);
+//			if(longitude.length() > 10) longitude = longitude.substring(0, 9); // on coupe si trop long
+			System.out.println("Longitude pre trame 1 : " + longitude);
+			
 			while(longitude.charAt(h) != '.') h++;
-			h++;
-			longitude = longitude.substring(0, h);
-			for(int m = longitude.length(); m<5+1; m++) tempString += "0";
-			tempString += longitude;
-			temp = Math.abs(point.getCoordonnes().getLongitude());
-			longitude = "" + temp + "";
-			longitude = longitude.substring(h, longitude.length()-1);
-			
-			//tempString += ".";
-			for(int m = longitude.length(); m<6+1; m++) tempString += "0";
-			tempString += longitude;
+			tempString2 = longitude.substring(0, h);
+			System.out.println("Longitude pre trame 2 : " + tempString2);
+		//	if(latitude.length() > 4) latitude = latitude.substring(4, latitude.length()-1);
+			if(tempString2.length() != 5) for(int m = tempString2.length(); m<5; m++) tempString += "0";
+			tempString += tempString2;
+			System.out.println("Longi : " + tempString);
+
+			tempString2 = longitude.substring(h+1, longitude.length());
+			if(tempString2.length() > 4) tempString2 = tempString2.substring(0, 3); 
+			System.out.println("Longi : " + tempString);
+			tempString += ".";
+			System.out.println("Longueur : " + tempString2.length());
+			if(tempString2.length() != 4) for(int m = tempString2.length(); m<4; m++) tempString += "0";
+			tempString += tempString2;
 			longitude = tempString;
-			longitude= longitude.substring(0, 12);
+			System.out.println("Longitude 2 " + longitude); 
+
+			temps = ""+ point.getTemps() +"";
+		//	double dd = Math.point.getTemps();
 			
-				trame += Math.round(point.getTemps()) + "," 
+				trame += temps + "," 
+						
 					
 					+ latitude + "," + lat + ","
 					+ longitude + "," + longi + ",1,"
 					+ randomInteger(3, 12) + "," + (0.6 + randomInteger(0, 19))
 					+ "," + point.getAltitude() + ",M,"
 					+ (46.9 + randomInteger(1, 3)) + "46.9,M, , ";
+				trame = trame.toString();
 					int checksum = 0;
-			for (int j = 0; j < trame.length(); j++) {
+			for (int j = 1; j < trame.length(); j++) {
 				checksum = checksum ^ Character.codePointAt(trame, j);
 				
 			}
