@@ -54,6 +54,7 @@ public class IHMInformationsPoints extends JFrame implements ActionListener{
 		this.panel = (JPanel) this.getContentPane();
 		this.point = modifierPoint;
 		this.panelAPICarte = panelAPICarte;
+		checkTypeSysteme();
 		addComponentsWindow();
 		boutonSupprimerCreerPoint.setText("Supprimer");
 		for (Point pointListe : this.panelAPICarte.getParcours().getListePoints())
@@ -118,10 +119,11 @@ public class IHMInformationsPoints extends JFrame implements ActionListener{
 		initializeWindow();
 		this.setTitle("Création du point");
 		this.panel = (JPanel) this.getContentPane();
-		addComponentsWindow();
-		boutonSupprimerCreerPoint.setText("Créer");
 		this.coordonnee = creationPoint;
 		this.panelAPICarte = panelAPICarte;
+		checkTypeSysteme();
+		addComponentsWindow();
+		boutonSupprimerCreerPoint.setText("Créer");
 		this.type = "Créer";
 		this.setVisible(true);
 	}
@@ -151,6 +153,7 @@ public class IHMInformationsPoints extends JFrame implements ActionListener{
 
 	private void addGridBagLayout(JFormattedTextField passage, JFormattedTextField altitude) 
 	{
+		
 		// création du layout (GridBagLayout)
 
 		passage.setPreferredSize(new Dimension(70,30));
@@ -213,6 +216,21 @@ public class IHMInformationsPoints extends JFrame implements ActionListener{
 		this.passage.setText(null);
 		this.altitude.setText(null);
 
+	}
+
+	private void checkTypeSysteme() 
+	{
+		switch(this.panelAPICarte.getParcours().getTypeSysteme())
+		{
+		case TERRESTRE:
+			this.jlaltitude.setVisible(false);
+			this.altitude.setVisible(false);
+			this.dataAltitude="0";
+			break;
+		case AERIEN:
+			default:
+			break;
+		}
 	}
 
 
