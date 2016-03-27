@@ -6,6 +6,7 @@ import java.awt.event.MouseEvent;
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Hashtable;
 import java.util.List;
 
@@ -22,6 +23,7 @@ import org.openstreetmap.gui.jmapviewer.interfaces.MapMarker;
 import t1_1_Model_Principal.Coordonnees;
 import t1_1_Model_Principal.Parcours;
 import t1_1_Model_Principal.Point;
+import t1_1_Model_Principal.PointComp;
 
 public class PanelAPICarte extends JMapViewer {
 
@@ -155,6 +157,7 @@ public class PanelAPICarte extends JMapViewer {
 
 	void createMarker()
 	{		
+		Collections.sort(panelAPICarte.getParcours().getListePoints(),new PointComp());
 		this.addMapMarker(new AffichagePoint(new Coordinate(this.parcours.getListePoints().get(0).getCoordonnes().getLatitude(),this.parcours.getListePoints().get(0).getCoordonnes().getLongitude()),"./img/MarqueurDepart.png"));
 
 		for(int i=1;i<this.parcours.getListePoints().size()-1;i++)
@@ -164,6 +167,8 @@ public class PanelAPICarte extends JMapViewer {
 
 		this.addMapMarker(new AffichagePoint(new Coordinate(this.parcours.getListePoints().get(this.parcours.getListePoints().size()-1).getCoordonnes().getLatitude(),this.parcours.getListePoints().get(this.parcours.getListePoints().size()-1).getCoordonnes().getLongitude()),"./img/MarqueurArrivee.png"));
 
+		this.pointMarker = new Hashtable<MapMarker,Point>();
+		
 		for (int j=0;j<this.mapMarkerList.size();j++)
 		{
 			this.pointMarker.put(this.mapMarkerList.get(j), this.parcours.getListePoints().get(j));

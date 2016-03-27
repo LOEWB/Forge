@@ -2,6 +2,7 @@ package t2_1_IHM;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -31,7 +32,8 @@ import t1_1_Model_Principal.PointComp;
 
 public class IHMInformationsPoints extends JFrame implements ActionListener{
 
-	private JButton boutonSupprimerCreerPoint;
+	private JButton boutonSupprimerCreerPoint = new JButton("");;
+	private JButton boutonSortir = new JButton("");
 	private JPanel panel;
 	private JFormattedTextField passage = new JFormattedTextField(NumberFormat.getNumberInstance());
 	private JFormattedTextField altitude = new JFormattedTextField(NumberFormat.getNumberInstance());
@@ -47,6 +49,7 @@ public class IHMInformationsPoints extends JFrame implements ActionListener{
 
 
 
+
 	public IHMInformationsPoints(Point modifierPoint, PanelAPICarte panelAPICarte)
 	{
 		initializeWindow();
@@ -54,8 +57,8 @@ public class IHMInformationsPoints extends JFrame implements ActionListener{
 		this.panel = (JPanel) this.getContentPane();
 		this.point = modifierPoint;
 		this.panelAPICarte = panelAPICarte;
-		checkTypeSysteme();
 		addComponentsWindow();
+		checkTypeSysteme();
 		boutonSupprimerCreerPoint.setText("Supprimer");
 		for (Point pointListe : this.panelAPICarte.getParcours().getListePoints())
 		{
@@ -121,8 +124,8 @@ public class IHMInformationsPoints extends JFrame implements ActionListener{
 		this.panel = (JPanel) this.getContentPane();
 		this.coordonnee = creationPoint;
 		this.panelAPICarte = panelAPICarte;
-		checkTypeSysteme();
 		addComponentsWindow();
+		checkTypeSysteme();
 		boutonSupprimerCreerPoint.setText("Créer");
 		this.type = "Créer";
 		this.setVisible(true);
@@ -142,9 +145,13 @@ public class IHMInformationsPoints extends JFrame implements ActionListener{
 	{
 
 		// creating bouton 'supprimer'
-		this.boutonSupprimerCreerPoint = new JButton("");
 		this.boutonSupprimerCreerPoint.addActionListener(this);
+		boutonSortir.setText("Sortir");
+		this.boutonSortir.addActionListener(this);
 
+		this.boutonSupprimerCreerPoint.setActionCommand("Création/Suppression");
+		this.boutonSortir.setActionCommand("Sortir");
+		
 		this.addGridBagLayout(passage, altitude);
 
 		// panel ajouté à la fenetre au debut avec getContentPane()		
@@ -153,12 +160,13 @@ public class IHMInformationsPoints extends JFrame implements ActionListener{
 
 	private void addGridBagLayout(JFormattedTextField passage, JFormattedTextField altitude) 
 	{
-		
+
 		// création du layout (GridBagLayout)
 
 		passage.setPreferredSize(new Dimension(70,30));
 		altitude.setPreferredSize(new Dimension(70,30));
-		boutonSupprimerCreerPoint.setPreferredSize(new Dimension(110,30));
+		boutonSupprimerCreerPoint.setPreferredSize(new Dimension(95,30));
+		boutonSortir.setPreferredSize(new Dimension(95,30));
 		jlpassage.setPreferredSize(new Dimension(100,30));
 		jlaltitude.setPreferredSize(new Dimension(100,30));
 
@@ -173,11 +181,14 @@ public class IHMInformationsPoints extends JFrame implements ActionListener{
 		cell3.add(this.boutonSupprimerCreerPoint);
 		cell3.setPreferredSize(new Dimension(110,40));
 		JPanel cell4 = new JPanel();
-		cell4.add(this.jlpassage);
+		cell4.add(this.boutonSortir);
 		cell4.setPreferredSize(new Dimension(110,40));
 		JPanel cell5 = new JPanel();
-		cell5.add(this.jlaltitude);
+		cell5.add(this.jlpassage);
 		cell5.setPreferredSize(new Dimension(110,40));
+		JPanel cell6 = new JPanel();
+		cell6.add(this.jlaltitude);
+		cell6.setPreferredSize(new Dimension(110,40));
 
 		this.panel.setPreferredSize(new Dimension(350, 200));
 		this.panel.setLayout(new GridBagLayout());
@@ -191,7 +202,7 @@ public class IHMInformationsPoints extends JFrame implements ActionListener{
 		gbc.gridy = 0;
 		gbc.gridheight = 1;
 		gbc.gridwidth = 1;
-		this.panel.add(cell4, gbc);
+		this.panel.add(cell5, gbc);
 		// ---------------------------------------------
 
 		gbc.gridx = 1;
@@ -200,18 +211,19 @@ public class IHMInformationsPoints extends JFrame implements ActionListener{
 
 		gbc.gridx = 0;
 		gbc.gridy = 1;
-		this.panel.add(cell5, gbc);
+		this.panel.add(cell6, gbc);
 		// ---------------------------------------------
 
 		gbc.gridx = 1;
 		this.panel.add(cell2, gbc);
 		// ---------------------------------------------
 
-		gbc.gridwidth = 2;
-		gbc.fill = GridBagConstraints.BOTH;
 		gbc.gridx = 0;
 		gbc.gridy = 3;
+		this.panel.add(cell4, gbc);
+		gbc.gridx = 1;
 		this.panel.add(cell3, gbc);
+
 
 		this.passage.setText(null);
 		this.altitude.setText(null);
@@ -225,10 +237,10 @@ public class IHMInformationsPoints extends JFrame implements ActionListener{
 		case TERRESTRE:
 			this.jlaltitude.setVisible(false);
 			this.altitude.setVisible(false);
-			this.dataAltitude="0";
+			this.altitude.setValue((long)0);
 			break;
 		case AERIEN:
-			default:
+		default:
 			break;
 		}
 	}
@@ -240,43 +252,51 @@ public class IHMInformationsPoints extends JFrame implements ActionListener{
 	@Override
 	public void actionPerformed(ActionEvent e)
 	{
-
-
-		if(this.type.equals("Créer"))
+		if(e.getActionCommand().equals("Création/Suppression"))
 		{
-			if(this.passage.getText().equals("") || this.altitude.getText().equals(""))
+			if(this.type.equals("Créer"))
 			{
-				JOptionPane.showMessageDialog(this,"Veuillez renseigner les champs demandés");
+				if(this.passage.getText().equals("") || this.altitude.getText().equals(""))
+				{
+					JOptionPane.showMessageDialog(this,"Veuillez renseigner les champs demandés");
+				}
+				else
+				{
+					this.panelAPICarte.removeSegments();
+					panelAPICarte.removeAllMapMarkers();
+					if(this.passage.getValue() instanceof Double)
+					{
+						panelAPICarte.addPoint((double)this.passage.getValue(), coordonnee, (double)this.altitude.getValue());
+					}
+					else
+					{
+						panelAPICarte.addPoint((double)((long) this.passage.getValue()), coordonnee, (double)((long)this.altitude.getValue()));
+					}
+					panelAPICarte.createMarker();	
+					panelAPICarte.traceSegments();			
+					this.dispose();
+				}
 			}
 			else
 			{
 				this.panelAPICarte.removeSegments();
 				panelAPICarte.removeAllMapMarkers();
-				if(this.passage.getValue() instanceof Double)
-				{
-					panelAPICarte.addPoint((double)this.passage.getValue(), coordonnee, (double)this.altitude.getValue());
-				}
-				else
-				{
-					panelAPICarte.addPoint((double)((long) this.passage.getValue()), coordonnee, (double)((long)this.altitude.getValue()));
-				}
-				Collections.sort(panelAPICarte.getParcours().getListePoints(),new PointComp());
+				this.panelAPICarte.deletePoint(this.point);
+				this.panelAPICarte.removeMarker(this.point);
 				panelAPICarte.createMarker();	
 				panelAPICarte.traceSegments();			
+				JOptionPane.showMessageDialog(this,"Le point a été supprimé");
 				this.dispose();
 			}
 		}
 		else
 		{
-			this.panelAPICarte.removeSegments();
-			panelAPICarte.removeAllMapMarkers();
-			this.panelAPICarte.deletePoint(this.point);
-			this.panelAPICarte.removeMarker(this.point);
-			panelAPICarte.createMarker();	
-			panelAPICarte.traceSegments();			
-			JOptionPane.showMessageDialog(this,"Le point a été supprimé");
-			this.dispose();
+			
+			this.dispose();		
+			
+			
 		}
+
 
 		//affiche parcours
 		for(Point i:panelAPICarte.getParcours().getListePoints())
