@@ -5,6 +5,14 @@ public class Point {
 	private double tempsPassageRelatif;
 	private double altitude;
 
+	public void setTempsPassageRelatif(double tempsPassageRelatif) {
+		this.tempsPassageRelatif = tempsPassageRelatif;
+	}
+
+	public void setAltitude(double altitude) {
+		this.altitude = altitude;
+	}
+
 	public Point(double sec, Coordonnees coor, double altitude) {
 
 		this.coordonnes = coor;
