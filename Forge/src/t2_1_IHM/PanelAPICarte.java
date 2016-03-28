@@ -114,7 +114,7 @@ public class PanelAPICarte extends JMapViewer {
 	void changePoint(double sec, Point point, double altitude)
 	{		
 
-		for(int i=0;i<this.parcours.getListePoints().size();i++)
+		for(int i=0;i<this.parcours.getListePoints().size()-1;i++)
 		{
 			if(this.parcours.getListePoints().get(i).getCoordonnes() == point.getCoordonnes())
 			{
@@ -130,22 +130,26 @@ public class PanelAPICarte extends JMapViewer {
 		this.parcours.supprimerPoint(point);		
 	}
 
-	public Parcours getParcours() {
+	public Parcours getParcours() 
+	{
 		return parcours;
 	}
 
 	void traceSegments()
-	{		
-		for(int i=0;i<this.parcours.getListePoints().size()-1;i++)
+	{	
+		if(this.parcours.getListePoints().size()>=2)
 		{
-			Coordinate point1 = new Coordinate(this.parcours.getListePoints().get(i).getCoordonnes().getLatitude(),this.parcours.getListePoints().get(i).getCoordonnes().getLongitude());
-			Coordinate point2 = new Coordinate(this.parcours.getListePoints().get(i+1).getCoordonnes().getLatitude(),this.parcours.getListePoints().get(i+1).getCoordonnes().getLongitude());
-			List<Coordinate> route = new ArrayList<Coordinate>(Arrays.asList(point1,point2,point2));;
-			MapPolygonImpl mapPolyImpl=new MapPolygonImpl(route);
-			mapPolyImpl.setColor(new Color(0,130,200));
-			this.panelAPICarte.addMapPolygon(mapPolyImpl);
-			this.panelAPICarte.removeMapPolygon(new MapPolygonImpl(route));
-		}				
+			for(int i=0;i<this.parcours.getListePoints().size()-1;i++)
+			{
+				Coordinate point1 = new Coordinate(this.parcours.getListePoints().get(i).getCoordonnes().getLatitude(),this.parcours.getListePoints().get(i).getCoordonnes().getLongitude());
+				Coordinate point2 = new Coordinate(this.parcours.getListePoints().get(i+1).getCoordonnes().getLatitude(),this.parcours.getListePoints().get(i+1).getCoordonnes().getLongitude());
+				List<Coordinate> route = new ArrayList<Coordinate>(Arrays.asList(point1,point2,point2));;
+				MapPolygonImpl mapPolyImpl=new MapPolygonImpl(route);
+				mapPolyImpl.setColor(new Color(0,130,200));
+				this.panelAPICarte.addMapPolygon(mapPolyImpl);
+				this.panelAPICarte.removeMapPolygon(new MapPolygonImpl(route));
+			}	
+		}
 	}
 
 	void removeSegments()
@@ -153,31 +157,42 @@ public class PanelAPICarte extends JMapViewer {
 		if(!(this.mapPolygonList.isEmpty()))
 		{
 			this.panelAPICarte.removeAllMapPolygons();
-			
+
 		}
 	}
 
-	void createMarker()
+	void createMarkers()
 	{		
-		Collections.sort(panelAPICarte.getParcours().getListePoints(),new PointComp());
-		this.addMapMarker(new AffichagePoint(new Coordinate(this.parcours.getListePoints().get(0).getCoordonnes().getLatitude(),this.parcours.getListePoints().get(0).getCoordonnes().getLongitude()),"./img/MarqueurDepart.png"));
-
-		for(int i=1;i<this.parcours.getListePoints().size()-1;i++)
-		{		
-			this.addMapMarker(new AffichagePointInter(new Coordinate(this.parcours.getListePoints().get(i).getCoordonnes().getLatitude(),this.parcours.getListePoints().get(i).getCoordonnes().getLongitude()),"./img/MarqueurPoint.png"));
-		}
-
-		this.addMapMarker(new AffichagePoint(new Coordinate(this.parcours.getListePoints().get(this.parcours.getListePoints().size()-1).getCoordonnes().getLatitude(),this.parcours.getListePoints().get(this.parcours.getListePoints().size()-1).getCoordonnes().getLongitude()),"./img/MarqueurArrivee.png"));
-
-		this.pointMarker = new Hashtable<MapMarker,Point>();
-		
-		for (int j=0;j<this.mapMarkerList.size();j++)
+		if(this.parcours.getListePoints().size()>0)
 		{
-			this.pointMarker.put(this.mapMarkerList.get(j), this.parcours.getListePoints().get(j));
+			Collections.sort(panelAPICarte.getParcours().getListePoints(),new PointComp());
+			this.pointMarker = new Hashtable<MapMarker,Point>();
+			this.addMapMarker(new AffichagePoint(new Coordinate(this.parcours.getListePoints().get(0).getCoordonnes().getLatitude(),this.parcours.getListePoints().get(0).getCoordonnes().getLongitude()),"./img/MarqueurDepart.png"));
+
+			if(this.parcours.getListePoints().size()>=3)
+			{
+				for(int i=1;i<this.parcours.getListePoints().size()-1;i++)
+				{		
+					this.addMapMarker(new AffichagePointInter(new Coordinate(this.parcours.getListePoints().get(i).getCoordonnes().getLatitude(),this.parcours.getListePoints().get(i).getCoordonnes().getLongitude()),"./img/MarqueurPoint.png"));
+				}
+			}
+
+			if(this.parcours.getListePoints().size()>=2)
+			{
+				this.addMapMarker(new AffichagePoint(new Coordinate(this.parcours.getListePoints().get(this.parcours.getListePoints().size()-1).getCoordonnes().getLatitude(),this.parcours.getListePoints().get(this.parcours.getListePoints().size()-1).getCoordonnes().getLongitude()),"./img/MarqueurArrivee.png"));
+			}
+
+			if(this.mapMarkerList.size() > 0 && this.parcours.getListePoints().size()>0)
+			{
+				for (int j=0;j<this.mapMarkerList.size()-1;j++)
+				{
+					this.pointMarker.put(this.mapMarkerList.get(j), this.parcours.getListePoints().get(j));
+				}
+			}
 		}
-		
+
 	}
-	
+
 	void removeMarker(Point point)
 	{
 		for(MapMarker marker : this.mapMarkerList)
@@ -187,7 +202,7 @@ public class PanelAPICarte extends JMapViewer {
 				this.pointMarker.remove(marker);
 			}
 		}
-		
+
 	}
 
 }

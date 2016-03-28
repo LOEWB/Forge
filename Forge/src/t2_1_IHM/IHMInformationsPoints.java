@@ -264,15 +264,23 @@ public class IHMInformationsPoints extends JFrame implements ActionListener{
 				{
 					this.panelAPICarte.removeSegments();
 					panelAPICarte.removeAllMapMarkers();
-					if(this.passage.getValue() instanceof Double)
+					if(this.passage.getValue() instanceof Double && this.altitude.getValue() instanceof Double)
 					{
 						panelAPICarte.addPoint((double)this.passage.getValue(), coordonnee, (double)this.altitude.getValue());
+					}
+					else if(this.passage.getValue() instanceof Double && this.altitude.getValue() instanceof Long)
+					{
+						panelAPICarte.addPoint((double)this.passage.getValue(), coordonnee, (double)((long)this.altitude.getValue()));
+					}
+					else if(this.passage.getValue() instanceof Long && this.altitude.getValue() instanceof Double)
+					{
+						panelAPICarte.addPoint((double)((long) this.passage.getValue()), coordonnee, (double)this.altitude.getValue());
 					}
 					else
 					{
 						panelAPICarte.addPoint((double)((long) this.passage.getValue()), coordonnee, (double)((long)this.altitude.getValue()));
 					}
-					panelAPICarte.createMarker();	
+					panelAPICarte.createMarkers();	
 					panelAPICarte.traceSegments();			
 					this.dispose();
 				}
@@ -283,7 +291,7 @@ public class IHMInformationsPoints extends JFrame implements ActionListener{
 				panelAPICarte.removeAllMapMarkers();
 				this.panelAPICarte.deletePoint(this.point);
 				this.panelAPICarte.removeMarker(this.point);
-				panelAPICarte.createMarker();	
+				panelAPICarte.createMarkers();	
 				panelAPICarte.traceSegments();			
 				JOptionPane.showMessageDialog(this,"Le point a été supprimé");
 				this.dispose();
