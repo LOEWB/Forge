@@ -198,6 +198,7 @@ public class Parcours {
 			trames += trame;
 
 			*/
+			
 			 
 			 			trame = "$GPGGA,";
 			point = listePoints.get(i);
@@ -236,8 +237,8 @@ public class Parcours {
 			//System.out.println("Latitude : " + tempString);
 			tempString += ".";
 			//System.out.println("Longueur : " + tempString2.length());
-			if(tempString2.length() != 4) for(int m = tempString2.length(); m<4; m++) tempString += "0";
 			tempString += tempString2;
+			if(tempString2.length() != 4) for(int m = tempString2.length(); m<4; m++) tempString += "0";
 			latitude = tempString;
 			//System.out.println("Latitude 2 " + latitude); 
 
@@ -270,9 +271,9 @@ public class Parcours {
 			if(tempString2.length() > 4) tempString2 = tempString2.substring(0, 3); 
 			//System.out.println("Longi : " + tempString);
 			tempString += ".";
+			tempString += tempString2;
 			//System.out.println("Longueur : " + tempString2.length());
 			if(tempString2.length() != 4) for(int m = tempString2.length(); m<4; m++) tempString += "0";
-			tempString += tempString2;
 			longitude = tempString;
 			//System.out.println("Longitude 2 " + longitude); 
 
