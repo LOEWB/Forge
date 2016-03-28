@@ -471,7 +471,7 @@ public class Parcours {
 
 			for(int p=0;p<nbPeriodeIntermediaire;p++)
 			{
-				Point pointCourant = new Point(listePoints.get(i).getTemps()+p*periodeTrame, new Coordonnees(listePoints.get(i).getCoordonnes().getLongitude()+p*transLongitudePeriode, listePoints.get(i).getCoordonnes().getLatitude()+p*transLatitudePeriode), listePoints.get(i).getAltitude()+p*transAltitudePeriode);
+				Point pointCourant = new Point(listePoints.get(i).getTemps()+p*periodeTrame, new Coordonnees(listePoints.get(i).getCoordonnes().getLatitude()+p*transLatitudePeriode, listePoints.get(i).getCoordonnes().getLongitude()+p*transLongitudePeriode), listePoints.get(i).getAltitude()+p*transAltitudePeriode);
 				listeFinale.add(pointCourant);
 			}
 		}

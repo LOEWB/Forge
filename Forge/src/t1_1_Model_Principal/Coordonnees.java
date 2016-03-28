@@ -4,9 +4,9 @@ public class Coordonnees {
 	double longitude;
 	double latitude;
 
-	public Coordonnees(double d, double e) {
-		this.longitude = e;
-		this.latitude = d;
+	public Coordonnees(double lat, double longi) {
+		this.longitude = longi;
+		this.latitude = lat;
 	}
 
 	public double getLongitude() {
