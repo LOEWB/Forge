@@ -95,11 +95,13 @@ public class Parcours {
 		long secondes;
 		double doublePart;
 		for (int i = 0; i < listePoints.size(); i++) {
+			/*
 			trame = "$GPGGA,";
 			point = listePoints.get(i);
 			h=0;
 			tempString = "";
 			tempString2 = "";
+			
 			if(point.getCoordonnes().getLatitude() < 0) lat = "S";
 			else lat = "N";
 			if(point.getCoordonnes().getLongitude() < 0) longi = "W";
@@ -172,6 +174,8 @@ public class Parcours {
 			longitude = tempString;
 			//System.out.println("Longitude 2 " + longitude); 
 
+
+			
 			temps = ""+ point.getTemps() +"";
 		//	double dd = Math.point.getTemps();
 			
@@ -193,10 +197,7 @@ public class Parcours {
 			trame += "*" + checksumString.toUpperCase();
 			trames += trame;
 
-			/*
-			 * 
-			 *  VERSION AVEC BOURRAGE
-			 * 
+			*/
 			 
 			 			trame = "$GPGGA,";
 			point = listePoints.get(i);
@@ -235,7 +236,7 @@ public class Parcours {
 			System.out.println("Latitude : " + tempString);
 			tempString += ".";
 			System.out.println("Longueur : " + tempString2.length());
-			if(tempString2.length() != 4) for(int m = tempString2.length(); m<5; m++) tempString += "0";
+			if(tempString2.length() != 4) for(int m = tempString2.length(); m<4; m++) tempString += "0";
 			tempString += tempString2;
 			latitude = tempString;
 			System.out.println("Latitude 2 " + latitude); 
@@ -296,8 +297,7 @@ public class Parcours {
 			trame += "*" + checksumString.toUpperCase();
 			trames += trame;
 
-			 * 
-			 */
+			
 		}
 
 		return trames;
