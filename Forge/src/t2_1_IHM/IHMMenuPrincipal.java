@@ -29,31 +29,27 @@ public class IHMMenuPrincipal implements ActionListener {
 
 	private void initGraphInterface() {
 		this.window.setTitle("Menu Principal");
-		this.window.setSize(475, 550);
+		this.window.setSize(400, 450);
 		this.window.setLayout(null);
 		this.window.setResizable(false);
 		this.window.setLocationRelativeTo(null);
 		this.window.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 
 		JPanel panel = new JPanel();
-		panel.setBounds(113, 50, 300, 550);
+		panel.setBounds(0, 50, 1000, 550);
 		panel.setLayout(null); // afin de fixer manuellement les coordonnées des
 								// composants
 
-		ImageIcon logoForge = new ImageIcon("./img/logoForge.PNG"); // ne pas
-																	// oublier
-																	// de mettre
-																	// à jour le
-																	// Logo
+		ImageIcon logoForge = new ImageIcon("./img/logoForge.PNG");
 		JLabel labelForge = new JLabel(logoForge);
-		labelForge.setBounds(-45, 0, 350, 200); // adapter manuellement la
+		labelForge.setBounds(-300, 0, 1000, 200); // adapter manuellement la
 												// taille a l'image
 		JButton boutonParcours = new JButton("Créer un parcours");
-		boutonParcours.setBounds(25, 220, 200, 35);
+		boutonParcours.setBounds(97, 220, 200, 35);
 		boutonParcours.addActionListener(this);
 		boutonParcours.setActionCommand("Parcours");
 		JButton boutonSimulation = new JButton("Lancer une simulation");
-		boutonSimulation.setBounds(25, 330, 200, 35);
+		boutonSimulation.setBounds(97, 290, 200, 35);
 		boutonSimulation.addActionListener(this);
 		boutonSimulation.setActionCommand("Simulation");
 
