@@ -3,7 +3,7 @@ package t1_1_Model_Principal;
 
 public class MainTest {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws Exception {
 		System.out.println("\t\t-- Application de test en cmd de création,sauvegarde et chargement de parcours puis exportation, importation simu--\n\n");
 		System.out.println("\t\tPARCOURS\n\n");
 		Point valence = new Point(180820, new Coordonnees(4.890892,44.933014),0);
@@ -36,6 +36,13 @@ public class MainTest {
 		}
 		System.out.println("\nVitesse moyenne : "+parcours.vitesseMoyenne()+"km/h");
 
+		
+		PortSerie testPortSerie = new PortSerie();
+		testPortSerie.setPort("COM8", 96000);
+		while(true) {
+			testPortSerie.envoyer("Debut Test Fin");
+		}
+		
 		//		System.out.println("\n\nDébut simulation :");
 		//		simu.jouerSimulation();
 	}
