@@ -282,8 +282,8 @@ public class Parcours {
 				trame += temps + "," 
 						
 					
-					+ longitude + "," + lat + ","
-					+ latitude + "," + longi + ",1,"
+					+ latitude + "," + lat + ","
+					+ longitude + "," + longi + ",1,"
 					+ randomInteger(3, 12) + "," + (0.6 + randomInteger(0, 19))
 					+ "," + point.getAltitude() + ",M,"
 					+ (46.9 + randomInteger(1, 3)) + ",M,,";
