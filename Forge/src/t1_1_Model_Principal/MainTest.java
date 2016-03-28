@@ -16,18 +16,18 @@ public class MainTest {
 
 		parcours.setDebit(2);
 
-		System.out.println("\nEnregistrement du parcours dans le fichier ParcoursStValence.fGF\n");
-		parcours.sauvegarderParcours("ParcoursSteValence.fGF");
+//		System.out.println("\nEnregistrement du parcours dans le fichier ParcoursStValence.fGF\n");
+//		parcours.sauvegarderParcours("ParcoursSteValence.fGF");
 
-		System.out.println("\nCréation d'un nouveau parcours\nChargement du parcours depuis le fichier ParcoursStValence.fGF dans ce nouveau parcours\n");
-		Parcours newParcours = new Parcours(TypeSysteme.TERRESTRE);
-		newParcours.chargerParcours("ParcoursSteValence.fGF");
+//		System.out.println("\nCréation d'un nouveau parcours\nChargement du parcours depuis le fichier ParcoursStValence.fGF dans ce nouveau parcours\n");
+//		Parcours newParcours = new Parcours(TypeSysteme.TERRESTRE);
+//		newParcours.chargerParcours("ParcoursSteValence.fGF");
 		
 		System.out.println("\n\n\t\tSIMULATION\n\n");
 		Simulation simu = new Simulation(parcours);
-		System.out.println("\nExportation de la simulation dans le fichier SimuSteValence.nmea\nImportation de la simulation depuis le fichier SimuSteValence.nmea");
-		simu.exportSimulation("SimuSteValence.nmea");
-		simu.importSimulation("SimuSteValence.nmea");
+//		System.out.println("\nExportation de la simulation dans le fichier SimuSteValence.nmea\nImportation de la simulation depuis le fichier SimuSteValence.nmea");
+//		simu.exportSimulation("SimuSteValence.nmea");
+//		simu.importSimulation("SimuSteValence.nmea");
 
 		System.out.println("\nVitesse moyenne : "+parcours.vitesseMoyenne()+"km/h");
 		
