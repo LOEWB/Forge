@@ -128,9 +128,7 @@ public class PanelAPICarte extends JMapViewer {
 			if(this.parcours.getListePoints().get(i).getCoordonnes() == point.getCoordonnes())
 			{
 				this.parcours.getListePoints().get(i).setAltitude(altitude);
-				System.out.println(altitude);
 				this.parcours.getListePoints().get(i).setTempsPassageRelatif(sec);
-				System.out.println(sec);
 				Collections.sort(panelAPICarte.getParcours().getListePoints(),new PointComp());
 			}
 		}
