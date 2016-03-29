@@ -68,8 +68,8 @@ public class IHMInformationsPoints extends JFrame implements ActionListener{
 				dataHeure = Double.toString(pointListe.getTemps());
 			}		
 		}
-		passage.setText(dataAltitude);
-		altitude.setText(dataHeure);
+		passage.setText(dataHeure);
+		altitude.setText(dataAltitude);
 		this.type = "Modifier/Supprimer";		
 		this.setVisible(true);
 
