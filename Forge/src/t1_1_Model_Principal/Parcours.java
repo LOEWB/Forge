@@ -515,4 +515,16 @@ public class Parcours {
 		return d/(((this.listePoints.get(this.listePoints.size()-1).getTemps()-this.listePoints.get(0).getTemps()))/3600);
 	}
 
+
+	public double altitudeMoyenne() 
+	{
+		double altMoy = 0;
+		for(Point point: this.listePoints)
+		{
+			altMoy+=point.getAltitude();
+		}
+		altMoy = altMoy / this.listePoints.size();
+		return altMoy;
+	}
+
 }

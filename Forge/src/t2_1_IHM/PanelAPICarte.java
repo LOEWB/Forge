@@ -44,6 +44,9 @@ public class PanelAPICarte extends JMapViewer {
 			// événement click sur la map => création point de parcours
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				
+				
+				
 				if (checkAddPoint(map.getPosition(e.getPoint())))
 				{
 					new IHMInformationsPoints((Coordinate)map.getPosition(e.getPoint()), panelAPICarte);		    		

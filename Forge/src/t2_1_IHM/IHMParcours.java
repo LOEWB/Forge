@@ -6,6 +6,8 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -14,12 +16,14 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSplitPane;
 
+import org.openstreetmap.gui.jmapviewer.DefaultMapController;
+
 import t1_1_Model_Principal.Coordonnees;
 import t1_1_Model_Principal.Parcours;
 import t1_1_Model_Principal.Point;
 import t1_1_Model_Principal.TypeSysteme;
 
-public class IHMParcours implements ActionListener {
+public class IHMParcours implements ActionListener,MouseListener {
 
 	private JButton bsimulation = new JButton("LANCER LA SIMULATION");
 	
@@ -35,13 +39,13 @@ public class IHMParcours implements ActionListener {
 
 	private JLabel vitesseMoy = new JLabel("Vitesse moyenne :");
 
-	private JLabel vitesseMoyCalc = new JLabel("10km/h(test)"); // texte par
+	private JLabel vitesseMoyCalc = new JLabel(""); // texte par
 																// défaut à
 																// supprimer
 
 	private JLabel altitudeMoy = new JLabel("Altitude moyenne :");
 
-	private JLabel altitudeMoyCalc = new JLabel("7500m(test)"); // texte par
+	private JLabel altitudeMoyCalc = new JLabel(""); // texte par
 																// défaut à
 																// supprimer
 	
@@ -63,6 +67,9 @@ public class IHMParcours implements ActionListener {
 		
 		panelAPICarte.createMarkers();	
 		panelAPICarte.traceSegments();
+		
+		vitesseMoyCalc.setText(Double.toString(panelAPICarte.getParcours().vitesseMoyenne()));
+		altitudeMoyCalc.setText(Double.toString(panelAPICarte.getParcours().altitudeMoyenne()));		
 		
 		JPanel parametres = new JPanel();
 		JPanel boutonSimulation = new JPanel();
@@ -108,6 +115,7 @@ public class IHMParcours implements ActionListener {
 
 
 		api.setBackground(Color.WHITE);
+		api.addMouseListener(this);
 		parametres.setBackground(Color.WHITE);
 		boutonSimulation.setBackground(Color.WHITE);
 		carte.setBackground(Color.WHITE);
@@ -204,8 +212,6 @@ public class IHMParcours implements ActionListener {
 			saintay = new Point(3600, new Coordonnees(45.446958, 4.383396), 100);
 			parcours.ajouterPoint(valence);
 			parcours.ajouterPoint(saintay);
-			panelAPICarte.createMarkers();	
-			panelAPICarte.traceSegments();
 		default:
 			break;
 		}
@@ -243,6 +249,8 @@ public class IHMParcours implements ActionListener {
 
 	}
 
+
+	
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// test :
@@ -284,6 +292,41 @@ public class IHMParcours implements ActionListener {
 			break;
 		}
 
+	}
+
+	@Override
+	public void mouseClicked(MouseEvent arg0) {
+		vitesseMoyCalc.setText(Double.toString(panelAPICarte.getParcours().vitesseMoyenne()));
+		altitudeMoyCalc.setText(Double.toString(panelAPICarte.getParcours().altitudeMoyenne()));
+		
+	}
+
+	@Override
+	public void mouseEntered(MouseEvent arg0) {
+		vitesseMoyCalc.setText(Double.toString(panelAPICarte.getParcours().vitesseMoyenne()));
+		altitudeMoyCalc.setText(Double.toString(panelAPICarte.getParcours().altitudeMoyenne()));
+		
+	}
+
+	@Override
+	public void mouseExited(MouseEvent arg0) {
+		vitesseMoyCalc.setText(Double.toString(panelAPICarte.getParcours().vitesseMoyenne()));
+		altitudeMoyCalc.setText(Double.toString(panelAPICarte.getParcours().altitudeMoyenne()));
+		
+	}
+
+	@Override
+	public void mousePressed(MouseEvent arg0) {
+		vitesseMoyCalc.setText(Double.toString(panelAPICarte.getParcours().vitesseMoyenne()));
+		altitudeMoyCalc.setText(Double.toString(panelAPICarte.getParcours().altitudeMoyenne()));
+		
+	}
+
+	@Override
+	public void mouseReleased(MouseEvent arg0) {
+		vitesseMoyCalc.setText(Double.toString(panelAPICarte.getParcours().vitesseMoyenne()));
+		altitudeMoyCalc.setText(Double.toString(panelAPICarte.getParcours().altitudeMoyenne()));
+		
 	}	
 	
 }
