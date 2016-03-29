@@ -43,8 +43,8 @@ public class IHMInformationsPoints extends JFrame implements ActionListener{
 	private Coordinate coordonnee;	
 	private String type;
 	private PanelAPICarte panelAPICarte;
-	private String dataAltitude;
-	private String dataHeure;
+	private double dataAltitude;
+	private double dataHeure;
 
 
 
@@ -64,12 +64,12 @@ public class IHMInformationsPoints extends JFrame implements ActionListener{
 		{
 			if(pointListe == point)
 			{
-				dataAltitude = Double.toString(pointListe.getAltitude());
-				dataHeure = Double.toString(pointListe.getTemps());
+				dataAltitude = pointListe.getAltitude();
+				dataHeure = pointListe.getTemps();
 			}		
 		}
-		passage.setText(dataHeure);
-		altitude.setText(dataAltitude);
+		passage.setValue(dataHeure);
+		altitude.setValue(dataAltitude);
 		this.type = "Modifier/Supprimer";		
 		this.setVisible(true);
 
@@ -83,13 +83,23 @@ public class IHMInformationsPoints extends JFrame implements ActionListener{
 			}
 			public void insertUpdate(DocumentEvent e) {
 				Data();
-				panelAPICarte.changePoint(Double.parseDouble(dataHeure), point, Double.parseDouble(dataAltitude));	
-
+				panelAPICarte.removeSegments();
+				panelAPICarte.removeAllMapMarkers();
+				panelAPICarte.changePoint(dataHeure, point, (double)altitude.getValue());
+				panelAPICarte.createMarkers();	
+				panelAPICarte.traceSegments();	
 			}
 
 			private void Data()
 			{
-				dataHeure = passage.getText();
+				if(passage.getValue() instanceof Double)
+				{
+					dataHeure = (double) passage.getValue();
+				}
+				else
+				{
+					dataHeure = (double)((long) passage.getValue());
+				}
 			}
 		});
 
@@ -102,13 +112,24 @@ public class IHMInformationsPoints extends JFrame implements ActionListener{
 			}
 			public void insertUpdate(DocumentEvent e) {
 				Data();
-				panelAPICarte.changePoint(Double.parseDouble(dataHeure), point, Double.parseDouble(dataAltitude));
+				panelAPICarte.removeSegments();
+				panelAPICarte.removeAllMapMarkers();
+				panelAPICarte.changePoint((double)passage.getValue(), point,dataAltitude);
+				panelAPICarte.createMarkers();	
+				panelAPICarte.traceSegments();	
 
 			}
 
 			private void Data()
 			{
-				dataAltitude = altitude.getText();
+				if(altitude.getValue() instanceof Double)
+				{
+					dataAltitude = (double) altitude.getValue();
+				}
+				else
+				{
+					dataAltitude = (double)((long) altitude.getValue());
+				}
 			}
 		});
 
@@ -151,7 +172,7 @@ public class IHMInformationsPoints extends JFrame implements ActionListener{
 
 		this.boutonSupprimerCreerPoint.setActionCommand("Création/Suppression");
 		this.boutonSortir.setActionCommand("Sortir");
-		
+
 		this.addGridBagLayout(passage, altitude);
 
 		// panel ajouté à la fenetre au debut avec getContentPane()		
@@ -282,27 +303,27 @@ public class IHMInformationsPoints extends JFrame implements ActionListener{
 					}
 					panelAPICarte.createMarkers();	
 					panelAPICarte.traceSegments();			
-					this.dispose();
+					dispose();
 				}
 			}
 			else
 			{
-				this.panelAPICarte.removeSegments();
+				panelAPICarte.removeSegments();
 				panelAPICarte.removeAllMapMarkers();
-				this.panelAPICarte.deletePoint(this.point);
-				this.panelAPICarte.removeMarker(this.point);
+				panelAPICarte.deletePoint(this.point);
+				panelAPICarte.removeMarker(this.point);
 				panelAPICarte.createMarkers();	
 				panelAPICarte.traceSegments();			
 				JOptionPane.showMessageDialog(this,"Le point a été supprimé");
-				this.dispose();
+				dispose();
 			}
 		}
 		else
 		{
-			
-			this.dispose();		
-			
-			
+
+			dispose();		
+
+
 		}
 
 

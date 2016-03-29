@@ -123,12 +123,15 @@ public class PanelAPICarte extends JMapViewer {
 	void changePoint(double sec, Point point, double altitude)
 	{		
 
-		for(int i=0;i<this.parcours.getListePoints().size()-1;i++)
+		for(int i=0;i<this.parcours.getListePoints().size();i++)
 		{
 			if(this.parcours.getListePoints().get(i).getCoordonnes() == point.getCoordonnes())
 			{
 				this.parcours.getListePoints().get(i).setAltitude(altitude);
+				System.out.println(altitude);
 				this.parcours.getListePoints().get(i).setTempsPassageRelatif(sec);
+				System.out.println(sec);
+				Collections.sort(panelAPICarte.getParcours().getListePoints(),new PointComp());
 			}
 		}
 
@@ -136,7 +139,8 @@ public class PanelAPICarte extends JMapViewer {
 
 	void deletePoint(Point point)
 	{		
-		this.parcours.supprimerPoint(point);		
+		this.parcours.supprimerPoint(point);
+		Collections.sort(panelAPICarte.getParcours().getListePoints(),new PointComp());
 	}
 
 	public Parcours getParcours() 
