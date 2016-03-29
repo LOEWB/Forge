@@ -9,6 +9,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSplitPane;
@@ -44,6 +45,10 @@ public class IHMParcours implements ActionListener {
 																// défaut à
 																// supprimer
 	
+    private String[] listeDebit = { "Débit : 1 trame/s","Débit : 2 trames/s","Débit : 3 trames/s" };
+	
+    private JComboBox<String> comboBoxDebitTrame = new JComboBox<String>(listeDebit);
+    	
 	private Parcours parcours;
 	
 	public IHMParcours(String typeDeSysteme) {
@@ -54,8 +59,7 @@ public class IHMParcours implements ActionListener {
 		api.setZoom(8, new java.awt.Point(-25,40));
 		JPanel parametres = new JPanel();
 		JPanel boutonSimulation = new JPanel();
-		JPanel boutonSauvegarder = new JPanel();
-		JPanel boutonCharger = new JPanel();
+		JPanel basDroit = new JPanel();
 		JPanel carte = new JPanel();
 		
 		typeSystemeCalc.setText(typeDeSysteme);
@@ -65,13 +69,8 @@ public class IHMParcours implements ActionListener {
 		splitGauche.setDividerLocation((int)(FenetreForge.height*0.80));
 		splitGauche.setDividerSize(0);
 
-		JSplitPane splitBasDroit = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,
-				boutonSauvegarder, boutonCharger);
-		splitBasDroit.setDividerLocation((int)(FenetreForge.height*1.35/2));
-		splitBasDroit.setDividerSize(0);
-
 		JSplitPane splitDroit = new JSplitPane(JSplitPane.VERTICAL_SPLIT,
-				carte, splitBasDroit);
+				carte, basDroit);
 		splitDroit.setDividerLocation((int)(FenetreForge.height*0.90));
 		splitDroit.setDividerSize(0);
 
@@ -98,15 +97,16 @@ public class IHMParcours implements ActionListener {
 		api.setBackground(Color.WHITE);
 		parametres.setBackground(Color.WHITE);
 		boutonSimulation.setBackground(Color.WHITE);
-		boutonSauvegarder.setBackground(Color.WHITE);
-		boutonCharger.setBackground(Color.WHITE);
 		carte.setBackground(Color.WHITE);
+		basDroit.setBackground(Color.WHITE);
+		comboBoxDebitTrame.setBackground(Color.WHITE);
 
-		bsimulation.setPreferredSize(new Dimension(210, 40));
-		bmenu.setPreferredSize(new Dimension(210, 40));
-		bsauvegarder.setPreferredSize(new Dimension(210, 40));
-		bcharger.setPreferredSize(new Dimension(210, 40));
+		bsimulation.setPreferredSize(new Dimension((int)(FenetreForge.height*0.27), (int)(FenetreForge.height*0.30/5)));
+		bmenu.setPreferredSize(new Dimension((int)(FenetreForge.height*0.27), (int)(FenetreForge.height*0.30/5)));
+		bsauvegarder.setPreferredSize(new Dimension((int)(FenetreForge.height*0.6), (int)(FenetreForge.height*0.30/5)));
+		bcharger.setPreferredSize(new Dimension((int)(FenetreForge.height*0.6), (int)(FenetreForge.height*0.30/5)));
 		api.setPreferredSize(new Dimension((int)(FenetreForge.height*1.42), (int)(FenetreForge.height*1.25)));
+		comboBoxDebitTrame.setPreferredSize(new Dimension((int)(FenetreForge.height*0.27/2), (int)(FenetreForge.height*0.30/5)));
 		typeSysteme.setPreferredSize(new Dimension(115, 30));
 		typeSystemeCalc.setPreferredSize(new Dimension(115, 30));
 		vitesseMoy.setPreferredSize(new Dimension(115, 30));
@@ -135,6 +135,10 @@ public class IHMParcours implements ActionListener {
 		parametres.add(altitudeMoy, gbcParametres);
 		gbcParametres.gridx = 1;
 		parametres.add(altitudeMoyCalc, gbcParametres);
+		gbcParametres.gridwidth = 2;
+		gbcParametres.gridx = 0;
+		gbcParametres.gridy = 16;
+		parametres.add(comboBoxDebitTrame, gbcParametres);
 
 		// panel en bas a gauche (bouton simulation & menu)
 		boutonSimulation.setLayout(new GridBagLayout());
@@ -149,16 +153,16 @@ public class IHMParcours implements ActionListener {
 		carte.add(api);
 
 		// panels en bas a droite (boutons sauvegarder/charger parcours)
-		boutonSauvegarder.setLayout(new GridBagLayout());
-		GridBagConstraints gbcSauvegarder = new GridBagConstraints();
-		gbcSauvegarder.gridx = 0;
-		gbcSauvegarder.gridy = 0;
-		boutonSauvegarder.add(bsauvegarder, gbcSauvegarder);
-		boutonCharger.setLayout(new GridBagLayout());
-		GridBagConstraints gbcCharger = new GridBagConstraints();
-		gbcCharger.gridx = 0;
-		gbcCharger.gridy = 0;
-		boutonCharger.add(bcharger, gbcCharger);
+		basDroit.setLayout(new GridBagLayout());
+		GridBagConstraints gbcBasDroit = new GridBagConstraints();
+		gbcBasDroit.gridx = 0;
+		gbcBasDroit.gridy = 0;
+		basDroit.add(comboBoxDebitTrame, gbcBasDroit);	
+		gbcBasDroit.gridx = 1;
+		gbcBasDroit.gridy = 0;
+		basDroit.add(bsauvegarder, gbcBasDroit);		
+		gbcBasDroit.gridx = 2;
+		basDroit.add(bcharger, gbcBasDroit);
 
 		FenetreForge.fenetreForge.getContentPane().removeAll();
 		FenetreForge.fenetreForge.getContentPane().add(splitForge);
