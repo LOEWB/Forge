@@ -45,7 +45,7 @@ public class IHMParcours implements ActionListener {
 																// défaut à
 																// supprimer
 	
-    private String[] listeDebit = { "Débit : 1 trame/s","Débit : 2 trames/s","Débit : 3 trames/s" };
+    private String[] listeDebit = { "Débit : 1 trame/s","Débit : 1.5 trames/s","Débit : 2 trames/s" };
 	
     private JComboBox<String> comboBoxDebitTrame = new JComboBox<String>(listeDebit);
     	
@@ -102,13 +102,17 @@ public class IHMParcours implements ActionListener {
 		bcharger.addActionListener(this);
 		bcharger.setBackground(Color.WHITE);
 		bcharger.setActionCommand("charger");
+		comboBoxDebitTrame.setBackground(Color.WHITE);
+		comboBoxDebitTrame.addActionListener(this);
+		comboBoxDebitTrame.setActionCommand("debitTrame");
+
 
 		api.setBackground(Color.WHITE);
 		parametres.setBackground(Color.WHITE);
 		boutonSimulation.setBackground(Color.WHITE);
 		carte.setBackground(Color.WHITE);
 		basDroit.setBackground(Color.WHITE);
-		comboBoxDebitTrame.setBackground(Color.WHITE);
+
 
 		bsimulation.setPreferredSize(new Dimension((int)(FenetreForge.height*0.27), (int)(FenetreForge.height*0.30/5)));
 		bmenu.setPreferredSize(new Dimension((int)(FenetreForge.height*0.27), (int)(FenetreForge.height*0.30/5)));
@@ -249,6 +253,20 @@ public class IHMParcours implements ActionListener {
 		parcours.ajouterPoint(saintay);
 
 		switch (e.getActionCommand()) {
+		case "debitTrame":
+			switch (comboBoxDebitTrame.getSelectedIndex())
+			{
+			case 0:
+				panelAPICarte.getParcours().setDebit(1.0f);
+				break;
+			case 1:
+				panelAPICarte.getParcours().setDebit(1.5f);
+				break;
+			case 2:
+				panelAPICarte.getParcours().setDebit(2f);
+				break;
+			}			
+			break;
 		case "sauvegarder":
 		case "charger":
 			new IHMChoixFichier(e.getActionCommand(), parcours);
