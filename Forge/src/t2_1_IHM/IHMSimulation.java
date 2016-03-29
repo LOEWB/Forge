@@ -9,6 +9,7 @@ import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -66,17 +67,17 @@ public class IHMSimulation implements ActionListener {
 	private JLabel debutLabel = new JLabel("Début");
 	private JLabel finLabel = new JLabel("Fin");
 
-	private JFormattedTextField date = new JFormattedTextField(DateFormat.getDateInstance());
+	private JFormattedTextField date = new JFormattedTextField(new SimpleDateFormat("MM/dd/yyyy"));
 
-	private JFormattedTextField date2 = new JFormattedTextField(DateFormat.getDateInstance());
+	private JFormattedTextField date2 = new JFormattedTextField(new SimpleDateFormat("MM/dd/yyyy"));
 
-	private JFormattedTextField date3 = new JFormattedTextField(DateFormat.getDateInstance());
+	private JFormattedTextField date3 = new JFormattedTextField(new SimpleDateFormat("MM/dd/yyyy"));
 
-	private JFormattedTextField date4 = new JFormattedTextField(DateFormat.getDateInstance());
+	private JFormattedTextField date4 = new JFormattedTextField(new SimpleDateFormat("MM/dd/yyyy"));
 
-	private JFormattedTextField date5 = new JFormattedTextField(DateFormat.getDateInstance());
+	private JFormattedTextField date5 = new JFormattedTextField(new SimpleDateFormat("MM/dd/yyyy"));
 
-	private JFormattedTextField date6 = new JFormattedTextField(DateFormat.getDateInstance());
+	private JFormattedTextField date6 = new JFormattedTextField(new SimpleDateFormat("MM/dd/yyyy"));
 
 	private String[] listeLiaisonSerie = { "Liaison série 1", "Liaison série 2", "Liaison série 3" };
 

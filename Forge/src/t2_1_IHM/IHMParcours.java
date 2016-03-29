@@ -26,7 +26,7 @@ import t1_1_Model_Principal.TypeSysteme;
 public class IHMParcours implements ActionListener,MouseListener {
 
 	private JButton bsimulation = new JButton("LANCER LA SIMULATION");
-	
+
 	private JButton bmenu = new JButton("MENU");
 
 	private JButton bsauvegarder = new JButton("SAUVEGARDER LE PARCOURS");
@@ -37,45 +37,45 @@ public class IHMParcours implements ActionListener,MouseListener {
 
 	private JLabel typeSystemeCalc = new JLabel();
 
-	private JLabel vitesseMoy = new JLabel("Vitesse moyenne :");
+	private JLabel vitesseMoy = new JLabel("Vitesse moyenne (km/h) :");
 
 	private JLabel vitesseMoyCalc = new JLabel(""); // texte par
-																// défaut à
-																// supprimer
+	// défaut à
+	// supprimer
 
-	private JLabel altitudeMoy = new JLabel("Altitude moyenne :");
+	private JLabel altitudeMoy = new JLabel("Altitude moyenne (m) :");
 
 	private JLabel altitudeMoyCalc = new JLabel(""); // texte par
-																// défaut à
-																// supprimer
-	
-    private String[] listeDebit = { "Débit : 1 trame/s","Débit : 1.5 trames/s","Débit : 2 trames/s" };
-	
-    private JComboBox<String> comboBoxDebitTrame = new JComboBox<String>(listeDebit);
-    	
+	// défaut à
+	// supprimer
+
+	private String[] listeDebit = { "Débit : 1 trame/s","Débit : 1.5 trames/s","Débit : 2 trames/s" };
+
+	private JComboBox<String> comboBoxDebitTrame = new JComboBox<String>(listeDebit);
+
 	private Parcours parcours;
-	
+
 	private PanelAPICarte panelAPICarte;
-	
+
 	public IHMParcours(String typeDeSysteme) {
-		
+
 		this.initParcours(typeDeSysteme);
-		
+
 		PanelAPICarte api = new PanelAPICarte(this.parcours);
 		this.panelAPICarte = api;
 		api.setZoom(8, new java.awt.Point(-25,40));
-		
+
 		panelAPICarte.createMarkers();	
 		panelAPICarte.traceSegments();
-		
+
 		vitesseMoyCalc.setText(Double.toString(panelAPICarte.getParcours().vitesseMoyenne()));
 		altitudeMoyCalc.setText(Double.toString(panelAPICarte.getParcours().altitudeMoyenne()));		
-		
+
 		JPanel parametres = new JPanel();
 		JPanel boutonSimulation = new JPanel();
 		JPanel basDroit = new JPanel();
 		JPanel carte = new JPanel();
-		
+
 		typeSystemeCalc.setText(typeDeSysteme);
 
 		JSplitPane splitGauche = new JSplitPane(JSplitPane.VERTICAL_SPLIT,
@@ -96,7 +96,7 @@ public class IHMParcours implements ActionListener,MouseListener {
 		splitForge.setContinuousLayout(true);
 		splitGauche.setContinuousLayout(true);
 		splitDroit.setContinuousLayout(true);
-		
+
 		bsimulation.addActionListener(this);
 		bsimulation.setBackground(Color.WHITE);
 		bsimulation.setActionCommand("simulation");
@@ -167,8 +167,8 @@ public class IHMParcours implements ActionListener,MouseListener {
 		gbcSimulation.gridx = 0;
 		gbcSimulation.gridy = 0;
 		boutonSimulation.add(bsimulation, gbcSimulation);
-        gbcSimulation.gridy = 1;
-        boutonSimulation.add(bmenu, gbcSimulation);
+		gbcSimulation.gridy = 1;
+		boutonSimulation.add(bmenu, gbcSimulation);
 
 		// panel en haut a droite (api carte)
 		carte.add(api);
@@ -188,9 +188,9 @@ public class IHMParcours implements ActionListener,MouseListener {
 		FenetreForge.fenetreForge.getContentPane().removeAll();
 		FenetreForge.fenetreForge.getContentPane().add(splitForge);
 		FenetreForge.fenetreForge.setVisible(true);
-		
+
 	}
-	
+
 	/**
 	 * initialisation du parcours au lancement de l'IHM
 	 * @param typeDeSysteme
@@ -250,10 +250,10 @@ public class IHMParcours implements ActionListener,MouseListener {
 	}
 
 
-	
+
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		
+
 		switch (e.getActionCommand()) {
 		case "debitTrame":
 			switch (comboBoxDebitTrame.getSelectedIndex())
@@ -290,37 +290,51 @@ public class IHMParcours implements ActionListener,MouseListener {
 
 	@Override
 	public void mouseClicked(MouseEvent arg0) {
-		vitesseMoyCalc.setText(Double.toString(panelAPICarte.getParcours().vitesseMoyenne()));
-		altitudeMoyCalc.setText(Double.toString(panelAPICarte.getParcours().altitudeMoyenne()));
-		
+		if(panelAPICarte.getParcours().getListePoints().size() > 0)
+		{
+			vitesseMoyCalc.setText(Double.toString(panelAPICarte.getParcours().vitesseMoyenne()));
+			altitudeMoyCalc.setText(Double.toString(panelAPICarte.getParcours().altitudeMoyenne()));
+		}
+
 	}
 
 	@Override
 	public void mouseEntered(MouseEvent arg0) {
-		vitesseMoyCalc.setText(Double.toString(panelAPICarte.getParcours().vitesseMoyenne()));
-		altitudeMoyCalc.setText(Double.toString(panelAPICarte.getParcours().altitudeMoyenne()));
-		
+		if(panelAPICarte.getParcours().getListePoints().size() > 0)
+		{
+			vitesseMoyCalc.setText(Double.toString(panelAPICarte.getParcours().vitesseMoyenne()));
+			altitudeMoyCalc.setText(Double.toString(panelAPICarte.getParcours().altitudeMoyenne()));
+		}
+
 	}
 
 	@Override
 	public void mouseExited(MouseEvent arg0) {
-		vitesseMoyCalc.setText(Double.toString(panelAPICarte.getParcours().vitesseMoyenne()));
-		altitudeMoyCalc.setText(Double.toString(panelAPICarte.getParcours().altitudeMoyenne()));
-		
+		if(panelAPICarte.getParcours().getListePoints().size() > 0)
+		{
+			vitesseMoyCalc.setText(Double.toString(panelAPICarte.getParcours().vitesseMoyenne()));
+			altitudeMoyCalc.setText(Double.toString(panelAPICarte.getParcours().altitudeMoyenne()));
+		}
 	}
 
 	@Override
 	public void mousePressed(MouseEvent arg0) {
-		vitesseMoyCalc.setText(Double.toString(panelAPICarte.getParcours().vitesseMoyenne()));
-		altitudeMoyCalc.setText(Double.toString(panelAPICarte.getParcours().altitudeMoyenne()));
-		
+		if(panelAPICarte.getParcours().getListePoints().size() > 0)
+		{
+			vitesseMoyCalc.setText(Double.toString(panelAPICarte.getParcours().vitesseMoyenne()));
+			altitudeMoyCalc.setText(Double.toString(panelAPICarte.getParcours().altitudeMoyenne()));
+		}
+
 	}
 
 	@Override
 	public void mouseReleased(MouseEvent arg0) {
-		vitesseMoyCalc.setText(Double.toString(panelAPICarte.getParcours().vitesseMoyenne()));
-		altitudeMoyCalc.setText(Double.toString(panelAPICarte.getParcours().altitudeMoyenne()));
-		
+		if(panelAPICarte.getParcours().getListePoints().size() > 0)
+		{
+			vitesseMoyCalc.setText(Double.toString(panelAPICarte.getParcours().vitesseMoyenne()));
+			altitudeMoyCalc.setText(Double.toString(panelAPICarte.getParcours().altitudeMoyenne()));
+		}
+
 	}	
-	
+
 }
