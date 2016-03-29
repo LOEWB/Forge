@@ -69,6 +69,12 @@ public class PanelAPICarte extends JMapViewer {
 			}
 		};
 	}
+	
+	public PanelAPICarte(Parcours parcours, String simulation)
+	{
+		super();
+		this.parcours = parcours;
+	}
 
 
 
@@ -177,6 +183,33 @@ public class PanelAPICarte extends JMapViewer {
 				}
 			}
 
+			if(this.parcours.getListePoints().size()>=2)
+			{
+				this.addMapMarker(new AffichagePoint(new Coordinate(this.parcours.getListePoints().get(this.parcours.getListePoints().size()-1).getCoordonnes().getLatitude(),this.parcours.getListePoints().get(this.parcours.getListePoints().size()-1).getCoordonnes().getLongitude()),"./img/MarqueurArrivee.png"));
+			}
+
+			if(this.mapMarkerList.size() > 0 && this.parcours.getListePoints().size()>0)
+			{
+				for (int j=0;j<this.mapMarkerList.size();j++)
+				{
+					this.pointMarker.put(this.mapMarkerList.get(j), this.parcours.getListePoints().get(j));
+
+				}
+				
+			}
+		}
+
+	}
+	
+	void createMarkerDebutFin()
+	{		
+		if(this.parcours.getListePoints().size()>0)
+		{
+			Collections.sort(panelAPICarte.getParcours().getListePoints(),new PointComp());
+			this.pointMarker = new Hashtable<MapMarker,Point>();
+			this.addMapMarker(new AffichagePoint(new Coordinate(this.parcours.getListePoints().get(0).getCoordonnes().getLatitude(),this.parcours.getListePoints().get(0).getCoordonnes().getLongitude()),"./img/MarqueurDepart.png"));
+
+			
 			if(this.parcours.getListePoints().size()>=2)
 			{
 				this.addMapMarker(new AffichagePoint(new Coordinate(this.parcours.getListePoints().get(this.parcours.getListePoints().size()-1).getCoordonnes().getLatitude(),this.parcours.getListePoints().get(this.parcours.getListePoints().size()-1).getCoordonnes().getLongitude()),"./img/MarqueurArrivee.png"));

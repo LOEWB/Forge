@@ -51,12 +51,19 @@ public class IHMParcours implements ActionListener {
     	
 	private Parcours parcours;
 	
+	private PanelAPICarte panelAPICarte;
+	
 	public IHMParcours(String typeDeSysteme) {
 		
 		this.initParcours(typeDeSysteme);
 		
 		PanelAPICarte api = new PanelAPICarte(this.parcours);
+		this.panelAPICarte = api;
 		api.setZoom(8, new java.awt.Point(-25,40));
+		
+		panelAPICarte.createMarkers();	
+		panelAPICarte.traceSegments();
+		
 		JPanel parametres = new JPanel();
 		JPanel boutonSimulation = new JPanel();
 		JPanel basDroit = new JPanel();
@@ -87,6 +94,8 @@ public class IHMParcours implements ActionListener {
 		bsimulation.setBackground(Color.WHITE);
 		bsimulation.setActionCommand("simulation");
 		bmenu.setBackground(Color.WHITE);
+		bmenu.addActionListener(this);
+		bmenu.setActionCommand("menu");
 		bsauvegarder.addActionListener(this);
 		bsauvegarder.setBackground(Color.WHITE);
 		bsauvegarder.setActionCommand("sauvegarder");
@@ -168,29 +177,6 @@ public class IHMParcours implements ActionListener {
 		FenetreForge.fenetreForge.getContentPane().add(splitForge);
 		FenetreForge.fenetreForge.setVisible(true);
 		
-		this.bsimulation.addActionListener(new ActionListener()
-	    {
-
-			@Override
-			public void actionPerformed(ActionEvent e) 
-			{				
-				FenetreForge.fenetreForge.dispose();
-				new IHMSimulation();				
-			}
-			 
-	    });
-		
-		 this.bmenu.addActionListener(new ActionListener()
-	     {
-
-			@Override
-			public void actionPerformed(ActionEvent e) 
-			{				
-				FenetreForge.fenetreForge.dispose();
-				new IHMMenuPrincipal();				
-			}
-			 
-	     });
 	}
 	
 	/**
@@ -214,6 +200,8 @@ public class IHMParcours implements ActionListener {
 			saintay = new Point(3600, new Coordonnees(45.446958, 4.383396), 100);
 			parcours.ajouterPoint(valence);
 			parcours.ajouterPoint(saintay);
+			panelAPICarte.createMarkers();	
+			panelAPICarte.traceSegments();
 		default:
 			break;
 		}
@@ -265,6 +253,14 @@ public class IHMParcours implements ActionListener {
 		case "charger":
 			new IHMChoixFichier(e.getActionCommand(), parcours);
 			break;
+		case "simulation":
+			FenetreForge.fenetreForge.dispose();
+			new IHMSimulation(panelAPICarte.getParcours());	
+			break;
+		case "menu":
+			FenetreForge.fenetreForge.dispose();
+			new IHMMenuPrincipal();	
+			break;			
 		default:
 			// les autres boutons
 			break;
