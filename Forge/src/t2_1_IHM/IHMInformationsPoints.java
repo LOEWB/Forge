@@ -35,9 +35,10 @@ public class IHMInformationsPoints extends JFrame implements ActionListener{
 	private JButton boutonSupprimerCreerPoint = new JButton("");;
 	private JButton boutonSortir = new JButton("");
 	private JPanel panel;
-	private JFormattedTextField passage = new JFormattedTextField(NumberFormat.getNumberInstance());
+	private JFormattedTextField passageHeure = new JFormattedTextField(NumberFormat.getNumberInstance());
+	private JFormattedTextField passageMinute = new JFormattedTextField(NumberFormat.getNumberInstance());
 	private JFormattedTextField altitude = new JFormattedTextField(NumberFormat.getNumberInstance());
-	private JLabel jlpassage = new JLabel("Passage (h) :");
+	private JLabel jlpassage = new JLabel("Passage (h/m) :");
 	private JLabel jlaltitude = new JLabel("altitude (m) :");
 	private Point point;
 	private Coordinate coordonnee;	
@@ -45,6 +46,7 @@ public class IHMInformationsPoints extends JFrame implements ActionListener{
 	private PanelAPICarte panelAPICarte;
 	private double dataAltitude;
 	private double dataHeure;
+	private double dataMinute;
 
 
 
@@ -68,13 +70,13 @@ public class IHMInformationsPoints extends JFrame implements ActionListener{
 				dataHeure = pointListe.getTemps();
 			}		
 		}
-		passage.setValue(dataHeure);
+		passageHeure.setValue(dataHeure);
 		altitude.setValue(dataAltitude);
 		this.type = "Modifier/Supprimer";		
 		this.setVisible(true);
 
 
-		passage.getDocument().addDocumentListener(new DocumentListener() {
+		passageHeure.getDocument().addDocumentListener(new DocumentListener() {
 			public void changedUpdate(DocumentEvent e) {
 
 			}
@@ -85,20 +87,49 @@ public class IHMInformationsPoints extends JFrame implements ActionListener{
 				Data();
 				panelAPICarte.removeSegments();
 				panelAPICarte.removeAllMapMarkers();
-				panelAPICarte.changePoint(dataHeure, point, (double)altitude.getValue());
+				panelAPICarte.changePoint(dataHeure+((double)passageMinute.getValue()/60), point, (double)altitude.getValue());
 				panelAPICarte.createMarkers();	
 				panelAPICarte.traceSegments();	
 			}
 
 			private void Data()
 			{
-				if(passage.getValue() instanceof Double)
+				if(passageHeure.getValue() instanceof Double)
 				{
-					dataHeure = (double) passage.getValue();
+					dataHeure = (double) passageHeure.getValue();
 				}
 				else
 				{
-					dataHeure = (double)((long) passage.getValue());
+					dataHeure = (double)((long) passageHeure.getValue());
+				}
+			}
+		});
+		
+		passageMinute.getDocument().addDocumentListener(new DocumentListener() {
+			public void changedUpdate(DocumentEvent e) {
+
+			}
+			public void removeUpdate(DocumentEvent e) {
+
+			}
+			public void insertUpdate(DocumentEvent e) {
+				Data();
+				panelAPICarte.removeSegments();
+				panelAPICarte.removeAllMapMarkers();
+				panelAPICarte.changePoint((double)passageHeure.getValue()+(dataMinute/60), point, (double)altitude.getValue());
+				panelAPICarte.createMarkers();	
+				panelAPICarte.traceSegments();	
+			}
+
+			private void Data()
+			{
+				if(passageMinute.getValue() instanceof Double)
+				{
+					dataMinute = (double) passageMinute.getValue();
+				}
+				else
+				{
+					dataMinute = (double)((long) passageMinute.getValue());
 				}
 			}
 		});
@@ -114,7 +145,7 @@ public class IHMInformationsPoints extends JFrame implements ActionListener{
 				Data();
 				panelAPICarte.removeSegments();
 				panelAPICarte.removeAllMapMarkers();
-				panelAPICarte.changePoint((double)passage.getValue(), point,dataAltitude);
+				panelAPICarte.changePoint((double)passageHeure.getValue()+((double)passageMinute.getValue()/60), point,dataAltitude);
 				panelAPICarte.createMarkers();	
 				panelAPICarte.traceSegments();	
 
@@ -173,18 +204,19 @@ public class IHMInformationsPoints extends JFrame implements ActionListener{
 		this.boutonSupprimerCreerPoint.setActionCommand("Création/Suppression");
 		this.boutonSortir.setActionCommand("Sortir");
 
-		this.addGridBagLayout(passage, altitude);
+		this.addGridBagLayout(passageHeure, passageMinute, altitude);
 
 		// panel ajouté à la fenetre au debut avec getContentPane()		
 
 	}
 
-	private void addGridBagLayout(JFormattedTextField passage, JFormattedTextField altitude) 
+	private void addGridBagLayout(JFormattedTextField passageHeure, JFormattedTextField passageMinute, JFormattedTextField altitude) 
 	{
 
 		// création du layout (GridBagLayout)
 
-		passage.setPreferredSize(new Dimension(70,30));
+		passageHeure.setPreferredSize(new Dimension(70,30));
+		passageMinute.setPreferredSize(new Dimension(70,30));
 		altitude.setPreferredSize(new Dimension(70,30));
 		boutonSupprimerCreerPoint.setPreferredSize(new Dimension(95,30));
 		boutonSortir.setPreferredSize(new Dimension(95,30));
@@ -193,8 +225,11 @@ public class IHMInformationsPoints extends JFrame implements ActionListener{
 
 
 		JPanel cell1 = new JPanel();
-		cell1.add(passage);
+		cell1.add(passageHeure);
 		cell1.setPreferredSize(new Dimension(110,40));
+		JPanel cell12 = new JPanel();
+		cell12.add(passageMinute);
+		cell12.setPreferredSize(new Dimension(110,40));
 		JPanel cell2 = new JPanel();
 		cell2.add(altitude);
 		cell2.setPreferredSize(new Dimension(110,40));
@@ -229,6 +264,10 @@ public class IHMInformationsPoints extends JFrame implements ActionListener{
 		gbc.gridx = 1;
 		this.panel.add(cell1, gbc);
 		// ---------------------------------------------
+		
+		gbc.gridx = 2;
+		this.panel.add(cell12, gbc);
+		// ---------------------------------------------
 
 		gbc.gridx = 0;
 		gbc.gridy = 1;
@@ -242,12 +281,13 @@ public class IHMInformationsPoints extends JFrame implements ActionListener{
 		gbc.gridx = 0;
 		gbc.gridy = 3;
 		this.panel.add(cell4, gbc);
-		gbc.gridx = 1;
+		gbc.gridx = 2;
 		this.panel.add(cell3, gbc);
 
 
-		this.passage.setText(null);
-		this.altitude.setText(null);
+		this.passageHeure.setValue(0.0);
+		this.passageMinute.setValue(0.0);
+		this.altitude.setValue(0.0);
 
 	}
 
@@ -258,7 +298,7 @@ public class IHMInformationsPoints extends JFrame implements ActionListener{
 		case TERRESTRE:
 			this.jlaltitude.setVisible(false);
 			this.altitude.setVisible(false);
-			this.altitude.setValue((long)0);
+			this.altitude.setValue(0l);
 			break;
 		case AERIEN:
 		default:
@@ -277,7 +317,7 @@ public class IHMInformationsPoints extends JFrame implements ActionListener{
 		{
 			if(this.type.equals("Créer"))
 			{
-				if(this.passage.getText().equals("") || this.altitude.getText().equals(""))
+				if(this.passageHeure.getText().equals("") || this.altitude.getText().equals(""))
 				{
 					JOptionPane.showMessageDialog(this,"Veuillez renseigner les champs demandés");
 				}
@@ -285,21 +325,33 @@ public class IHMInformationsPoints extends JFrame implements ActionListener{
 				{
 					this.panelAPICarte.removeSegments();
 					panelAPICarte.removeAllMapMarkers();
-					if(this.passage.getValue() instanceof Double && this.altitude.getValue() instanceof Double)
+					if(this.passageHeure.getValue() instanceof Double && this.altitude.getValue() instanceof Double)
 					{
-						panelAPICarte.addPoint((double)this.passage.getValue(), coordonnee, (double)this.altitude.getValue());
+						if(this.passageMinute.getValue() instanceof Double)
+							panelAPICarte.addPoint(((double)this.passageHeure.getValue())+((double)this.passageMinute.getValue()/60), coordonnee, (double)this.altitude.getValue());
+						else
+							panelAPICarte.addPoint(((double)this.passageHeure.getValue())+(((double)((long)this.passageHeure.getValue())/60)), coordonnee, (double)this.altitude.getValue());
 					}
-					else if(this.passage.getValue() instanceof Double && this.altitude.getValue() instanceof Long)
+					else if(this.passageHeure.getValue() instanceof Double && this.altitude.getValue() instanceof Long)
 					{
-						panelAPICarte.addPoint((double)this.passage.getValue(), coordonnee, (double)((long)this.altitude.getValue()));
+						if(this.passageMinute.getValue() instanceof Double)
+							panelAPICarte.addPoint(((double)this.passageHeure.getValue())+((double)this.passageMinute.getValue()/60), coordonnee, (double)((long)this.altitude.getValue()));
+						else
+							panelAPICarte.addPoint(((double)this.passageHeure.getValue())+((double)((long)this.passageHeure.getValue())/60), coordonnee, (double)((long)this.altitude.getValue()));
 					}
-					else if(this.passage.getValue() instanceof Long && this.altitude.getValue() instanceof Double)
+					else if(this.passageHeure.getValue() instanceof Long && this.altitude.getValue() instanceof Double)
 					{
-						panelAPICarte.addPoint((double)((long) this.passage.getValue()), coordonnee, (double)this.altitude.getValue());
+						if(this.passageMinute.getValue() instanceof Double)
+							panelAPICarte.addPoint(((double)((long) this.passageHeure.getValue()))+((double)this.passageMinute.getValue()/60), coordonnee, (double)this.altitude.getValue());
+						else
+							panelAPICarte.addPoint(((double)((long) this.passageHeure.getValue()))+((double)((long)this.passageHeure.getValue())/60), coordonnee, (double)this.altitude.getValue());						
 					}
 					else
 					{
-						panelAPICarte.addPoint((double)((long) this.passage.getValue()), coordonnee, (double)((long)this.altitude.getValue()));
+						if(this.passageMinute.getValue() instanceof Double)
+							panelAPICarte.addPoint(((double)((long) this.passageHeure.getValue()))+((double)this.passageMinute.getValue()/60), coordonnee, (double)((long)this.altitude.getValue()));
+						else
+							panelAPICarte.addPoint(((double)((long) this.passageHeure.getValue()))+((double)((long)this.passageHeure.getValue())/60), coordonnee, (double)((long)this.altitude.getValue()));						
 					}
 					panelAPICarte.createMarkers();	
 					panelAPICarte.traceSegments();			
