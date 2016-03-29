@@ -8,6 +8,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.text.NumberFormat;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -37,13 +38,13 @@ public class IHMParcours implements ActionListener,MouseListener {
 
 	private JLabel typeSystemeCalc = new JLabel();
 
-	private JLabel vitesseMoy = new JLabel("Vitesse moyenne (km/h) :");
+	private JLabel vitesseMoy = new JLabel("Vitesse moyenne :");
 
 	private JLabel vitesseMoyCalc = new JLabel(""); // texte par
 	// défaut à
 	// supprimer
 
-	private JLabel altitudeMoy = new JLabel("Altitude moyenne (m) :");
+	private JLabel altitudeMoy = new JLabel("Altitude moyenne :");
 
 	private JLabel altitudeMoyCalc = new JLabel(""); // texte par
 	// défaut à
@@ -130,36 +131,39 @@ public class IHMParcours implements ActionListener,MouseListener {
 		comboBoxDebitTrame.setPreferredSize(new Dimension((int)(FenetreForge.height*0.27/2), (int)(FenetreForge.height*0.30/5)));
 		typeSysteme.setPreferredSize(new Dimension(115, 30));
 		typeSystemeCalc.setPreferredSize(new Dimension(115, 30));
-		vitesseMoy.setPreferredSize(new Dimension(115, 30));
+		vitesseMoy.setPreferredSize(new Dimension(150, 30));
 		vitesseMoyCalc.setPreferredSize(new Dimension(115, 30));
-		altitudeMoy.setPreferredSize(new Dimension(115, 30));
+		altitudeMoy.setPreferredSize(new Dimension(150, 30));
 		altitudeMoyCalc.setPreferredSize(new Dimension(115, 30));
 
 		// panel en haut a gauche (parametres)
 		parametres.setBorder(BorderFactory.createTitledBorder("Paramètres parcours"));
 		parametres.setLayout(new GridBagLayout());
 		GridBagConstraints gbcParametres = new GridBagConstraints();
+		gbcParametres.anchor = GridBagConstraints.LINE_START;
 		gbcParametres.gridx = 0;
 		gbcParametres.gridy = 0;
 		gbcParametres.gridwidth = 1;
 		gbcParametres.gridheight = 1;
 		parametres.add(typeSysteme, gbcParametres);
+		gbcParametres.anchor = GridBagConstraints.LINE_END;
 		gbcParametres.gridx = 1;
 		parametres.add(typeSystemeCalc, gbcParametres);
+		gbcParametres.anchor = GridBagConstraints.LINE_START;
 		gbcParametres.gridx = 0;
 		gbcParametres.gridy = 2;
 		parametres.add(vitesseMoy, gbcParametres);
+		gbcParametres.anchor = GridBagConstraints.LINE_END;
 		gbcParametres.gridx = 1;
 		parametres.add(vitesseMoyCalc, gbcParametres);
+		gbcParametres.anchor = GridBagConstraints.LINE_START;
 		gbcParametres.gridx = 0;
 		gbcParametres.gridy = 4;
 		parametres.add(altitudeMoy, gbcParametres);
+		gbcParametres.anchor = GridBagConstraints.LINE_END;
 		gbcParametres.gridx = 1;
 		parametres.add(altitudeMoyCalc, gbcParametres);
-		gbcParametres.gridwidth = 2;
-		gbcParametres.gridx = 0;
-		gbcParametres.gridy = 16;
-		parametres.add(comboBoxDebitTrame, gbcParametres);
+
 
 		// panel en bas a gauche (bouton simulation & menu)
 		boutonSimulation.setLayout(new GridBagLayout());
@@ -288,53 +292,43 @@ public class IHMParcours implements ActionListener,MouseListener {
 
 	}
 
-	@Override
-	public void mouseClicked(MouseEvent arg0) {
+	void setInformationsText()
+	{
+		NumberFormat format = NumberFormat.getInstance(); 
+		format.setMinimumFractionDigits(2);
 		if(panelAPICarte.getParcours().getListePoints().size() > 0)
 		{
-			vitesseMoyCalc.setText(Double.toString(panelAPICarte.getParcours().vitesseMoyenne()));
-			altitudeMoyCalc.setText(Double.toString(panelAPICarte.getParcours().altitudeMoyenne()));
+			String vitMoy=format.format(panelAPICarte.getParcours().vitesseMoyenne());
+			String altMoy=format.format(panelAPICarte.getParcours().altitudeMoyenne());
+			vitesseMoyCalc.setText(vitMoy + "  km/h");
+			altitudeMoyCalc.setText(altMoy + "  m");
 		}
+	}
 
+	@Override
+	public void mouseClicked(MouseEvent arg0) {
+		setInformationsText();
 	}
 
 	@Override
 	public void mouseEntered(MouseEvent arg0) {
-		if(panelAPICarte.getParcours().getListePoints().size() > 0)
-		{
-			vitesseMoyCalc.setText(Double.toString(panelAPICarte.getParcours().vitesseMoyenne()));
-			altitudeMoyCalc.setText(Double.toString(panelAPICarte.getParcours().altitudeMoyenne()));
-		}
-
+		setInformationsText();
 	}
 
 	@Override
 	public void mouseExited(MouseEvent arg0) {
-		if(panelAPICarte.getParcours().getListePoints().size() > 0)
-		{
-			vitesseMoyCalc.setText(Double.toString(panelAPICarte.getParcours().vitesseMoyenne()));
-			altitudeMoyCalc.setText(Double.toString(panelAPICarte.getParcours().altitudeMoyenne()));
-		}
+		setInformationsText();
 	}
 
 	@Override
 	public void mousePressed(MouseEvent arg0) {
-		if(panelAPICarte.getParcours().getListePoints().size() > 0)
-		{
-			vitesseMoyCalc.setText(Double.toString(panelAPICarte.getParcours().vitesseMoyenne()));
-			altitudeMoyCalc.setText(Double.toString(panelAPICarte.getParcours().altitudeMoyenne()));
-		}
+		setInformationsText();
 
 	}
 
 	@Override
 	public void mouseReleased(MouseEvent arg0) {
-		if(panelAPICarte.getParcours().getListePoints().size() > 0)
-		{
-			vitesseMoyCalc.setText(Double.toString(panelAPICarte.getParcours().vitesseMoyenne()));
-			altitudeMoyCalc.setText(Double.toString(panelAPICarte.getParcours().altitudeMoyenne()));
-		}
-
+		setInformationsText();
 	}	
 
 }
