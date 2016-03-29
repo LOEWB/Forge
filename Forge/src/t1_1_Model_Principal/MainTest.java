@@ -17,17 +17,18 @@ public class MainTest {
 		parcours.setDebit(1);
 
 		//		System.out.println("\nEnregistrement du parcours dans le fichier ParcoursStValence.fGF\n");
-		//		parcours.sauvegarderParcours("ParcoursSteValence.fGF");
+				parcours.sauvegarderParcours("ParcoursSteValence.fGF");
 
 		//		System.out.println("\nCréation d'un nouveau parcours\nChargement du parcours depuis le fichier ParcoursStValence.fGF dans ce nouveau parcours\n");
-		//		Parcours newParcours = new Parcours(TypeSysteme.TERRESTRE);
-		//		newParcours.chargerParcours("ParcoursSteValence.fGF");
+				Parcours newParcours = new Parcours(TypeSysteme.AERIEN);
+				newParcours.chargerParcours("ParcoursSteValence.fGF");
 
 		System.out.println("\n\n\t\tSIMULATION\n\n");
 		Simulation simu = new Simulation(parcours);
 		System.out.println("\nExportation de la simulation dans le fichier SimuSteValence.nmea\nImportation de la simulation depuis le fichier SimuSteValence.nmea");
 		simu.exportSimulation("SimuSteValence.nmea");
-		simu.importSimulation("SimuSteValence.nmea");
+		Simulation simu2 = new Simulation();
+		simu2.importSimulation("SimuSteValence.nmea");
 
 		System.out.println("\n\nAffichage des trames importées par ligne :\n");
 		for (String trame : simu.getTramesArray())
@@ -36,12 +37,16 @@ public class MainTest {
 		}
 		System.out.println("\nVitesse moyenne : "+parcours.vitesseMoyenne()+"km/h");
 
-		
-		PortSerie testPortSerie = new PortSerie();
-		testPortSerie.setPort("COM8", 96000);
-		while(true) {
-			testPortSerie.envoyer("Debut Test Fin");
+		for(Point p:newParcours.getListePoints())
+		{
+			System.out.println(p+"");
 		}
+		
+//		PortSerie testPortSerie = new PortSerie();
+//		testPortSerie.setPort("COM8", 96000);
+//		while(true) {
+//			testPortSerie.envoyer("Debut Test Fin");
+//		}
 		
 		//		System.out.println("\n\nDébut simulation :");
 		//		simu.jouerSimulation();

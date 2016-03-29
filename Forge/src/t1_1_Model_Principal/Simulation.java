@@ -18,6 +18,9 @@ public class Simulation {
 		this.chargerTramesBrutes(parcours.genererTrames());
 	}
 
+	public Simulation() {
+	}
+
 	public ArrayList<String> getTramesArray() {
 		return tramesArray;
 	}
