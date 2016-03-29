@@ -253,13 +253,7 @@ public class IHMParcours implements ActionListener,MouseListener {
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		// test :
-		Point valence = new Point(0, new Coordonnees(44.933014, 4.890892), 0);
-		Point saintay = new Point(3600, new Coordonnees(45.446958, 4.383396), 0);
-		Parcours parcours = new Parcours(TypeSysteme.TERRESTRE);
-		parcours.ajouterPoint(valence);
-		parcours.ajouterPoint(saintay);
-
+		
 		switch (e.getActionCommand()) {
 		case "debitTrame":
 			switch (comboBoxDebitTrame.getSelectedIndex())
@@ -277,7 +271,7 @@ public class IHMParcours implements ActionListener,MouseListener {
 			break;
 		case "sauvegarder":
 		case "charger":
-			new IHMChoixFichier(e.getActionCommand(), parcours);
+			new IHMChoixFichier(e.getActionCommand(), this.panelAPICarte);
 			break;
 		case "simulation":
 			FenetreForge.fenetreForge.dispose();

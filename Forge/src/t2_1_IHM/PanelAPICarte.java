@@ -145,7 +145,12 @@ public class PanelAPICarte extends JMapViewer {
 	{
 		return parcours;
 	}
-
+	
+	public void setParcours(Parcours parcours) 
+	{
+		this.parcours = parcours;
+	}
+	
 	void traceSegments()
 	{	
 		if(this.parcours.getListePoints().size()>=2)

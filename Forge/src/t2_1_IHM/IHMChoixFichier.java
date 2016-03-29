@@ -9,6 +9,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 
 import t1_1_Model_Principal.Parcours;
 import t1_1_Model_Principal.Simulation;
+import t1_1_Model_Principal.TypeSysteme;
 
 /**
  * lance la sauvegarde ou le chargement d'un parcours ou d'une simulation
@@ -17,8 +18,8 @@ import t1_1_Model_Principal.Simulation;
  *
  */
 public class IHMChoixFichier extends JFrame {
-
-	private final Parcours parcours;
+	
+	private final PanelAPICarte panelAPICarte;
 
 	private final Simulation simulation;
 
@@ -31,8 +32,8 @@ public class IHMChoixFichier extends JFrame {
 	 *            (sauvegarde ou chargement)
 	 * @param parcours
 	 */
-	public IHMChoixFichier(String typeOperation, Parcours parcours) {
-		this.parcours = parcours;
+	public IHMChoixFichier(String typeOperation, PanelAPICarte panelAPICarte) {
+		this.panelAPICarte = panelAPICarte;
 		this.simulation = null;
 
 		File directory = new File("./files");
@@ -66,10 +67,9 @@ public class IHMChoixFichier extends JFrame {
 	 *            (importation ou exportation)
 	 * @param simulation
 	 */
-	public IHMChoixFichier(String typeOperation, Parcours parcours,
-			Simulation simulation) {
+	public IHMChoixFichier(String typeOperation, PanelAPICarte panelAPICarte, Simulation simulation) {
 		this.simulation = simulation;
-		this.parcours = parcours;
+		this.panelAPICarte = panelAPICarte;
 
 		File directory = new File("./files");
 
@@ -122,7 +122,7 @@ public class IHMChoixFichier extends JFrame {
 																// confirmé
 						choixFichier.getSelectedFile().delete();
 						if (this.simulation == null)
-							this.parcours.sauvegarderParcours(path);
+							this.panelAPICarte.getParcours().sauvegarderParcours(path);
 						else
 							this.simulation.exportSimulation(path);
 					}
@@ -131,7 +131,7 @@ public class IHMChoixFichier extends JFrame {
 				// sauvegarde dans un nouveau fichier
 				else {
 					if (this.simulation == null)
-						this.parcours.sauvegarderParcours(path);
+						this.panelAPICarte.getParcours().sauvegarderParcours(path);
 					else
 						this.simulation.exportSimulation(path);
 				}
@@ -164,7 +164,7 @@ public class IHMChoixFichier extends JFrame {
 			if (fichier.exists() && fichier.getName().endsWith(this.extension)) {
 				// lancer chargementParcours ou importationSimulation
 				if (this.simulation == null)
-					this.parcours.chargerParcours(path);
+					chargeParcours(path);
 				else
 					this.simulation.importSimulation(path);
 			} else
@@ -174,6 +174,18 @@ public class IHMChoixFichier extends JFrame {
 		} else if (retour == JFileChooser.ERROR_OPTION)
 			JOptionPane.showMessageDialog(this, "Action impossible", "Erreur",
 					JOptionPane.ERROR_MESSAGE);
+	}
+
+	private void chargeParcours(String path) {
+		this.panelAPICarte.removeSegments();
+		this.panelAPICarte.removeAllMapMarkers();
+		
+		// creer parcours vide en récupérant le bon type du systeme
+		this.panelAPICarte.setParcours(new Parcours(TypeSysteme.TERRESTRE));
+		this.panelAPICarte.getParcours().chargerParcours(path);
+		
+		this.panelAPICarte.createMarkers();
+		this.panelAPICarte.traceSegments();
 	}
 
 }

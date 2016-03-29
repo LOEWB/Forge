@@ -360,13 +360,13 @@ public class IHMSimulation implements ActionListener {
 
 		switch (e.getActionCommand()) {
 		case "charger":
-			new IHMChoixFichier(e.getActionCommand(), parcours);
+			new IHMChoixFichier(e.getActionCommand(), this.panelAPICarte);
 			break;
 		case "importer":
 			break;
 		case "exporter":
 			Simulation simulation = new Simulation(parcours);
-			new IHMChoixFichier(e.getActionCommand(), parcours, simulation);
+			new IHMChoixFichier(e.getActionCommand(), this.panelAPICarte, simulation);
 			break;
 		case "menu":
 			FenetreForge.fenetreForge.dispose();
