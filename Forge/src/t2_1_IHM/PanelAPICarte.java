@@ -184,10 +184,12 @@ public class PanelAPICarte extends JMapViewer {
 
 			if(this.mapMarkerList.size() > 0 && this.parcours.getListePoints().size()>0)
 			{
-				for (int j=0;j<this.mapMarkerList.size()-1;j++)
+				for (int j=0;j<this.mapMarkerList.size();j++)
 				{
 					this.pointMarker.put(this.mapMarkerList.get(j), this.parcours.getListePoints().get(j));
+
 				}
+				
 			}
 		}
 
