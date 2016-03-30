@@ -90,6 +90,174 @@ public class Simulation {
 		
 		
 	}
+
+	ArrayList<Point> getPoints(String trames) {
+		
+		ArrayList<Point> listePoints = new ArrayList<Point>();
+
+			double tempsPremierPoint = 0;
+			double tempsPoint = 0;
+			double doublePart;
+			int i = 0;
+			int h=0;
+			int intPart;
+			double longitude;
+			double latitude;
+			float altitude = 0;
+
+	 		String parcoursBrut = trames;
+			String temporaire = "";
+			String temporaire2 = "";
+			String integerPart = "";
+			
+			i = 7;
+
+			while (parcoursBrut.charAt(i) != ',') {
+				temporaire += parcoursBrut.charAt(i);
+				i++;
+			}
+			i++;
+
+			tempsPremierPoint = Double.parseDouble(temporaire);
+
+			temporaire = "";
+
+			while (parcoursBrut.charAt(i) != ',') {
+				temporaire += parcoursBrut.charAt(i);
+				i++;
+			}
+
+			i++;
+			latitude = Double.parseDouble(temporaire);
+			i += 2;
+			temporaire = "";
+			while (parcoursBrut.charAt(i) != ',') {
+				temporaire += parcoursBrut.charAt(i);
+				i++;
+			}
+			i++;
+			longitude = Double.parseDouble(temporaire);
+			i += 2;
+
+			while (parcoursBrut.charAt(i) != ',')
+				i++; // saut du fix
+			i++;
+
+			while (parcoursBrut.charAt(i) != ',')
+				i++; // saut satellites
+			i++;
+
+			while (parcoursBrut.charAt(i) != ',')
+				i++; // saut DOP
+			i++;
+
+			temporaire = "";
+
+			while (parcoursBrut.charAt(i) != ',') {
+				temporaire += parcoursBrut.charAt(i);
+				i++;
+			}
+
+			altitude = Float.parseFloat(temporaire);
+
+			if ((parcoursBrut.indexOf("$GPGGA", i)) != -1) {
+				i = parcoursBrut.indexOf("$GPGGA", i);
+				parcoursBrut = parcoursBrut.substring(i);
+			
+	 
+			listePoints.add(new Point(tempsPremierPoint, new Coordonnees(longitude,
+					latitude), altitude));
+
+			while (parcoursBrut.indexOf("$GPGGA", 0) != -1) {
+
+				temporaire = "";
+
+				i = 7;
+
+				while (parcoursBrut.charAt(i) != ',') {
+					temporaire += parcoursBrut.charAt(i);
+					i++;
+				}
+				i++;
+
+				tempsPoint = Double.parseDouble(temporaire);
+
+				temporaire = "";
+
+				while (parcoursBrut.charAt(i) != ',') {
+					temporaire += parcoursBrut.charAt(i);
+					i++;
+				}
+				i++;
+				latitude = Double.parseDouble(temporaire);
+				i += 2;
+				temporaire = "";
+				while (parcoursBrut.charAt(i) != ',') {
+					temporaire += parcoursBrut.charAt(i);
+					i++;
+				}
+				i++;
+				longitude = Double.parseDouble(temporaire);
+				i += 2;
+
+				while (parcoursBrut.charAt(i) != ',')
+					i++; // saut du fix
+				i++;
+
+				while (parcoursBrut.charAt(i) != ',')
+					i++; // saut satellites
+				i++;
+
+				while (parcoursBrut.charAt(i) != ',')
+					i++; // saut DOP
+				i++;
+
+				temporaire = "";
+
+				while (parcoursBrut.charAt(i) != ',') { // offset to go to the next
+														// frame : c'est plus facile
+														// à dire en anglais :)
+					temporaire += parcoursBrut.charAt(i);
+					i++;
+				}
+
+				altitude = Float.parseFloat(temporaire);
+
+				if ((parcoursBrut.indexOf("$GPGGA", i)) != -1)
+					i = parcoursBrut.indexOf("$GPGGA", i);
+
+				parcoursBrut = parcoursBrut.substring(i);
+				
+				integerPart = "";
+				temporaire2 = ""+latitude+"";
+				h=0;
+				while(temporaire2.charAt(h) != '.') h++; // recherche partie int
+				integerPart = temporaire2.substring(0, h);
+				intPart = Integer.parseInt(integerPart); // d
+				integerPart = "0." + temporaire2.substring(h+1, temporaire2.length()-1);
+				doublePart = Double.parseDouble(integerPart);
+				temporaire2 = "" + intPart + doublePart/60 + "";
+				latitude = Double.valueOf(temporaire2);
+				
+				integerPart = "";
+				temporaire2 = ""+longitude+"";
+				h=0;
+				while(temporaire2.charAt(h) != '.') h++; // recherche partie int
+				integerPart = temporaire2.substring(0, h);
+				intPart = Integer.parseInt(integerPart); // d
+				integerPart = "0." + temporaire2.substring(h+1, temporaire2.length()-1);
+				doublePart = Double.parseDouble(integerPart);
+				temporaire2 = "" + intPart + doublePart/60 + "";
+				longitude = Double.valueOf(temporaire2);
+				
+				
+				listePoints.add(new Point(tempsPoint - tempsPremierPoint,
+						new Coordonnees(latitude, longitude), altitude));
+			}
+	 	}
+		
+			return listePoints;
+	}
 	
 	
 	public void importSimulation(String cheminFichier)
