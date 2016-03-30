@@ -218,8 +218,8 @@ public class IHMInformationsPoints extends JFrame implements ActionListener{
 		passageHeure.setPreferredSize(new Dimension((int)(FenetreForge.width*0.20)/5, (int)(FenetreForge.height*0.17)/6));
 		passageMinute.setPreferredSize(new Dimension((int)(FenetreForge.width*0.20)/5, (int)(FenetreForge.height*0.17)/6));
 		altitude.setPreferredSize(new Dimension((int)(FenetreForge.width*0.20)/5, (int)(FenetreForge.height*0.17)/6));
-		boutonSupprimerCreerPoint.setPreferredSize(new Dimension((int)(FenetreForge.width*0.27)/4, (int)(FenetreForge.height*0.17)/6));
-		boutonSortir.setPreferredSize(new Dimension((int)(FenetreForge.width*0.27)/4, (int)(FenetreForge.height*0.17)/6));
+		boutonSupprimerCreerPoint.setPreferredSize(new Dimension((int)(FenetreForge.width*0.27)/4, (int)(FenetreForge.height*0.15)/6));
+		boutonSortir.setPreferredSize(new Dimension((int)(FenetreForge.width*0.27)/4, (int)(FenetreForge.height*0.15)/6));
 
 
 		JPanel cell1 = new JPanel();
