@@ -40,7 +40,57 @@ public class Simulation {
 	EtatSimu getEtat() {
 		return this.etat;
 	}
+	/*
+	public void chargerParcours(String cheminFichier) {
+		ConteneurFichier conteneurFichier = new ConteneurFichier();
+		String parcoursBrut = conteneurFichier.lire(cheminFichier);
+		
+		String[] attributsTable=parcoursBrut.split("#");
+		//type systeme
+		if(attributsTable[0]!="1")
+			this.typeSysteme=TypeSysteme.TERRESTRE;
+		else
+			this.typeSysteme=TypeSysteme.AERIEN;
+		
+		//debitGPS
+		this.GPSdebit=Float.valueOf(attributsTable[1]);
+		//liste points
+		String[] listePoints=attributsTable[2].split("\\$");
+		
+		for(int i=0;i<listePoints.length;i++)
+		{
+			String[] tabPt=listePoints[i].split(",");
+			this.listePoints.add(new Point(Double.valueOf(tabPt[0]),new Coordonnees(Double.valueOf(tabPt[2]),Double.valueOf(tabPt[3])),Double.valueOf(tabPt[1])));
+		}
+		
+
+			
+
+	} */
+	// $GPGGA,180820.0,4455.9806,N,00453.4530,E,1,6,14.6,0.0,M,47.9,M,,*57
+	  
+	 
+	/*
+	Point getPoint(String trame) {
+		 Coordonnees coordonnes;
+		 double tempsPassageRelatif;
+		 double altitude;
+
+		String[] attributsTable=trame.split(",");
+		altitude = Double.valueOf(arg0)
+		//t=Float.valueOf(attributsTable[1]);
+		
+		
+	}
 	
+	public Point(double sec, Coordonnees coor, double altitude) {
+
+		this.coordonnes = coor;
+		this.tempsPassageRelatif = sec;
+		this.altitude = altitude;
+	}
+	
+	*/
 	public void importSimulation(String cheminFichier)
 	{
 		ConteneurFichier conteneurFichier = new ConteneurFichier();
