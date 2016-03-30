@@ -185,7 +185,10 @@ public class IHMChoixFichier extends JFrame {
 		this.panelAPICarte.removeAllMapMarkers();
 		
 		// creer parcours vide en récupérant le bon type du systeme
-		this.panelAPICarte.setParcours(new Parcours(TypeSysteme.TERRESTRE));
+		if(this.panelAPICarte.getParcours().getTypeSysteme() == TypeSysteme.TERRESTRE)
+			this.panelAPICarte.setParcours(new Parcours(TypeSysteme.TERRESTRE));
+		else
+			this.panelAPICarte.setParcours(new Parcours(TypeSysteme.AERIEN));
 		this.panelAPICarte.getParcours().chargerParcours(path);
 		
 		if(this.fenetre == "creation")

@@ -71,8 +71,11 @@ public class IHMParcours implements ActionListener,MouseListener {
 		panelAPICarte.createMarkers();	
 		panelAPICarte.traceSegments();
 
+		if(this.panelAPICarte.getParcours().getTypeSysteme() == TypeSysteme.AERIEN)
+			altitudeMoyCalc.setText(Double.toString(panelAPICarte.getParcours().altitudeMoyenne()));
+			
 		vitesseMoyCalc.setText(Double.toString(panelAPICarte.getParcours().vitesseMoyenne()));
-		altitudeMoyCalc.setText(Double.toString(panelAPICarte.getParcours().altitudeMoyenne()));		
+			
 
 		JPanel parametres = new JPanel();
 		JPanel boutonSimulation = new JPanel();
@@ -131,7 +134,7 @@ public class IHMParcours implements ActionListener,MouseListener {
 		Dimension dimensionComboBox = new Dimension((int)(FenetreForge.width*0.3/2), (int)(FenetreForge.height*0.30/5));
 		Dimension dimensionLabelsInformation = new Dimension((int)(FenetreForge.width*0.18/2), (int)(FenetreForge.height*0.10));
 
-		
+
 		api.setPreferredSize(dimensionAPI);
 		bsimulation.setPreferredSize(dimensionBoutonsBasGauche);
 		bmenu.setPreferredSize(dimensionBoutonsBasGauche);
@@ -144,7 +147,7 @@ public class IHMParcours implements ActionListener,MouseListener {
 		vitesseMoyCalc.setPreferredSize(dimensionLabelsInformation);
 		altitudeMoy.setPreferredSize(dimensionLabelsInformation);
 		altitudeMoyCalc.setPreferredSize(dimensionLabelsInformation);
-		
+
 		Font tailletexte = new Font(null, Font.BOLD, 12);
 		typeSysteme.setFont(tailletexte);
 		typeSystemeCalc.setFont(tailletexte);
@@ -158,7 +161,7 @@ public class IHMParcours implements ActionListener,MouseListener {
 		((JLabel)comboBoxDebitTrame.getRenderer()).setHorizontalAlignment(SwingConstants.CENTER);
 		bsauvegarder.setFont(tailletexte);
 		bcharger.setFont(tailletexte);
-		
+
 
 		// panel en haut a gauche (parametres)
 		parametres.setBorder(BorderFactory.createTitledBorder(null, "Paramètres parcours", 0, 0, tailletexte));
@@ -212,6 +215,12 @@ public class IHMParcours implements ActionListener,MouseListener {
 		basDroit.add(bsauvegarder, gbcBasDroit);		
 		gbcBasDroit.gridx = 2;
 		basDroit.add(bcharger, gbcBasDroit);
+		
+		if(this.panelAPICarte.getParcours().getTypeSysteme() == TypeSysteme.TERRESTRE)
+		{
+			altitudeMoy.setVisible(false);
+			altitudeMoyCalc.setVisible(false);
+		}
 
 		FenetreForge.fenetreForge.getContentPane().removeAll();
 		FenetreForge.fenetreForge.getContentPane().add(splitForge);
@@ -300,6 +309,7 @@ public class IHMParcours implements ActionListener,MouseListener {
 		case "sauvegarder":
 		case "charger":
 			new IHMChoixFichier(e.getActionCommand(), this.panelAPICarte, "creation");
+			actualiseType();
 			break;
 		case "simulation":
 			FenetreForge.fenetreForge.dispose();
@@ -316,43 +326,63 @@ public class IHMParcours implements ActionListener,MouseListener {
 
 	}
 
-	void setInformationsText()
+
+	void actualiseType()
+	{
+		switch (this.panelAPICarte.getParcours().getTypeSysteme())
+		{
+		case TERRESTRE:
+			typeSystemeCalc.setText("terrestre");
+			break;
+		case AERIEN:
+			typeSystemeCalc.setText("aerien");
+			break;
+		}
+
+		setInformationsText(this.panelAPICarte.getParcours().getTypeSysteme());
+
+	}
+
+	void setInformationsText(TypeSysteme type)
 	{
 		NumberFormat format = NumberFormat.getInstance(); 
 		format.setMinimumFractionDigits(2);
 		if(panelAPICarte.getParcours().getListePoints().size() > 0)
 		{
 			String vitMoy=format.format(panelAPICarte.getParcours().vitesseMoyenne());
-			String altMoy=format.format(panelAPICarte.getParcours().altitudeMoyenne());
 			vitesseMoyCalc.setText(vitMoy + "  km/h");
-			altitudeMoyCalc.setText(altMoy + "  m");
+			if(type == TypeSysteme.AERIEN)
+			{
+				String altMoy=format.format(panelAPICarte.getParcours().altitudeMoyenne());			
+				altitudeMoyCalc.setText(altMoy + "  m");
+			}
 		}
 	}
 
 	@Override
 	public void mouseClicked(MouseEvent arg0) {
-		setInformationsText();
+		setInformationsText(this.panelAPICarte.getParcours().getTypeSysteme());
 	}
 
 	@Override
 	public void mouseEntered(MouseEvent arg0) {
-		setInformationsText();
+		setInformationsText(this.panelAPICarte.getParcours().getTypeSysteme());
 	}
 
 	@Override
 	public void mouseExited(MouseEvent arg0) {
-		setInformationsText();
+		setInformationsText(this.panelAPICarte.getParcours().getTypeSysteme());
 	}
 
 	@Override
 	public void mousePressed(MouseEvent arg0) {
-		setInformationsText();
+		setInformationsText(this.panelAPICarte.getParcours().getTypeSysteme());
 
 	}
 
 	@Override
 	public void mouseReleased(MouseEvent arg0) {
-		setInformationsText();
+		setInformationsText(this.panelAPICarte.getParcours().getTypeSysteme());
 	}	
 
 }
