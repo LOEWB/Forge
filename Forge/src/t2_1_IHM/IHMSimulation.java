@@ -372,19 +372,15 @@ public class IHMSimulation implements ActionListener {
 		vitesse.setMinorTickSpacing(0);
 		vitesse.setMajorTickSpacing(1);
 		
-		bas.setLayout(new GridBagLayout());
-		GridBagConstraints gbcBas = new GridBagConstraints();             
-		gbcBas.insets = new Insets(4,4,4,4);
-		gbcBas.anchor = GridBagConstraints.CENTER;
-		gbcBas.gridx = 0;       
-		gbcBas.gridy = 0;
-		bas.add(bPause, gbcBas);
-		gbcBas.gridx = 1;       
-		bas.add(bLecture, gbcBas);
-		gbcBas.fill = 4;
-		gbcBas.gridx = 2;       
-		bas.add(vitesse, gbcBas);
 		
+		GridLayout glBas = new GridLayout(3, 1);
+		glBas.setHgap(5); 
+		glBas.setVgap(5);
+		bas.setLayout(glBas);         
+		bas.add(bPause);
+		bas.add(bLecture);
+		bas.add(vitesse);    
+		bas.setLayout(new GridBagLayout());		
 
 		api.setZoom(8, new java.awt.Point(-25,40));
 		carte.add(api); 
