@@ -27,7 +27,7 @@ import t1_1_Model_Principal.PointComp;
 
 public class PanelAPICarte extends JMapViewer {
 
-	DefaultMapController mapController;
+	private DefaultMapController mapController;
 
 	private Parcours parcours;
 
@@ -53,7 +53,7 @@ public class PanelAPICarte extends JMapViewer {
 				}
 				else
 				{
-					// TODO --> cas du click sur un marker
+					// cas du click sur un marker
 					for (MapMarker marker : mapMarkerList)
 					{
 						// point sur l'écran
@@ -112,7 +112,7 @@ public class PanelAPICarte extends JMapViewer {
 	/**
 	 * ajoute le point au parcours en cours
 	 */
-	void addPoint(double sec, Coordinate coord, double altitude)
+	public void addPoint(double sec, Coordinate coord, double altitude)
 	{
 
 		Point point = new Point(sec,new Coordonnees(coord.getLat(), coord.getLon()),altitude);
@@ -120,7 +120,7 @@ public class PanelAPICarte extends JMapViewer {
 
 	}
 
-	void changePoint(double sec, Point point, double altitude)
+	public void changePoint(double sec, Point point, double altitude)
 	{		
 
 		for(int i=0;i<this.parcours.getListePoints().size();i++)
@@ -135,7 +135,7 @@ public class PanelAPICarte extends JMapViewer {
 
 	}
 
-	void deletePoint(Point point)
+	public void deletePoint(Point point)
 	{		
 		this.parcours.supprimerPoint(point);
 		Collections.sort(panelAPICarte.getParcours().getListePoints(),new PointComp());
@@ -151,7 +151,7 @@ public class PanelAPICarte extends JMapViewer {
 		this.parcours = parcours;
 	}
 	
-	void traceSegments()
+	public void traceSegments()
 	{	
 		if(this.parcours.getListePoints().size()>=2)
 		{
@@ -168,7 +168,7 @@ public class PanelAPICarte extends JMapViewer {
 		}
 	}
 
-	void removeSegments()
+	public void removeSegments()
 	{		
 		if(!(this.mapPolygonList.isEmpty()))
 		{
@@ -177,7 +177,7 @@ public class PanelAPICarte extends JMapViewer {
 		}
 	}
 
-	void createMarkers()
+	public void createMarkers()
 	{		
 		if(this.parcours.getListePoints().size()>0)
 		{
@@ -211,7 +211,7 @@ public class PanelAPICarte extends JMapViewer {
 
 	}
 	
-	void createMarkerDebutFin()
+	public void createMarkerDebutFin()
 	{		
 		if(this.parcours.getListePoints().size()>0)
 		{
@@ -238,7 +238,7 @@ public class PanelAPICarte extends JMapViewer {
 
 	}
 
-	void removeMarker(Point point)
+	public void removeMarker(Point point)
 	{
 		for(MapMarker marker : this.mapMarkerList)
 		{
@@ -248,6 +248,10 @@ public class PanelAPICarte extends JMapViewer {
 			}
 		}
 
+	}
+	
+	public DefaultMapController getMapController(){
+		return this.mapController;
 	}
 
 }
