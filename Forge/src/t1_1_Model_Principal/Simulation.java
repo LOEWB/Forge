@@ -165,8 +165,8 @@ public class Simulation {
 				parcoursBrut = parcoursBrut.substring(i);
 			
 	 
-			listePoints.add(new Point(tempsPremierPoint, new Coordonnees(longitude,
-					latitude), altitude));
+			listePoints.add(new Point(tempsPremierPoint, new Coordonnees(latitude,
+					longitude), altitude));
 
 			while (parcoursBrut.indexOf("$GPGGA", 0) != -1) {
 
