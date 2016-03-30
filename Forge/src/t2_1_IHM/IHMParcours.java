@@ -333,9 +333,13 @@ public class IHMParcours implements ActionListener,MouseListener {
 		{
 		case TERRESTRE:
 			typeSystemeCalc.setText("terrestre");
+			altitudeMoy.setVisible(false);
+			altitudeMoyCalc.setVisible(false);
 			break;
-		case AERIEN:
+		case AERIEN: default:
 			typeSystemeCalc.setText("aerien");
+			altitudeMoy.setVisible(true);
+			altitudeMoyCalc.setVisible(true);
 			break;
 		}
 
