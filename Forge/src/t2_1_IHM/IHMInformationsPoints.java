@@ -215,13 +215,11 @@ public class IHMInformationsPoints extends JFrame implements ActionListener{
 
 		// création du layout (GridBagLayout)
 
-		passageHeure.setPreferredSize(new Dimension((int)(FenetreForge.width*0.20)/5, (int)(FenetreForge.height*0.18)/6));
-		passageMinute.setPreferredSize(new Dimension((int)(FenetreForge.width*0.20)/5, (int)(FenetreForge.height*0.18)/6));
-		altitude.setPreferredSize(new Dimension((int)(FenetreForge.width*0.20)/5, (int)(FenetreForge.height*0.18)/6));
-		boutonSupprimerCreerPoint.setPreferredSize(new Dimension((int)(FenetreForge.width*0.2)/4, (int)(FenetreForge.height*0.18)/6));
-		boutonSortir.setPreferredSize(new Dimension((int)(FenetreForge.width*0.2)/4, (int)(FenetreForge.height*0.18)/6));
-		jlpassage.setPreferredSize(new Dimension((int)(FenetreForge.width*0.2)/4, (int)(FenetreForge.height*0.18)/6));
-		jlaltitude.setPreferredSize(new Dimension((int)(FenetreForge.width*0.2)/4, (int)(FenetreForge.height*0.18)/6));
+		passageHeure.setPreferredSize(new Dimension((int)(FenetreForge.width*0.20)/5, (int)(FenetreForge.height*0.17)/6));
+		passageMinute.setPreferredSize(new Dimension((int)(FenetreForge.width*0.20)/5, (int)(FenetreForge.height*0.17)/6));
+		altitude.setPreferredSize(new Dimension((int)(FenetreForge.width*0.20)/5, (int)(FenetreForge.height*0.17)/6));
+		boutonSupprimerCreerPoint.setPreferredSize(new Dimension((int)(FenetreForge.width*0.27)/4, (int)(FenetreForge.height*0.17)/6));
+		boutonSortir.setPreferredSize(new Dimension((int)(FenetreForge.width*0.27)/4, (int)(FenetreForge.height*0.17)/6));
 
 
 		JPanel cell1 = new JPanel();
@@ -235,16 +233,15 @@ public class IHMInformationsPoints extends JFrame implements ActionListener{
 		cell2.setPreferredSize(new Dimension((int)(FenetreForge.width*0.20)/5, (int)(FenetreForge.height*0.2)/6));
 		JPanel cell3 = new JPanel();
 		cell3.add(this.boutonSupprimerCreerPoint);
-		cell3.setPreferredSize(new Dimension((int)(FenetreForge.width*0.2)/4, (int)(FenetreForge.height*0.2)/6));
+		cell3.setPreferredSize(new Dimension((int)(FenetreForge.width*0.3)/4, (int)(FenetreForge.height*0.2)/6));
 		JPanel cell4 = new JPanel();
 		cell4.add(this.boutonSortir);
-		cell4.setPreferredSize(new Dimension((int)(FenetreForge.width*0.2)/4, (int)(FenetreForge.height*0.2)/6));
+		cell4.setPreferredSize(new Dimension((int)(FenetreForge.width*0.3)/4, (int)(FenetreForge.height*0.2)/6));
 		JPanel cell5 = new JPanel();
 		cell5.add(this.jlpassage);
-		cell5.setPreferredSize(new Dimension((int)(FenetreForge.width*0.2)/4, (int)(FenetreForge.height*0.2)/6));
 		JPanel cell6 = new JPanel();
 		cell6.add(this.jlaltitude);
-		cell6.setPreferredSize(new Dimension((int)(FenetreForge.width*0.2)/4, (int)(FenetreForge.height*0.2)/6));
+
 
 		this.panel.setPreferredSize(new Dimension((int)(FenetreForge.width*0.20), (int)(FenetreForge.height*0.20)));
 		this.panel.setLayout(new GridBagLayout());
