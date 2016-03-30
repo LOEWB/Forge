@@ -40,13 +40,13 @@ public class IHMParcours implements ActionListener,MouseListener {
 
 	private JLabel typeSystemeCalc = new JLabel();
 
-	private JLabel vitesseMoy = new JLabel("Vitesse moyenne :");
+	private JLabel vitesseMoy = new JLabel("Vitesse moyenne :  ");
 
 	private JLabel vitesseMoyCalc = new JLabel(""); // texte par
 	// défaut à
 	// supprimer
 
-	private JLabel altitudeMoy = new JLabel("Altitude moyenne :");
+	private JLabel altitudeMoy = new JLabel("Altitude moyenne :  ");
 
 	private JLabel altitudeMoyCalc = new JLabel(""); // texte par
 	// défaut à
@@ -93,7 +93,7 @@ public class IHMParcours implements ActionListener,MouseListener {
 
 		JSplitPane splitForge = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,
 				splitGauche, splitDroit);
-		splitForge.setDividerLocation((int)(FenetreForge.height*0.35));
+		splitForge.setDividerLocation((int)(FenetreForge.width*0.198));
 		splitForge.setDividerSize(0);
 
 		splitForge.setContinuousLayout(true);
@@ -129,7 +129,7 @@ public class IHMParcours implements ActionListener,MouseListener {
 		Dimension dimensionBoutonsBasGauche = new Dimension((int)(FenetreForge.width*0.15), (int)(FenetreForge.height*0.30/5));
 		Dimension dimensionBoutonsBasDroite = new Dimension((int)(FenetreForge.width*0.3), (int)(FenetreForge.height*0.30/5));
 		Dimension dimensionComboBox = new Dimension((int)(FenetreForge.width*0.3/2), (int)(FenetreForge.height*0.30/5));
-		Dimension dimensionLabelsInformation = new Dimension((int)(FenetreForge.width*0.06), (int)(FenetreForge.height*0.10));
+		Dimension dimensionLabelsInformation = new Dimension((int)(FenetreForge.width*0.18/2), (int)(FenetreForge.height*0.10));
 
 		
 		api.setPreferredSize(dimensionAPI);
@@ -145,7 +145,7 @@ public class IHMParcours implements ActionListener,MouseListener {
 		altitudeMoy.setPreferredSize(dimensionLabelsInformation);
 		altitudeMoyCalc.setPreferredSize(dimensionLabelsInformation);
 		
-		Font tailletexte = new Font(null, Font.BOLD, 20);
+		Font tailletexte = new Font(null, Font.BOLD, 12);
 		typeSysteme.setFont(tailletexte);
 		typeSystemeCalc.setFont(tailletexte);
 		vitesseMoy.setFont(tailletexte);

@@ -147,7 +147,7 @@ public class IHMSimulation implements ActionListener {
 		splitBasDroit.setDividerSize(0);
 
 		JSplitPane splitForge = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, splitBasGauche,splitBasDroit);
-		splitForge.setDividerLocation((int)(FenetreForge.height*0.35));
+		splitForge.setDividerLocation((int)(FenetreForge.width*0.198));
 		splitForge.setDividerSize(0);         
 
 		splitForge.setContinuousLayout(true);
@@ -191,7 +191,7 @@ public class IHMSimulation implements ActionListener {
 		Dimension dimensionComboBox = new Dimension((int)(FenetreForge.width*0.15/2), (int)(FenetreForge.height*0.30/5));
 		Dimension dimensionBoutonsBas = new Dimension((int)(FenetreForge.width*0.15), (int)(FenetreForge.height*0.18/3));
 		Dimension dimensionDates = new Dimension((int)(FenetreForge.width*0.15/2), (int)(FenetreForge.height*0.50/3/4));
-		Dimension dimensionInformations = new Dimension((int)(FenetreForge.width*0.25), (int)(FenetreForge.height*0.50/3/4));		
+		Dimension dimensionInformations = new Dimension((int)(FenetreForge.width*0.25), (int)(FenetreForge.height*0.20/4));		
 
 		api.setPreferredSize(dimensionAPI);
 		vitesse.setPreferredSize(dimensionJSlider);
@@ -215,7 +215,7 @@ public class IHMSimulation implements ActionListener {
 		heureActuelleDisplay.setPreferredSize(dimensionInformations);
 		dateActuelleDisplay.setPreferredSize(dimensionInformations);
 		
-		Font tailletexte = new Font(null, Font.BOLD, 20);
+		Font tailletexte = new Font(null, Font.BOLD, 12);
 		vitActuelle.setFont(tailletexte);
 		vitMoyenne.setFont(tailletexte);
 		heureDepart.setFont(tailletexte);
