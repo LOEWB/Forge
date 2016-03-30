@@ -2,6 +2,7 @@ package t2_1_IHM;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
@@ -16,6 +17,7 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSplitPane;
+import javax.swing.SwingConstants;
 
 import org.openstreetmap.gui.jmapviewer.DefaultMapController;
 
@@ -123,21 +125,43 @@ public class IHMParcours implements ActionListener,MouseListener {
 		basDroit.setBackground(Color.WHITE);
 
 
-		bsimulation.setPreferredSize(new Dimension((int)(FenetreForge.height*0.27), (int)(FenetreForge.height*0.30/5)));
-		bmenu.setPreferredSize(new Dimension((int)(FenetreForge.height*0.27), (int)(FenetreForge.height*0.30/5)));
-		bsauvegarder.setPreferredSize(new Dimension((int)(FenetreForge.height*0.6), (int)(FenetreForge.height*0.30/5)));
-		bcharger.setPreferredSize(new Dimension((int)(FenetreForge.height*0.6), (int)(FenetreForge.height*0.30/5)));
-		api.setPreferredSize(new Dimension((int)(FenetreForge.height*1.42), (int)(FenetreForge.height*1.25)));
-		comboBoxDebitTrame.setPreferredSize(new Dimension((int)(FenetreForge.height*0.27/2), (int)(FenetreForge.height*0.30/5)));
-		typeSysteme.setPreferredSize(new Dimension(115, 30));
-		typeSystemeCalc.setPreferredSize(new Dimension(115, 30));
-		vitesseMoy.setPreferredSize(new Dimension(150, 30));
-		vitesseMoyCalc.setPreferredSize(new Dimension(115, 30));
-		altitudeMoy.setPreferredSize(new Dimension(150, 30));
-		altitudeMoyCalc.setPreferredSize(new Dimension(115, 30));
+		Dimension dimensionAPI = new Dimension((int)(FenetreForge.width*0.8), (int)(FenetreForge.height*0.9));
+		Dimension dimensionBoutonsBasGauche = new Dimension((int)(FenetreForge.width*0.15), (int)(FenetreForge.height*0.30/5));
+		Dimension dimensionBoutonsBasDroite = new Dimension((int)(FenetreForge.width*0.3), (int)(FenetreForge.height*0.30/5));
+		Dimension dimensionComboBox = new Dimension((int)(FenetreForge.width*0.3/2), (int)(FenetreForge.height*0.30/5));
+		Dimension dimensionLabelsInformation = new Dimension((int)(FenetreForge.width*0.06), (int)(FenetreForge.height*0.10));
+
+		
+		api.setPreferredSize(dimensionAPI);
+		bsimulation.setPreferredSize(dimensionBoutonsBasGauche);
+		bmenu.setPreferredSize(dimensionBoutonsBasGauche);
+		bsauvegarder.setPreferredSize(dimensionBoutonsBasDroite);
+		bcharger.setPreferredSize(dimensionBoutonsBasDroite);
+		comboBoxDebitTrame.setPreferredSize(dimensionComboBox);
+		typeSysteme.setPreferredSize(dimensionLabelsInformation);
+		typeSystemeCalc.setPreferredSize(dimensionLabelsInformation);
+		vitesseMoy.setPreferredSize(dimensionLabelsInformation);
+		vitesseMoyCalc.setPreferredSize(dimensionLabelsInformation);
+		altitudeMoy.setPreferredSize(dimensionLabelsInformation);
+		altitudeMoyCalc.setPreferredSize(dimensionLabelsInformation);
+		
+		Font tailletexte = new Font(null, Font.BOLD, 20);
+		typeSysteme.setFont(tailletexte);
+		typeSystemeCalc.setFont(tailletexte);
+		vitesseMoy.setFont(tailletexte);
+		vitesseMoyCalc.setFont(tailletexte);
+		altitudeMoy.setFont(tailletexte);
+		altitudeMoyCalc.setFont(tailletexte);
+		bsimulation.setFont(tailletexte);
+		bmenu.setFont(tailletexte);
+		comboBoxDebitTrame.setFont(tailletexte);
+		((JLabel)comboBoxDebitTrame.getRenderer()).setHorizontalAlignment(SwingConstants.CENTER);
+		bsauvegarder.setFont(tailletexte);
+		bcharger.setFont(tailletexte);
+		
 
 		// panel en haut a gauche (parametres)
-		parametres.setBorder(BorderFactory.createTitledBorder("Paramètres parcours"));
+		parametres.setBorder(BorderFactory.createTitledBorder(null, "Paramètres parcours", 0, 0, tailletexte));
 		parametres.setLayout(new GridBagLayout());
 		GridBagConstraints gbcParametres = new GridBagConstraints();
 		gbcParametres.anchor = GridBagConstraints.LINE_START;

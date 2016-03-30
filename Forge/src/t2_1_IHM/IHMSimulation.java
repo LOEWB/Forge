@@ -215,7 +215,7 @@ public class IHMSimulation implements ActionListener {
 		heureActuelleDisplay.setPreferredSize(dimensionInformations);
 		dateActuelleDisplay.setPreferredSize(dimensionInformations);
 		
-		Font tailletexte = new Font("Calibri", Font.BOLD, 20);
+		Font tailletexte = new Font(null, Font.BOLD, 20);
 		vitActuelle.setFont(tailletexte);
 		vitMoyenne.setFont(tailletexte);
 		heureDepart.setFont(tailletexte);
