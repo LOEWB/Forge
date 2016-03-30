@@ -11,6 +11,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -22,12 +23,14 @@ import javax.swing.JSlider;
 import javax.swing.JSplitPane;
 import javax.swing.SwingConstants;
 
+import org.openstreetmap.gui.jmapviewer.Coordinate;
 import org.openstreetmap.gui.jmapviewer.JMapViewer;
 
 import t1_1_Model_Principal.Coordonnees;
 import t1_1_Model_Principal.Parcours;
 import t1_1_Model_Principal.Point;
 import t1_1_Model_Principal.Simulation;
+import t1_1_Model_Principal.ThreadLecture;
 import t1_1_Model_Principal.TypeSysteme;
 
 public class IHMSimulation implements ActionListener {
@@ -88,7 +91,7 @@ public class IHMSimulation implements ActionListener {
 	private String[] listeDebit = { "Débit : 1200 bit/s","Débit : 2400 bit/s","Débit : 3600 bit/s" };
 
 	private JComboBox<String> comboBoxDebit = new JComboBox<String>(listeDebit);
-	
+
 	private PanelAPICarte panelAPICarte;
 
 
@@ -169,6 +172,8 @@ public class IHMSimulation implements ActionListener {
 		comboBoxliaisonSerie.setBackground(Color.WHITE);
 		comboBoxDebit.setBackground(Color.WHITE);
 		bJouer.setBackground(Color.WHITE);
+		bJouer.addActionListener(this);
+		bJouer.setActionCommand("jouer");
 		bMenu.setBackground(Color.WHITE);
 		bMenu.addActionListener(this);
 		bMenu.setActionCommand("menu");
@@ -184,7 +189,7 @@ public class IHMSimulation implements ActionListener {
 		depart.setBackground(Color.WHITE);
 		arrivee.setBackground(Color.WHITE);
 		plage.setBackground(Color.WHITE);
-		
+
 		Dimension dimensionAPI = new Dimension((int)(FenetreForge.width*0.8), (int)(FenetreForge.height*0.7));
 		Dimension dimensionJSlider = new Dimension((int)(FenetreForge.width*0.25), (int)(FenetreForge.height*0.1));
 		Dimension dimensionBoutonsHaut = new Dimension((int)(FenetreForge.width*0.15), (int)(FenetreForge.height*0.30/5));
@@ -214,7 +219,7 @@ public class IHMSimulation implements ActionListener {
 		heureArriveeDisplay.setPreferredSize(dimensionInformations);
 		heureActuelleDisplay.setPreferredSize(dimensionInformations);
 		dateActuelleDisplay.setPreferredSize(dimensionInformations);
-		
+
 		Font tailletexte = new Font(null, Font.BOLD, 12);
 		vitActuelle.setFont(tailletexte);
 		vitMoyenne.setFont(tailletexte);
@@ -383,7 +388,7 @@ public class IHMSimulation implements ActionListener {
 		heureArriveeDisplay.setBorder(BorderFactory.createEtchedBorder(Color.BLACK, Color.GRAY));
 		heureActuelleDisplay.setBorder(BorderFactory.createEtchedBorder(Color.BLACK, Color.GRAY));
 		dateActuelleDisplay.setBorder(BorderFactory.createEtchedBorder(Color.BLACK, Color.GRAY));
-		
+
 
 
 		FenetreForge.fenetreForge.getContentPane().removeAll();
@@ -393,7 +398,15 @@ public class IHMSimulation implements ActionListener {
 	}
 
 
-
+	void jouer()
+	{
+		ArrayList<Point> listePoint = this.panelAPICarte.getParcours().genererListePointsIntermediaires(this.panelAPICarte.getParcours().getDebit(), this.panelAPICarte.getParcours().getListePoints());
+		ArrayList<Point> listePoint2 = this.panelAPICarte.getParcours().getListePoints();
+		for(int i=0;i<this.panelAPICarte.getParcours().getListePoints().size();i++)
+		{
+			this.panelAPICarte.addMapMarker(new AffichagePointInter(new Coordinate(listePoint2.get(i).getCoordonnes().getLatitude(),listePoint2.get(i).getCoordonnes().getLongitude()),"./img/MarqueurPoint.png"));
+		}
+	}
 
 
 	@Override
@@ -401,7 +414,7 @@ public class IHMSimulation implements ActionListener {
 
 		switch (e.getActionCommand()) {
 		case "charger":
-			new IHMChoixFichier(e.getActionCommand(), this.panelAPICarte);
+			new IHMChoixFichier(e.getActionCommand(), this.panelAPICarte, "simulation");
 			break;
 		case "importer":
 			new IHMChoixFichier(e.getActionCommand(), this.panelAPICarte, new Simulation());
@@ -409,6 +422,10 @@ public class IHMSimulation implements ActionListener {
 		case "exporter":
 			Simulation simulation = new Simulation(this.panelAPICarte.getParcours());
 			new IHMChoixFichier(e.getActionCommand(), this.panelAPICarte, simulation);
+			break;
+		case "jouer":
+			if(this.panelAPICarte.getParcours().getListePoints().size()>0)
+				jouer();
 			break;
 		case "menu":
 			FenetreForge.fenetreForge.dispose();

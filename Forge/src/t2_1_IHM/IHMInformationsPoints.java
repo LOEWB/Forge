@@ -330,28 +330,28 @@ public class IHMInformationsPoints extends JFrame implements ActionListener{
 						if(this.passageMinute.getValue() instanceof Double)
 							panelAPICarte.addPoint((((double)this.passageHeure.getValue())+((double)this.passageMinute.getValue()/60))*3600, coordonnee, (double)this.altitude.getValue());
 						else
-							panelAPICarte.addPoint((((double)this.passageHeure.getValue())+(((double)((long)this.passageHeure.getValue())/60)))*3600, coordonnee, (double)this.altitude.getValue());
+							panelAPICarte.addPoint((((double)this.passageHeure.getValue())+(((double)((long)this.passageMinute.getValue())/60)))*3600, coordonnee, (double)this.altitude.getValue());
 					}
 					else if(this.passageHeure.getValue() instanceof Double && this.altitude.getValue() instanceof Long)
 					{
 						if(this.passageMinute.getValue() instanceof Double)
 							panelAPICarte.addPoint((((double)this.passageHeure.getValue())+((double)this.passageMinute.getValue()/60))*3600, coordonnee, (double)((long)this.altitude.getValue()));
 						else
-							panelAPICarte.addPoint((((double)this.passageHeure.getValue())+((double)((long)this.passageHeure.getValue())/60))*3600, coordonnee, (double)((long)this.altitude.getValue()));
+							panelAPICarte.addPoint((((double)this.passageHeure.getValue())+((double)((long)this.passageMinute.getValue())/60))*3600, coordonnee, (double)((long)this.altitude.getValue()));
 					}
 					else if(this.passageHeure.getValue() instanceof Long && this.altitude.getValue() instanceof Double)
 					{
 						if(this.passageMinute.getValue() instanceof Double)
 							panelAPICarte.addPoint((((double)((long) this.passageHeure.getValue()))+((double)this.passageMinute.getValue()/60))*3600, coordonnee, (double)this.altitude.getValue());
 						else
-							panelAPICarte.addPoint((((double)((long) this.passageHeure.getValue()))+((double)((long)this.passageHeure.getValue())/60))*3600, coordonnee, (double)this.altitude.getValue());						
+							panelAPICarte.addPoint((((double)((long) this.passageHeure.getValue()))+((double)((long)this.passageMinute.getValue())/60))*3600, coordonnee, (double)this.altitude.getValue());						
 					}
 					else
 					{
 						if(this.passageMinute.getValue() instanceof Double)
 							panelAPICarte.addPoint((((double)((long) this.passageHeure.getValue()))+((double)this.passageMinute.getValue()/60))*3600, coordonnee, (double)((long)this.altitude.getValue()));
 						else
-							panelAPICarte.addPoint((((double)((long) this.passageHeure.getValue()))+((double)((long)this.passageHeure.getValue())/60))*3600, coordonnee, (double)((long)this.altitude.getValue()));						
+							panelAPICarte.addPoint((((double)((long) this.passageHeure.getValue()))+((double)((long)this.passageMinute.getValue())/60))*3600, coordonnee, (double)((long)this.altitude.getValue()));						
 					}
 					panelAPICarte.createMarkers();	
 					panelAPICarte.traceSegments();			

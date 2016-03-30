@@ -299,7 +299,7 @@ public class IHMParcours implements ActionListener,MouseListener {
 			break;
 		case "sauvegarder":
 		case "charger":
-			new IHMChoixFichier(e.getActionCommand(), this.panelAPICarte);
+			new IHMChoixFichier(e.getActionCommand(), this.panelAPICarte, "creation");
 			break;
 		case "simulation":
 			FenetreForge.fenetreForge.dispose();

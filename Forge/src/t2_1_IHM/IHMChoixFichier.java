@@ -25,6 +25,8 @@ public class IHMChoixFichier extends JFrame {
 
 	private final String typeExtension;
 	
+	private String fenetre;
+	
 	private File directory;
 
 	/**
@@ -34,8 +36,9 @@ public class IHMChoixFichier extends JFrame {
 	 *            (sauvegarde ou chargement)
 	 * @param parcours
 	 */
-	public IHMChoixFichier(String typeOperation, PanelAPICarte panelAPICarte) {
+	public IHMChoixFichier(String typeOperation, PanelAPICarte panelAPICarte, String fenetre) {
 		this.panelAPICarte = panelAPICarte;
+		this.fenetre = fenetre;
 		this.simulation = null;
 
 		this.directory = new File("./files");
@@ -185,7 +188,10 @@ public class IHMChoixFichier extends JFrame {
 		this.panelAPICarte.setParcours(new Parcours(TypeSysteme.TERRESTRE));
 		this.panelAPICarte.getParcours().chargerParcours(path);
 		
-		this.panelAPICarte.createMarkers();
+		if(this.fenetre == "creation")
+			this.panelAPICarte.createMarkers();
+		else
+			this.panelAPICarte.createMarkerDebutFin();
 		this.panelAPICarte.traceSegments();
 	}
 
