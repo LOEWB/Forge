@@ -245,6 +245,7 @@ public class Parcours {
 			temp = Math.abs(point.getCoordonnes().getLatitude());
 			
 			longitude = "" + temp + "";
+			
 			h=0;
 			tempString = "";
 			tempString2 = "";
