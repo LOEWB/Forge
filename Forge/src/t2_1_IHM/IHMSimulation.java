@@ -217,6 +217,7 @@ public class IHMSimulation implements ActionListener {
 		Dimension dimensionBoutonsHaut = new Dimension((int)(FenetreForge.width*0.15), (int)(FenetreForge.height*0.30/5));
 		Dimension dimensionComboBox = new Dimension((int)(FenetreForge.width*0.15/2), (int)(FenetreForge.height*0.30/5));
 		Dimension dimensionBoutonsBas = new Dimension((int)(FenetreForge.width*0.15), (int)(FenetreForge.height*0.18/3));
+		Dimension dimensionBoutonsBasDroite = new Dimension((int)(FenetreForge.width*0.05), (int)(FenetreForge.height*0.18/3));
 		Dimension dimensionDates = new Dimension((int)(FenetreForge.width*0.15/2), (int)(FenetreForge.height*0.50/3/4));
 		Dimension dimensionInformations = new Dimension((int)(FenetreForge.width*0.25), (int)(FenetreForge.height*0.20/4));	
 		
@@ -231,8 +232,8 @@ public class IHMSimulation implements ActionListener {
 		comboBoxDebit.setPreferredSize(dimensionComboBox);
 		bJouer.setPreferredSize(dimensionBoutonsBas);
 		bMenu.setPreferredSize(dimensionBoutonsBas);
-		bPause.setPreferredSize(dimensionBoutonsBas);
-		bLecture.setPreferredSize(dimensionBoutonsBas);
+		bPause.setPreferredSize(dimensionBoutonsBasDroite);
+		bLecture.setPreferredSize(dimensionBoutonsBasDroite);
 		date.setPreferredSize(dimensionDates);
 		date2.setPreferredSize(dimensionDates);
 		date3.setPreferredSize(dimensionDates);
