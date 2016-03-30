@@ -5,7 +5,6 @@
 	<classpathentry exported="true" kind="lib" path="jars/comm-2.0.jar"/>
 	<classpathentry exported="true" kind="lib" path="jars/rxtx-2.1.7.jar"/>
 	<classpathentry exported="true" kind="lib" path="jars/JMapViewer.jar"/>
-	<classpathentry exported="true" kind="lib" path="jars/RXTXcomm.jar"/>
 	<classpathentry kind="lib" path="jars/jssc.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
