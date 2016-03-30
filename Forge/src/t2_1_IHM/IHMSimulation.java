@@ -156,8 +156,14 @@ public class IHMSimulation implements ActionListener {
 
 
 		bcharger.setBackground(Color.WHITE);
+		bcharger.addActionListener(this);
+		bcharger.setActionCommand("charger");
 		bimporter.setBackground(Color.WHITE);
+		bimporter.addActionListener(this);
+		bimporter.setActionCommand("importer");
 		bexporter.setBackground(Color.WHITE);
+		bexporter.addActionListener(this);
+		bexporter.setActionCommand("exporter");
 		comboBoxliaisonSerie.setBackground(Color.WHITE);
 		comboBoxDebit.setBackground(Color.WHITE);
 		bJouer.setBackground(Color.WHITE);
@@ -354,19 +360,16 @@ public class IHMSimulation implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		// test :
-		Point valence = new Point(0, new Coordonnees(44.933014, 4.890892), 0);
-		Point saintay = new Point(3600, new Coordonnees(45.446958, 4.383396), 0);
-		Parcours parcours = new Parcours(TypeSysteme.TERRESTRE);
 
 		switch (e.getActionCommand()) {
 		case "charger":
 			new IHMChoixFichier(e.getActionCommand(), this.panelAPICarte);
 			break;
 		case "importer":
+			new IHMChoixFichier(e.getActionCommand(), this.panelAPICarte, new Simulation());
 			break;
 		case "exporter":
-			Simulation simulation = new Simulation(parcours);
+			Simulation simulation = new Simulation(this.panelAPICarte.getParcours());
 			new IHMChoixFichier(e.getActionCommand(), this.panelAPICarte, simulation);
 			break;
 		case "menu":

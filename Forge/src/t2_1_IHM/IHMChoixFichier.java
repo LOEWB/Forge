@@ -23,7 +23,9 @@ public class IHMChoixFichier extends JFrame {
 
 	private final Simulation simulation;
 
-	private final String extension;
+	private final String typeExtension;
+	
+	private File directory;
 
 	/**
 	 * lance la sauvegarde ou le chargement du parcours
@@ -36,16 +38,16 @@ public class IHMChoixFichier extends JFrame {
 		this.panelAPICarte = panelAPICarte;
 		this.simulation = null;
 
-		File directory = new File("./files");
+		this.directory = new File("./files");
 
 		JFileChooser choixFichier = new JFileChooser();
 		choixFichier.setMultiSelectionEnabled(false);
-		choixFichier.setCurrentDirectory(directory);
+		choixFichier.setCurrentDirectory(this.directory);
 		choixFichier.setFileSelectionMode(JFileChooser.FILES_ONLY);
 		choixFichier.setAcceptAllFileFilterUsed(false);
-		this.extension = "fGF";
+		this.typeExtension = "fGF";
 		choixFichier.setFileFilter(new FileNameExtensionFilter(
-				"Fichiers parcours (*.fGF)", this.extension));
+				"Fichiers parcours (*.fGF)", this.typeExtension));
 		// filtre pour n'afficher que les fichiers de parcours (*.fGF)
 
 		switch (typeOperation) {
@@ -71,16 +73,16 @@ public class IHMChoixFichier extends JFrame {
 		this.simulation = simulation;
 		this.panelAPICarte = panelAPICarte;
 
-		File directory = new File("./files");
+		this.directory = new File("./files");
 
 		JFileChooser choixFichier = new JFileChooser();
 		choixFichier.setMultiSelectionEnabled(false);
-		choixFichier.setCurrentDirectory(directory);
+		choixFichier.setCurrentDirectory(this.directory);
 		choixFichier.setFileSelectionMode(JFileChooser.FILES_ONLY);
 		choixFichier.setAcceptAllFileFilterUsed(false);
-		this.extension = "fS";
+		this.typeExtension = "fS";
 		choixFichier.setFileFilter(new FileNameExtensionFilter(
-				"Fichiers simulation (*.fS)", this.extension));
+				"Fichiers simulation (*.fS)", this.typeExtension));
 		// filtre pour n'afficher que les fichiers de simulation (*.fS)
 
 		switch (typeOperation) {
@@ -103,44 +105,42 @@ public class IHMChoixFichier extends JFrame {
 	 */
 	private void saveDialog(JFileChooser choixFichier) {
 		int retour = choixFichier.showSaveDialog(this.getContentPane());
+		String extension = "."+this.typeExtension;
 
 		if (retour == JFileChooser.APPROVE_OPTION) { // un fichier a été choisi
 			File fichier = choixFichier.getSelectedFile();
-			String path = choixFichier.getSelectedFile().getAbsolutePath();
 
 			// vérification de l'extension du fichier
-			if (fichier.getName().endsWith(this.extension)) {
-
-				// le fichier existe déjà
-				if (fichier.exists()) {
-					int reponse = JOptionPane.showConfirmDialog(null,
-							"Êtes-vous sûr de vouloir écraser le fichier ?",
-							"Fichier déjà existant", JOptionPane.YES_NO_OPTION);
-					if (reponse == JOptionPane.YES_OPTION) { // écrasement du
-																// fichier
-																// existant
-																// confirmé
-						choixFichier.getSelectedFile().delete();
-						if (this.simulation == null)
-							this.panelAPICarte.getParcours().sauvegarderParcours(path);
-						else
-							this.simulation.exportSimulation(path);
-					}
-				}
-
-				// sauvegarde dans un nouveau fichier
-				else {
+			if (!fichier.getName().endsWith(extension))
+				fichier = new File(fichier.getPath()+extension);
+			
+			String path = fichier.getAbsolutePath();
+			
+			// le fichier existe déjà
+			if (fichier.exists()) {
+				int reponse = JOptionPane.showConfirmDialog(null,
+						"Êtes-vous sûr de vouloir écraser le fichier ?",
+						"Fichier déjà existant", JOptionPane.YES_NO_OPTION);
+				if (reponse == JOptionPane.YES_OPTION) { // écrasement du
+															// fichier
+															// existant
+															// confirmé
+					choixFichier.getSelectedFile().delete();
 					if (this.simulation == null)
 						this.panelAPICarte.getParcours().sauvegarderParcours(path);
 					else
 						this.simulation.exportSimulation(path);
 				}
 			}
-			// format du fichier incorrect
-			else
-				JOptionPane.showMessageDialog(this,
-						"format du fichier incorrect", "Sauvegarde impossible",
-						JOptionPane.ERROR_MESSAGE);
+
+			// sauvegarde dans un nouveau fichier
+			else {
+				if (this.simulation == null)
+					this.panelAPICarte.getParcours().sauvegarderParcours(path);
+				else
+					this.simulation.exportSimulation(path);
+			}
+			
 		} else if (retour == JFileChooser.ERROR_OPTION)
 			JOptionPane.showMessageDialog(this, "Action impossible", "Erreur",
 					JOptionPane.ERROR_MESSAGE);
@@ -154,6 +154,7 @@ public class IHMChoixFichier extends JFrame {
 	 */
 	private void openDialog(JFileChooser choixFichier) {
 		int retour = choixFichier.showOpenDialog(this.getContentPane());
+		String extension = "."+this.typeExtension;
 
 		if (retour == JFileChooser.APPROVE_OPTION) { // appui sur le bouton
 														// Ouvrir
@@ -161,7 +162,7 @@ public class IHMChoixFichier extends JFrame {
 			String path = choixFichier.getSelectedFile().getAbsolutePath();
 
 			// vérification fichier OK
-			if (fichier.exists() && fichier.getName().endsWith(this.extension)) {
+			if (fichier.exists() && fichier.getName().endsWith(extension)) {
 				// lancer chargementParcours ou importationSimulation
 				if (this.simulation == null)
 					chargeParcours(path);
