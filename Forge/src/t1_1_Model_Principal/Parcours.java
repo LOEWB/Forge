@@ -283,7 +283,8 @@ public class Parcours {
 			
 				trame += temps + "," 
 						
-					
+					// dd
+						
 					+ latitude + "," + lat + ","
 					+  longitude + "," + longi + ",1,"
 					+ randomInteger(3, 12) + "," + (0.6 + randomInteger(0, 19))
