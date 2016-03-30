@@ -7,6 +7,7 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.Insets;
+import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.DateFormat;
@@ -405,7 +406,20 @@ public class IHMSimulation implements ActionListener {
 		ArrayList<Point> listePoint2 = this.panelAPICarte.getParcours().getListePoints();
 		for(int i=0;i<this.panelAPICarte.getParcours().getListePoints().size();i++)
 		{
-			this.panelAPICarte.addMapMarker(new AffichagePointInter(new Coordinate(listePoint2.get(i).getCoordonnes().getLatitude(),listePoint2.get(i).getCoordonnes().getLongitude()),"./img/MarqueurPoint.png"));
+			this.panelAPICarte.addMapMarker(new AffichagePointInter(new Coordinate(listePoint2.get(i).getCoordonnes().getLatitude(),listePoint2.get(i).getCoordonnes().getLongitude()),"./img/MarqueurPoint.png"));	
+			int monX = ((int) this.panelAPICarte.getMapPosition(this.panelAPICarte.getMapMarkerList().get(this.panelAPICarte.getMapMarkerList().size()-1).getCoordinate()).getX()) - AffichagePoint.MARKER_SIZE*2;
+			int monY = ((int) this.panelAPICarte.getMapPosition(this.panelAPICarte.getMapMarkerList().get(this.panelAPICarte.getMapMarkerList().size()-1).getCoordinate()).getY()) - AffichagePoint.MARKER_SIZE*3;
+			Rectangle rect = new Rectangle(monX,monY,AffichagePoint.MARKER_SIZE*6,AffichagePoint.MARKER_SIZE*6);
+			this.panelAPICarte.paintImmediately(rect);;
+			try {
+				Thread.sleep(1000l);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			this.panelAPICarte.removeMapMarker(this.panelAPICarte.getMapMarkerList().get(this.panelAPICarte.getMapMarkerList().size()-1));
+			this.panelAPICarte.paintImmediately(rect);
+
 		}
 	}
 
