@@ -205,11 +205,11 @@ public class Parcours {
 			h=0;
 			tempString = "";
 			tempString2 = "";
-			if(point.getCoordonnes().getLatitude() < 0) lat = "S";
+			if(point.getCoordonnes().getLongitude() < 0) lat = "S";
 			else lat = "N";
-			if(point.getCoordonnes().getLongitude() < 0) longi = "W";
+			if(point.getCoordonnes().getLatitude() < 0) longi = "W";
 			else longi = "E";
-			temp = Math.abs(point.getCoordonnes().getLatitude());
+			temp = Math.abs(point.getCoordonnes().getLongitude());
 
 			// latitude 4, 4
 			// longitude 5, 4
@@ -242,7 +242,7 @@ public class Parcours {
 			latitude = tempString;
 			//System.out.println("Latitude 2 " + latitude); 
 
-			temp = Math.abs(point.getCoordonnes().getLongitude());
+			temp = Math.abs(point.getCoordonnes().getLatitude());
 			
 			longitude = "" + temp + "";
 			h=0;
@@ -283,8 +283,8 @@ public class Parcours {
 				trame += temps + "," 
 						
 					
-					+ longitude + "," + lat + ","
-					+ latitude + "," + longi + ",1,"
+					+ latitude + "," + lat + ","
+					+  longitude + "," + longi + ",1,"
 					+ randomInteger(3, 12) + "," + (0.6 + randomInteger(0, 19))
 					+ "," + point.getAltitude() + ",M,"
 					+ (46.9 + randomInteger(1, 3)) + ",M,,";
