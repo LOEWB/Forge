@@ -281,10 +281,10 @@ public class Simulation {
 		this.tramesArray=new ArrayList<String>(Arrays.asList(tramesTable));
 	}
 	
-	public void jouerSimulation()
-	{
-		ThreadLecture threadLecture = new ThreadLecture(this.tramesArray);
-		threadLecture.start();
-	}
+	public void jouerSimulation(String port, int debit)
+	 {
+	  ThreadLecture threadLecture = new ThreadLecture(this.tramesArray, port, debit);
+	  threadLecture.start();
+	 }
 	
 }

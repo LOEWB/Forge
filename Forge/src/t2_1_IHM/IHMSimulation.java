@@ -15,6 +15,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFormattedTextField;
@@ -30,12 +31,13 @@ import org.openstreetmap.gui.jmapviewer.JMapViewer;
 import t1_1_Model_Principal.Coordonnees;
 import t1_1_Model_Principal.Parcours;
 import t1_1_Model_Principal.Point;
+import t1_1_Model_Principal.PortSerie;
 import t1_1_Model_Principal.Simulation;
 import t1_1_Model_Principal.ThreadLecture;
 import t1_1_Model_Principal.TypeSysteme;
 
 public class IHMSimulation implements ActionListener {
-
+	
 	private Parcours parcours;
 
 	private JButton bcharger = new JButton("Charger");
@@ -47,6 +49,10 @@ public class IHMSimulation implements ActionListener {
 	private JButton bJouer = new JButton("JOUER");
 
 	private JButton bMenu = new JButton("MENU");
+	
+	private JButton bPause = new JButton("");
+	
+	private JButton bLecture = new JButton("");
 
 	private JLabel vitActuelle = new JLabel("Vitesse actuelle");    
 	private JLabel vitActuelleDisplay = new JLabel("");
@@ -89,7 +95,7 @@ public class IHMSimulation implements ActionListener {
 
 	private JComboBox<String> comboBoxliaisonSerie = new JComboBox<String>(listeLiaisonSerie);
 
-	private String[] listeDebit = { "Débit : 1200 bit/s","Débit : 2400 bit/s","Débit : 3600 bit/s" };
+	private String[] listeDebit = { "1200","2400","3600" };
 
 	private JComboBox<String> comboBoxDebit = new JComboBox<String>(listeDebit);
 
@@ -101,7 +107,11 @@ public class IHMSimulation implements ActionListener {
 	public IHMSimulation(Parcours parcours) 
 	{
 
-		this.parcours = parcours;		
+		this.parcours = parcours;
+		
+		PortSerie portSerie = new PortSerie();
+		this.listeLiaisonSerie = portSerie.getListePorts().toArray(new String[portSerie.getListePorts().size()]);
+		
 		creationComposant();
 		panelAPICarte.createMarkerDebutFin();
 		panelAPICarte.traceSegments();
@@ -111,6 +121,9 @@ public class IHMSimulation implements ActionListener {
 	public IHMSimulation() 
 	{
 
+		PortSerie portSerie = new PortSerie();
+		this.listeLiaisonSerie = portSerie.getListePorts().toArray(new String[portSerie.getListePorts().size()]);
+		
 		creationComposant();
 
 	}
@@ -190,7 +203,15 @@ public class IHMSimulation implements ActionListener {
 		depart.setBackground(Color.WHITE);
 		arrivee.setBackground(Color.WHITE);
 		plage.setBackground(Color.WHITE);
-
+		bPause.setBackground(Color.WHITE);
+		bLecture.setBackground(Color.WHITE);
+		bPause.setBorder(null);
+		bLecture.setBorder(null);
+		ImageIcon imgPause = new ImageIcon("./img/Pause.png");
+		ImageIcon imgLecture = new ImageIcon("./img/Lecture.png");
+		bPause.setIcon(imgPause);
+		bLecture.setIcon(imgLecture);
+		
 		Dimension dimensionAPI = new Dimension((int)(FenetreForge.width*0.8), (int)(FenetreForge.height*0.7));
 		Dimension dimensionJSlider = new Dimension((int)(FenetreForge.width*0.25), (int)(FenetreForge.height*0.1));
 		Dimension dimensionBoutonsHaut = new Dimension((int)(FenetreForge.width*0.15), (int)(FenetreForge.height*0.30/5));
@@ -210,6 +231,8 @@ public class IHMSimulation implements ActionListener {
 		comboBoxDebit.setPreferredSize(dimensionComboBox);
 		bJouer.setPreferredSize(dimensionBoutonsBas);
 		bMenu.setPreferredSize(dimensionBoutonsBas);
+		bPause.setPreferredSize(dimensionBoutonsBas);
+		bLecture.setPreferredSize(dimensionBoutonsBas);
 		date.setPreferredSize(dimensionDates);
 		date2.setPreferredSize(dimensionDates);
 		date3.setPreferredSize(dimensionDates);
@@ -347,7 +370,20 @@ public class IHMSimulation implements ActionListener {
 		vitesse.setPaintLabels(true);
 		vitesse.setMinorTickSpacing(0);
 		vitesse.setMajorTickSpacing(1);
-		bas.add(vitesse);
+		
+		bas.setLayout(new GridBagLayout());
+		GridBagConstraints gbcBas = new GridBagConstraints();             
+		gbcBas.insets = new Insets(4,4,4,4);
+		gbcBas.anchor = GridBagConstraints.CENTER;
+		gbcBas.gridx = 0;       
+		gbcBas.gridy = 0;
+		bas.add(bPause, gbcBas);
+		gbcBas.gridx = 1;       
+		bas.add(bLecture, gbcBas);
+		gbcBas.fill = 4;
+		gbcBas.gridx = 2;       
+		bas.add(vitesse, gbcBas);
+		
 
 		api.setZoom(8, new java.awt.Point(-25,40));
 		carte.add(api); 
@@ -403,6 +439,11 @@ public class IHMSimulation implements ActionListener {
 
 	void jouer()
 	{		
+		Simulation simu = new Simulation(this.panelAPICarte.getParcours());
+		simu.jouerSimulation(this.comboBoxliaisonSerie.getSelectedItem().toString(), Integer.valueOf(this.comboBoxDebit.getSelectedItem().toString()));		
+		
+		
+		
 		ArrayList<Point> listePoint2 = this.panelAPICarte.getParcours().getListePoints();
 		for(int i=0;i<this.panelAPICarte.getParcours().getListePoints().size();i++)
 		{
@@ -410,7 +451,7 @@ public class IHMSimulation implements ActionListener {
 			int monX = ((int) this.panelAPICarte.getMapPosition(this.panelAPICarte.getMapMarkerList().get(this.panelAPICarte.getMapMarkerList().size()-1).getCoordinate()).getX()) - AffichagePoint.MARKER_SIZE*2;
 			int monY = ((int) this.panelAPICarte.getMapPosition(this.panelAPICarte.getMapMarkerList().get(this.panelAPICarte.getMapMarkerList().size()-1).getCoordinate()).getY()) - AffichagePoint.MARKER_SIZE*3;
 			Rectangle rect = new Rectangle(monX,monY,AffichagePoint.MARKER_SIZE*6,AffichagePoint.MARKER_SIZE*6);
-			this.panelAPICarte.paintImmediately(rect);;
+			this.panelAPICarte.paintImmediately(rect);
 			try {
 				Thread.sleep(1000l);
 			} catch (InterruptedException e) {
