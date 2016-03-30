@@ -70,27 +70,27 @@ public class Simulation {
 	// $GPGGA,180820.0,4455.9806,N,00453.4530,E,1,6,14.6,0.0,M,47.9,M,,*57
 	  
 	 
-	/*
+	
 	Point getPoint(String trame) {
-		 Coordonnees coordonnes;
-		 double tempsPassageRelatif;
+		 Coordonnees coordonnees;
 		 double altitude;
-
+		 double latitude;
+		 double longitude;
+		 
+		 
 		String[] attributsTable=trame.split(",");
-		altitude = Double.valueOf(arg0)
-		//t=Float.valueOf(attributsTable[1]);
+		altitude = Double.valueOf(attributsTable[1]);
+		latitude = Double.valueOf(attributsTable[2]);
+		longitude = Double.valueOf(attributsTable[4]);
+		
+		coordonnees = new Coordonnees(latitude, longitude);
+		
+		return new Point(0, coordonnees,  altitude);
 		
 		
 	}
 	
-	public Point(double sec, Coordonnees coor, double altitude) {
-
-		this.coordonnes = coor;
-		this.tempsPassageRelatif = sec;
-		this.altitude = altitude;
-	}
 	
-	*/
 	public void importSimulation(String cheminFichier)
 	{
 		ConteneurFichier conteneurFichier = new ConteneurFichier();

@@ -1,78 +1,43 @@
 package t1_1_Model_Principal;
 
-import java.io.*;
-import javax.comm.*;
-import java.util.*;
-
-import gnu.io.CommPort;
-import gnu.io.CommPortIdentifier;
-import gnu.io.NoSuchPortException;
-import gnu.io.PortInUseException;
-import gnu.io.SerialPort;
-import gnu.io.UnsupportedCommOperationException;
-
-import java.io.FileDescriptor;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
+import java.io.*; // IOException
+import java.util.*; // Scanner
+import jssc.*;
 
 public class PortSerie {
-	private Enumeration ports = null;
-	private ArrayList<String> listePorts;
-	private int debit;
 
-	private OutputStream outStream = null;
-	private SerialPort serialPort = null;
-	private CommPort commPort;
-	private CommPortIdentifier portIdentifier = null;
-
-	public PortSerie() throws Exception {
-
-		ports = CommPortIdentifier.getPortIdentifiers();
-
-		while (ports.hasMoreElements()) {
-			portIdentifier = (CommPortIdentifier) ports.nextElement();
-
-			if (portIdentifier.getPortType() == CommPortIdentifier.PORT_SERIAL)
-				listePorts.add(portIdentifier.getName());
-
-		}
-	}
-
+    private static SerialPort serialPort;
+    
+    private String[] portNames = SerialPortList.getPortNames();
+    ArrayList<String> listePorts;
+  
 	public ArrayList<String> getListePorts() {
+        listePorts = new ArrayList<String>(Arrays.asList(portNames));
 		return this.listePorts;
 	}
 
-	boolean setPort(String port, int Debit) throws PortInUseException,
-			NoSuchPortException, UnsupportedCommOperationException {
+	boolean setPort(String port, int Debit) {
+    serialPort = new SerialPort(port);
 
-		if (Debit == 0)
-			this.debit = 2400;
-		else
-			this.debit = Debit;
+try {
+    serialPort.openPort();
+	   serialPort.setParams(Integer.valueOf(Debit), // baudrate à mettre en dynamique après
+               SerialPort.DATABITS_8,
+               SerialPort.STOPBITS_1,
+               SerialPort.PARITY_NONE);
 
-		this.portIdentifier = CommPortIdentifier.getPortIdentifier(port);
+serialPort.setFlowControlMode(SerialPort.FLOWCONTROL_RTSCTS_IN | 
+                        SerialPort.FLOWCONTROL_RTSCTS_OUT);
 
-		if (portIdentifier.isCurrentlyOwned())
-			return false;
-
-		this.commPort = portIdentifier.open("Forge Software on " + port, 10000);
-
-		if (!(commPort instanceof SerialPort))
-			return false;
-
-		this.serialPort = (SerialPort) commPort;
-
-		serialPort.setSerialPortParams(this.debit, SerialPort.DATABITS_8,
-				SerialPort.STOPBITS_1, SerialPort.PARITY_NONE);
-
+} catch (SerialPortException ex) {
+    System.out.println("Error in writing data to port: " + ex);
+}
 		return true;
 	}
 
-	void envoyer(String donnees) throws IOException {
+	void envoyer(String donnees) throws IOException, SerialPortException {
 
-		OutputStream outstream = this.serialPort.getOutputStream();
-		outstream.write(donnees.getBytes());
+        serialPort.writeString(donnees);
 
 	}
 

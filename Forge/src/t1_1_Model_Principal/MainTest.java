@@ -42,12 +42,17 @@ public class MainTest {
 			System.out.println(p+"");
 		}
 		
-//		PortSerie testPortSerie = new PortSerie();
-//		testPortSerie.setPort("COM8", 96000);
-//		while(true) {
-//			testPortSerie.envoyer("Debut Test Fin");
-//		}
+		PortSerie testPortSerie = new PortSerie();
+		testPortSerie.setPort("COM8", 9600);
 		
+		testPortSerie.envoyer("Putain its work");
+		
+		
+		
+		
+	//	Point dd = simu.getPoint("$GPGGA,180820.0,4455.9806,N,00453.4530,E,1,6,14.6,0.0,M,47.9,M,,*57");
+		
+	//	System.out.println(dd.toString()); // les 0 qui sont pas dans l'affichage sont du à la conversion en double, mais c'est normal...
 		//		System.out.println("\n\nDébut simulation :");
 		//		simu.jouerSimulation();
 	}
