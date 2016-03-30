@@ -146,7 +146,7 @@ public class IHMSimulation implements ActionListener {
 		splitMilieuDroit.setDividerSize(0);
 
 		JSplitPane splitBasDroit = new JSplitPane(JSplitPane.VERTICAL_SPLIT, splitMilieuDroit, bas);
-		splitBasDroit.setDividerLocation((int)(FenetreForge.height*0.90));
+		splitBasDroit.setDividerLocation((int)(FenetreForge.height*0.85));
 		splitBasDroit.setDividerSize(0);
 
 		JSplitPane splitForge = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, splitBasGauche,splitBasDroit);
@@ -191,12 +191,14 @@ public class IHMSimulation implements ActionListener {
 		plage.setBackground(Color.WHITE);
 
 		Dimension dimensionAPI = new Dimension((int)(FenetreForge.width*0.8), (int)(FenetreForge.height*0.7));
-		Dimension dimensionJSlider = new Dimension((int)(FenetreForge.width*0.25), (int)(FenetreForge.height*0.025));
+		Dimension dimensionJSlider = new Dimension((int)(FenetreForge.width*0.25), (int)(FenetreForge.height*0.15));
 		Dimension dimensionBoutonsHaut = new Dimension((int)(FenetreForge.width*0.15), (int)(FenetreForge.height*0.30/5));
 		Dimension dimensionComboBox = new Dimension((int)(FenetreForge.width*0.15/2), (int)(FenetreForge.height*0.30/5));
 		Dimension dimensionBoutonsBas = new Dimension((int)(FenetreForge.width*0.15), (int)(FenetreForge.height*0.18/3));
 		Dimension dimensionDates = new Dimension((int)(FenetreForge.width*0.15/2), (int)(FenetreForge.height*0.50/3/4));
-		Dimension dimensionInformations = new Dimension((int)(FenetreForge.width*0.25), (int)(FenetreForge.height*0.20/4));		
+		Dimension dimensionInformations = new Dimension((int)(FenetreForge.width*0.25), (int)(FenetreForge.height*0.20/4));	
+		
+		
 
 		api.setPreferredSize(dimensionAPI);
 		vitesse.setPreferredSize(dimensionJSlider);
