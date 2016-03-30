@@ -34,7 +34,7 @@ serialPort.setFlowControlMode(SerialPort.FLOWCONTROL_RTSCTS_IN |
 }
 		return true;
 	}
-
+	
 	void envoyer(String donnees) throws IOException, SerialPortException {
 
         serialPort.writeString(donnees);
