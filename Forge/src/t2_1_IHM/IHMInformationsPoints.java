@@ -186,7 +186,7 @@ public class IHMInformationsPoints extends JFrame implements ActionListener{
 
 	private void initializeWindow() 
 	{
-		this.setSize((int)(FenetreForge.width*0.10), (int)(FenetreForge.height*0.10));
+		this.setSize((int)(FenetreForge.width*0.20), (int)(FenetreForge.height*0.20));
 		this.setResizable(false);
 		this.setLocationRelativeTo(null);
 		this.setAlwaysOnTop(true);
@@ -246,7 +246,7 @@ public class IHMInformationsPoints extends JFrame implements ActionListener{
 		cell6.add(this.jlaltitude);
 		cell6.setPreferredSize(new Dimension((int)(FenetreForge.width*0.13)/4, (int)(FenetreForge.height*0.1)/6));
 
-		this.panel.setPreferredSize(new Dimension((int)(FenetreForge.width*0.10), (int)(FenetreForge.height*0.10)));
+		this.panel.setPreferredSize(new Dimension((int)(FenetreForge.width*0.20), (int)(FenetreForge.height*0.20)));
 		this.panel.setLayout(new GridBagLayout());
 
 		// application du layout

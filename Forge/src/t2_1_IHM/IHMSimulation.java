@@ -399,8 +399,7 @@ public class IHMSimulation implements ActionListener {
 
 
 	void jouer()
-	{
-		ArrayList<Point> listePoint = this.panelAPICarte.getParcours().genererListePointsIntermediaires(this.panelAPICarte.getParcours().getDebit(), this.panelAPICarte.getParcours().getListePoints());
+	{		
 		ArrayList<Point> listePoint2 = this.panelAPICarte.getParcours().getListePoints();
 		for(int i=0;i<this.panelAPICarte.getParcours().getListePoints().size();i++)
 		{
@@ -424,8 +423,9 @@ public class IHMSimulation implements ActionListener {
 			new IHMChoixFichier(e.getActionCommand(), this.panelAPICarte, simulation);
 			break;
 		case "jouer":
-			if(this.panelAPICarte.getParcours().getListePoints().size()>0)
-				jouer();
+			if(this.panelAPICarte.getParcours() != null)
+				if(this.panelAPICarte.getParcours().getListePoints().size()>0)
+					jouer();
 			break;
 		case "menu":
 			FenetreForge.fenetreForge.dispose();
