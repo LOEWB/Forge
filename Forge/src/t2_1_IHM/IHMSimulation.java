@@ -2,6 +2,7 @@ package t2_1_IHM;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
@@ -19,6 +20,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
 import javax.swing.JSplitPane;
+import javax.swing.SwingConstants;
 
 import org.openstreetmap.gui.jmapviewer.JMapViewer;
 
@@ -156,8 +158,14 @@ public class IHMSimulation implements ActionListener {
 
 
 		bcharger.setBackground(Color.WHITE);
+		bcharger.addActionListener(this);
+		bcharger.setActionCommand("charger");
 		bimporter.setBackground(Color.WHITE);
+		bimporter.addActionListener(this);
+		bimporter.setActionCommand("importer");
 		bexporter.setBackground(Color.WHITE);
+		bexporter.addActionListener(this);
+		bexporter.setActionCommand("exporter");
 		comboBoxliaisonSerie.setBackground(Color.WHITE);
 		comboBoxDebit.setBackground(Color.WHITE);
 		bJouer.setBackground(Color.WHITE);
@@ -176,33 +184,65 @@ public class IHMSimulation implements ActionListener {
 		depart.setBackground(Color.WHITE);
 		arrivee.setBackground(Color.WHITE);
 		plage.setBackground(Color.WHITE);
+		
+		Dimension dimensionAPI = new Dimension((int)(FenetreForge.width*0.8), (int)(FenetreForge.height*0.7));
+		Dimension dimensionJSlider = new Dimension((int)(FenetreForge.width*0.25), (int)(FenetreForge.height*0.1));
+		Dimension dimensionBoutonsHaut = new Dimension((int)(FenetreForge.width*0.15), (int)(FenetreForge.height*0.30/5));
+		Dimension dimensionComboBox = new Dimension((int)(FenetreForge.width*0.15/2), (int)(FenetreForge.height*0.30/5));
+		Dimension dimensionBoutonsBas = new Dimension((int)(FenetreForge.width*0.15), (int)(FenetreForge.height*0.18/3));
+		Dimension dimensionDates = new Dimension((int)(FenetreForge.width*0.15/2), (int)(FenetreForge.height*0.50/3/4));
+		Dimension dimensionInformations = new Dimension((int)(FenetreForge.width*0.25), (int)(FenetreForge.height*0.50/3/4));		
 
-		api.setPreferredSize(new Dimension((int)(FenetreForge.height*1.42), (int)(FenetreForge.height*0.7)));
-		bcharger.setPreferredSize(new Dimension((int)(FenetreForge.height*0.27), (int)(FenetreForge.height*0.30/5)));
-		bimporter.setPreferredSize(new Dimension((int)(FenetreForge.height*0.27), (int)(FenetreForge.height*0.30/5)));
-		bexporter.setPreferredSize(new Dimension((int)(FenetreForge.height*0.27), (int)(FenetreForge.height*0.30/5)));
-		comboBoxliaisonSerie.setPreferredSize(new Dimension((int)(FenetreForge.height*0.27/2), (int)(FenetreForge.height*0.30/5)));
-		comboBoxDebit.setPreferredSize(new Dimension((int)(FenetreForge.height*0.27/2), (int)(FenetreForge.height*0.30/5)));
-		bJouer.setPreferredSize(new Dimension((int)(FenetreForge.height*0.27), (int)(FenetreForge.height*0.18/3)));
-		bMenu.setPreferredSize(new Dimension((int)(FenetreForge.height*0.27), (int)(FenetreForge.height*0.18/3)));
-		date.setPreferredSize(new Dimension((int)(FenetreForge.height*0.27)/2, (int)(FenetreForge.height*0.50/3/4)));
-		date2.setPreferredSize(new Dimension((int)(FenetreForge.height*0.27/2), (int)(FenetreForge.height*0.50/3/4)));
-		date3.setPreferredSize(new Dimension((int)(FenetreForge.height*0.27/2), (int)(FenetreForge.height*0.50/3/4)));
-		date4.setPreferredSize(new Dimension((int)(FenetreForge.height*0.27/2), (int)(FenetreForge.height*0.50/3/4)));
-		date5.setPreferredSize(new Dimension((int)(FenetreForge.height*0.27/2), (int)(FenetreForge.height*0.50/3/4)));
-		date6.setPreferredSize(new Dimension((int)(FenetreForge.height*0.27/2), (int)(FenetreForge.height*0.50/3/4)));
-		vitActuelle.setPreferredSize(new Dimension(150, 30));
-		vitMoyenne.setPreferredSize(new Dimension(150, 30));
-		heureDepart.setPreferredSize(new Dimension(150, 30));
-		heureArrivee.setPreferredSize(new Dimension(150, 30));
-		heureActuelle.setPreferredSize(new Dimension(150, 30));
-		dateActuelle.setPreferredSize(new Dimension(150, 30));
-		vitActuelleDisplay.setPreferredSize(new Dimension(150, 30));
-		vitMoyenneDisplay.setPreferredSize(new Dimension(150, 30));
-		heureDepartDisplay.setPreferredSize(new Dimension(150, 30));
-		heureArriveeDisplay.setPreferredSize(new Dimension(150, 30));
-		heureActuelleDisplay.setPreferredSize(new Dimension(150, 30));
-		dateActuelleDisplay.setPreferredSize(new Dimension(150, 30));
+		api.setPreferredSize(dimensionAPI);
+		vitesse.setPreferredSize(dimensionJSlider);
+		bcharger.setPreferredSize(dimensionBoutonsHaut);
+		bimporter.setPreferredSize(dimensionBoutonsHaut);
+		bexporter.setPreferredSize(dimensionBoutonsHaut);
+		comboBoxliaisonSerie.setPreferredSize(dimensionComboBox);
+		comboBoxDebit.setPreferredSize(dimensionComboBox);
+		bJouer.setPreferredSize(dimensionBoutonsBas);
+		bMenu.setPreferredSize(dimensionBoutonsBas);
+		date.setPreferredSize(dimensionDates);
+		date2.setPreferredSize(dimensionDates);
+		date3.setPreferredSize(dimensionDates);
+		date4.setPreferredSize(dimensionDates);
+		date5.setPreferredSize(dimensionDates);
+		date6.setPreferredSize(dimensionDates);
+		vitActuelleDisplay.setPreferredSize(dimensionInformations);
+		vitMoyenneDisplay.setPreferredSize(dimensionInformations);
+		heureDepartDisplay.setPreferredSize(dimensionInformations);
+		heureArriveeDisplay.setPreferredSize(dimensionInformations);
+		heureActuelleDisplay.setPreferredSize(dimensionInformations);
+		dateActuelleDisplay.setPreferredSize(dimensionInformations);
+		
+		Font tailletexte = new Font(null, Font.BOLD, 20);
+		vitActuelle.setFont(tailletexte);
+		vitMoyenne.setFont(tailletexte);
+		heureDepart.setFont(tailletexte);
+		heureArrivee.setFont(tailletexte);
+		heureActuelle.setFont(tailletexte);
+		dateActuelle.setFont(tailletexte);
+		vitActuelleDisplay.setFont(tailletexte);
+		vitMoyenneDisplay.setFont(tailletexte);
+		heureDepartDisplay.setFont(tailletexte);
+		heureArriveeDisplay.setFont(tailletexte);
+		heureActuelleDisplay.setFont(tailletexte);
+		dateActuelleDisplay.setFont(tailletexte);
+		dateLabel.setFont(tailletexte);
+		heureLabel.setFont(tailletexte);
+		dateLabel2.setFont(tailletexte);
+		heureLabel2.setFont(tailletexte);
+		debutLabel.setFont(tailletexte);
+		finLabel.setFont(tailletexte);
+		bJouer.setFont(tailletexte);
+		bMenu.setFont(tailletexte);
+		bcharger.setFont(tailletexte);
+		bimporter.setFont(tailletexte);
+		bexporter.setFont(tailletexte);
+		comboBoxliaisonSerie.setFont(tailletexte);
+		((JLabel)comboBoxliaisonSerie.getRenderer()).setHorizontalAlignment(SwingConstants.CENTER);
+		comboBoxDebit.setFont(tailletexte);
+		((JLabel)comboBoxDebit.getRenderer()).setHorizontalAlignment(SwingConstants.CENTER);
 
 
 		boutons.setLayout(new GridBagLayout());
@@ -232,13 +272,14 @@ public class IHMSimulation implements ActionListener {
 		departArriveePlage.add(depart);
 		departArriveePlage.add(arrivee);
 		departArriveePlage.add(plage);         
-		depart.setBorder(BorderFactory.createTitledBorder("Départ"));
-		arrivee.setBorder(BorderFactory.createTitledBorder("Arrivée"));
-		plage.setBorder(BorderFactory.createTitledBorder("Plage Horaire relatif de la simulation (en heure)"));
+		depart.setBorder(BorderFactory.createTitledBorder(null, "Départ",0, 0, tailletexte));
+		arrivee.setBorder(BorderFactory.createTitledBorder(null, "Arrivée",0, 0, tailletexte));
+		plage.setBorder(BorderFactory.createTitledBorder(null, "Plage Horaire relatif de la simulation (en heure)",0, 0, tailletexte));
 
 		depart.setLayout(new GridBagLayout());
 		GridBagConstraints gbcDepart = new GridBagConstraints();             
 		gbcDepart.insets = new Insets(4,4,4,4);
+		gbcDepart.anchor = GridBagConstraints.CENTER;
 		gbcDepart.gridx = 0;       
 		gbcDepart.gridy = 0;
 		depart.add(dateLabel, gbcDepart);
@@ -253,6 +294,7 @@ public class IHMSimulation implements ActionListener {
 		arrivee.setLayout(new GridBagLayout());
 		GridBagConstraints gbcArrivee = new GridBagConstraints();             
 		gbcArrivee.insets = new Insets(4,4,4,4);
+		gbcArrivee.anchor = GridBagConstraints.CENTER;
 		gbcArrivee.gridx = 0;       
 		gbcArrivee.gridy = 0;
 		arrivee.add(dateLabel2, gbcArrivee);
@@ -267,6 +309,7 @@ public class IHMSimulation implements ActionListener {
 		plage.setLayout(new GridBagLayout());
 		GridBagConstraints gbcPlage = new GridBagConstraints();      
 		gbcPlage.insets = new Insets(4,4,4,4);
+		gbcPlage.anchor = GridBagConstraints.CENTER;
 		gbcPlage.gridx = 0;       
 		gbcPlage.gridy = 0;
 		plage.add(debutLabel, gbcPlage);
@@ -304,6 +347,7 @@ public class IHMSimulation implements ActionListener {
 		informations.setLayout(new GridBagLayout());
 		GridBagConstraints gbcInformations = new GridBagConstraints();             
 		gbcInformations.insets = new Insets(4,4,4,4);
+		gbcInformations.anchor = GridBagConstraints.CENTER;
 		gbcInformations.gridx = 0;       
 		gbcInformations.gridy = 0;
 		informations.add(vitActuelle, gbcInformations);
@@ -332,7 +376,7 @@ public class IHMSimulation implements ActionListener {
 		gbcInformations.gridy = 4;
 		informations.add(dateActuelleDisplay, gbcInformations);
 
-		informations.setBorder(BorderFactory.createTitledBorder("Informations"));
+		informations.setBorder(BorderFactory.createTitledBorder(null, "Informations",0, 0, tailletexte));
 		vitActuelleDisplay.setBorder(BorderFactory.createEtchedBorder(Color.BLACK, Color.GRAY));
 		vitMoyenneDisplay.setBorder(BorderFactory.createEtchedBorder(Color.BLACK, Color.GRAY));
 		heureDepartDisplay.setBorder(BorderFactory.createEtchedBorder(Color.BLACK, Color.GRAY));
@@ -354,19 +398,16 @@ public class IHMSimulation implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		// test :
-		Point valence = new Point(0, new Coordonnees(44.933014, 4.890892), 0);
-		Point saintay = new Point(3600, new Coordonnees(45.446958, 4.383396), 0);
-		Parcours parcours = new Parcours(TypeSysteme.TERRESTRE);
 
 		switch (e.getActionCommand()) {
 		case "charger":
 			new IHMChoixFichier(e.getActionCommand(), this.panelAPICarte);
 			break;
 		case "importer":
+			new IHMChoixFichier(e.getActionCommand(), this.panelAPICarte, new Simulation());
 			break;
 		case "exporter":
-			Simulation simulation = new Simulation(parcours);
+			Simulation simulation = new Simulation(this.panelAPICarte.getParcours());
 			new IHMChoixFichier(e.getActionCommand(), this.panelAPICarte, simulation);
 			break;
 		case "menu":
