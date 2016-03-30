@@ -44,6 +44,12 @@ public class MainTest {
 		}
 		
 		PortSerie testPortSerie = new PortSerie();
+		
+		ArrayList<String> listePorts = testPortSerie.getListePorts();
+
+		System.out.println("\n\nListe ports machines :\n");
+	 	for(int i=0; i<listePorts.size(); i++) System.out.println(listePorts.get(i));
+
 		testPortSerie.setPort("COM8", 9600);
 		
 		testPortSerie.envoyer("Putain its work");
