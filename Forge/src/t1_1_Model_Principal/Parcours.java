@@ -41,6 +41,10 @@ public class Parcours {
 	public ArrayList<Point> getListePoints() {
 		return listePoints;
 	}
+	
+	public void setListePoints(ArrayList<Point> listePoints) {
+		this.listePoints = listePoints;
+	}
 
 	public void ajouterPoint(Point p) {
 //		int index = 0;

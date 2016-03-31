@@ -33,6 +33,7 @@ import javax.swing.event.DocumentListener;
 import jssc.SerialPortException;
 
 import org.openstreetmap.gui.jmapviewer.Coordinate;
+import org.openstreetmap.gui.jmapviewer.DefaultMapController;
 
 import t1_1_Model_Principal.EtatSimu;
 import t1_1_Model_Principal.Parcours;
@@ -679,7 +680,8 @@ public class IHMSimulation implements ActionListener {
 
 
 
-		ArrayList<Point> listePoint2 = this.panelAPICarte.getParcours().getListePoints();
+		ArrayList<Point> listePoint2 = this.panelAPICarte.getParcours().genererListePointsIntermediaires(this.panelAPICarte.getParcours().getDebit(), this.panelAPICarte.getParcours().getListePoints());
+		this.panelAPICarte.getParcours().setListePoints(listePoint2);
 
 		new Thread(
 				new Runnable() 
@@ -688,27 +690,32 @@ public class IHMSimulation implements ActionListener {
 					{
 
 						threadJouerPoints = Thread.currentThread();
-						Boolean running = boolJouerPoints;
-
+						Float tempsAttente = (float) (panelAPICarte.getParcours().getListePoints().get(1).getTemps() - panelAPICarte.getParcours().getListePoints().get(0).getTemps());
 						int i=0;
+
 						while(true)
 						{
 							for(;i<panelAPICarte.getParcours().getListePoints().size();i++)
 							{
 								if(simulation.getEtat() == EtatSimu.PAUSE)
 									break;
-								panelAPICarte.addMapMarker(new AffichagePointInter(new Coordinate(listePoint2.get(i).getCoordonnes().getLatitude(),listePoint2.get(i).getCoordonnes().getLongitude()),"./img/MarqueurPoint.png"));
-								int monX = ((int) panelAPICarte.getMapPosition(panelAPICarte.getMapMarkerList().get(panelAPICarte.getMapMarkerList().size()-1).getCoordinate()).getX()) - AffichagePoint.MARKER_SIZE*2;
-								int monY = ((int) panelAPICarte.getMapPosition(panelAPICarte.getMapMarkerList().get(panelAPICarte.getMapMarkerList().size()-1).getCoordinate()).getY()) - AffichagePoint.MARKER_SIZE*3;
-								Rectangle rect = new Rectangle(monX,monY,AffichagePoint.MARKER_SIZE*6,AffichagePoint.MARKER_SIZE*6);
-								panelAPICarte.paintImmediately(rect);
-								try {
-									Thread.sleep((long)((float)panelAPICarte.getParcours().getDebit()*1000));
-								} catch (InterruptedException e) {
-									throw new RuntimeException("Thread interrupted..."+e);
-								}							
-								panelAPICarte.removeMapMarker(panelAPICarte.getMapMarkerList().get(panelAPICarte.getMapMarkerList().size()-1));
-								panelAPICarte.paintImmediately(rect);
+								panelAPICarte.removeAllMapMarkers();
+								panelAPICarte.createMarkerDebutFin();
+								panelAPICarte.addMapMarker(new AffichagePointInter(new Coordinate(listePoint2.get(i).getCoordonnes().getLongitude(),listePoint2.get(i).getCoordonnes().getLatitude()),"./img/MarqueurPoint.png"));
+								if(panelAPICarte.getMapPosition(panelAPICarte.getMapMarkerList().get(panelAPICarte.getMapMarkerList().size()-1).getCoordinate()) != null)
+								{
+									int monX = ((int) panelAPICarte.getMapPosition(panelAPICarte.getMapMarkerList().get(panelAPICarte.getMapMarkerList().size()-1).getCoordinate()).getX()) - AffichagePoint.MARKER_SIZE*2;
+									int monY = ((int) panelAPICarte.getMapPosition(panelAPICarte.getMapMarkerList().get(panelAPICarte.getMapMarkerList().size()-1).getCoordinate()).getY()) - AffichagePoint.MARKER_SIZE*3;
+									Rectangle rect = new Rectangle(monX,monY,AffichagePoint.MARKER_SIZE*6,AffichagePoint.MARKER_SIZE*6);
+									panelAPICarte.paintImmediately(rect);
+									try {
+										Thread.sleep((long)(1000*tempsAttente));
+									} catch (InterruptedException e) {
+										throw new RuntimeException("Thread interrupted..."+e);
+									}							
+									panelAPICarte.removeMapMarker(panelAPICarte.getMapMarkerList().get(panelAPICarte.getMapMarkerList().size()-1));
+									panelAPICarte.paintImmediately(rect);
+								}
 							}
 						}
 					}
