@@ -1,5 +1,6 @@
 package t2_1_IHM;
 
+
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -10,7 +11,7 @@ import java.awt.Insets;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.text.DateFormat;
+import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
@@ -24,20 +25,18 @@ import javax.swing.JPanel;
 import javax.swing.JSlider;
 import javax.swing.JSplitPane;
 import javax.swing.SwingConstants;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 
 import org.openstreetmap.gui.jmapviewer.Coordinate;
-import org.openstreetmap.gui.jmapviewer.JMapViewer;
-
-import t1_1_Model_Principal.Coordonnees;
 import t1_1_Model_Principal.Parcours;
 import t1_1_Model_Principal.Point;
 import t1_1_Model_Principal.PortSerie;
 import t1_1_Model_Principal.Simulation;
-import t1_1_Model_Principal.ThreadLecture;
-import t1_1_Model_Principal.TypeSysteme;
+
 
 public class IHMSimulation implements ActionListener {
-	
+
 	private Parcours parcours;
 
 	private JButton bcharger = new JButton("Charger");
@@ -49,9 +48,9 @@ public class IHMSimulation implements ActionListener {
 	private JButton bJouer = new JButton("JOUER");
 
 	private JButton bMenu = new JButton("MENU");
-	
+
 	private JButton bPause = new JButton("");
-	
+
 	private JButton bLecture = new JButton("");
 
 	private JLabel vitActuelle = new JLabel("Vitesse actuelle");    
@@ -91,6 +90,10 @@ public class IHMSimulation implements ActionListener {
 
 	private JFormattedTextField date6 = new JFormattedTextField(new SimpleDateFormat("MM/dd/yyyy"));
 
+	private JLabel tauxErreurLabel = new JLabel("Taux d'erreur :    ");
+
+	private JFormattedTextField tauxErreur = new JFormattedTextField(NumberFormat.getPercentInstance());
+
 	private String[] listeLiaisonSerie = { "Liaison série 1", "Liaison série 2", "Liaison série 3" };
 
 	private JComboBox<String> comboBoxliaisonSerie = new JComboBox<String>(listeLiaisonSerie);
@@ -98,8 +101,12 @@ public class IHMSimulation implements ActionListener {
 	private String[] listeDebit = { "1200","2400","3600" };
 
 	private JComboBox<String> comboBoxDebit = new JComboBox<String>(listeDebit);
+	
+	JSlider vitesse = new JSlider(); 
 
 	private PanelAPICarte panelAPICarte;
+
+	private float dataTauxErreur;
 
 
 
@@ -108,13 +115,37 @@ public class IHMSimulation implements ActionListener {
 	{
 
 		this.parcours = parcours;
-		
+
 		PortSerie portSerie = new PortSerie();
 		this.listeLiaisonSerie = portSerie.getListePorts().toArray(new String[portSerie.getListePorts().size()]);
-		
+
 		creationComposant();
 		panelAPICarte.createMarkerDebutFin();
 		panelAPICarte.traceSegments();
+
+
+		tauxErreur.getDocument().addDocumentListener(new DocumentListener() {
+			public void changedUpdate(DocumentEvent e) {
+
+			}
+			public void removeUpdate(DocumentEvent e) {
+
+			}
+			public void insertUpdate(DocumentEvent e) {
+				Data();
+			}
+
+			private void Data()
+			{
+			
+				if(tauxErreur.getValue() instanceof Float)
+					if((float) tauxErreur.getValue() <= 1)
+						dataTauxErreur = (float) tauxErreur.getValue();
+				else
+					if((float)((double) tauxErreur.getValue()) <= 1)
+						dataTauxErreur = (float)((double) tauxErreur.getValue());
+			}
+		});
 
 	}
 
@@ -123,8 +154,32 @@ public class IHMSimulation implements ActionListener {
 
 		PortSerie portSerie = new PortSerie();
 		this.listeLiaisonSerie = portSerie.getListePorts().toArray(new String[portSerie.getListePorts().size()]);
-		
+
 		creationComposant();
+
+
+		tauxErreur.getDocument().addDocumentListener(new DocumentListener() {
+			public void changedUpdate(DocumentEvent e) {
+
+			}
+			public void removeUpdate(DocumentEvent e) {
+
+			}
+			public void insertUpdate(DocumentEvent e) {
+				Data();
+			}
+
+			private void Data()
+			{
+				if(tauxErreur.getValue() instanceof Float)
+					if((float) tauxErreur.getValue() <= 1)
+						dataTauxErreur = (float) tauxErreur.getValue();
+				else
+					if((float)((double) tauxErreur.getValue()) <= 1)
+						dataTauxErreur = (float)((double) tauxErreur.getValue());
+			}
+		});
+
 
 	}
 
@@ -143,7 +198,10 @@ public class IHMSimulation implements ActionListener {
 		JPanel depart = new JPanel();
 		JPanel arrivee = new JPanel();
 		JPanel plage = new JPanel();
-		JSlider vitesse = new JSlider(); 
+		JPanel panelBoutonsPaLe = new JPanel();
+		JPanel panelTauxErreur = new JPanel();
+
+
 
 
 
@@ -203,6 +261,8 @@ public class IHMSimulation implements ActionListener {
 		depart.setBackground(Color.WHITE);
 		arrivee.setBackground(Color.WHITE);
 		plage.setBackground(Color.WHITE);
+		panelTauxErreur.setBackground(Color.WHITE);
+		panelBoutonsPaLe.setBackground(Color.WHITE);
 		bPause.setBackground(Color.WHITE);
 		bLecture.setBackground(Color.WHITE);
 		bPause.setBorder(null);
@@ -211,7 +271,7 @@ public class IHMSimulation implements ActionListener {
 		ImageIcon imgLecture = new ImageIcon("./img/Lecture.png");
 		bPause.setIcon(imgPause);
 		bLecture.setIcon(imgLecture);
-		
+
 		Dimension dimensionAPI = new Dimension((int)(FenetreForge.width*0.8), (int)(FenetreForge.height*0.7));
 		Dimension dimensionJSlider = new Dimension((int)(FenetreForge.width*0.25), (int)(FenetreForge.height*0.1));
 		Dimension dimensionBoutonsHaut = new Dimension((int)(FenetreForge.width*0.15), (int)(FenetreForge.height*0.30/5));
@@ -220,8 +280,8 @@ public class IHMSimulation implements ActionListener {
 		Dimension dimensionBoutonsBasDroite = new Dimension((int)(FenetreForge.width*0.05), (int)(FenetreForge.height*0.18/3));
 		Dimension dimensionDates = new Dimension((int)(FenetreForge.width*0.15/2), (int)(FenetreForge.height*0.50/3/4));
 		Dimension dimensionInformations = new Dimension((int)(FenetreForge.width*0.25), (int)(FenetreForge.height*0.20/4));	
-		
-		
+		Dimension dimensionTauxErreur = new Dimension((int)(FenetreForge.width*0.05), (int)(FenetreForge.height*0.02));	
+
 
 		api.setPreferredSize(dimensionAPI);
 		vitesse.setPreferredSize(dimensionJSlider);
@@ -245,7 +305,8 @@ public class IHMSimulation implements ActionListener {
 		heureDepartDisplay.setPreferredSize(dimensionInformations);
 		heureArriveeDisplay.setPreferredSize(dimensionInformations);
 		heureActuelleDisplay.setPreferredSize(dimensionInformations);
-		dateActuelleDisplay.setPreferredSize(dimensionInformations);
+		dateActuelleDisplay.setPreferredSize(dimensionInformations);  
+		tauxErreur.setPreferredSize(dimensionTauxErreur);
 
 		Font tailletexte = new Font(null, Font.BOLD, 12);
 		vitActuelle.setFont(tailletexte);
@@ -275,7 +336,7 @@ public class IHMSimulation implements ActionListener {
 		((JLabel)comboBoxliaisonSerie.getRenderer()).setHorizontalAlignment(SwingConstants.CENTER);
 		comboBoxDebit.setFont(tailletexte);
 		((JLabel)comboBoxDebit.getRenderer()).setHorizontalAlignment(SwingConstants.CENTER);
-
+		tauxErreurLabel.setFont(tailletexte);
 
 		boutons.setLayout(new GridBagLayout());
 		GridBagConstraints gbcBoutons = new GridBagConstraints();     
@@ -371,16 +432,35 @@ public class IHMSimulation implements ActionListener {
 		vitesse.setPaintLabels(true);
 		vitesse.setMinorTickSpacing(0);
 		vitesse.setMajorTickSpacing(1);
-		
-		
-		GridLayout glBas = new GridLayout(3, 1);
-		glBas.setHgap(5); 
-		glBas.setVgap(5);
-		bas.setLayout(glBas);         
-		bas.add(bPause);
-		bas.add(bLecture);
-		bas.add(vitesse);    
-		bas.setLayout(new GridBagLayout());		
+
+		panelTauxErreur.setLayout(new GridBagLayout());
+		GridBagConstraints gbcTauxErreur = new GridBagConstraints();
+		gbcTauxErreur.insets = new Insets(4,4,4,4);
+		gbcTauxErreur.gridx = 0;
+		gbcTauxErreur.gridy = 0;
+		panelTauxErreur.add(tauxErreurLabel,gbcTauxErreur);
+		gbcTauxErreur.gridx = 1;
+		panelTauxErreur.add(tauxErreur,gbcTauxErreur);
+
+
+		panelBoutonsPaLe.setLayout(new GridBagLayout());
+		GridBagConstraints gbcBoutonsPaLe = new GridBagConstraints();
+		gbcBoutonsPaLe.gridx = 0;
+		gbcBoutonsPaLe.gridy = 0;
+		panelBoutonsPaLe.add(bPause,gbcBoutonsPaLe);
+		gbcBoutonsPaLe.gridx = 1;
+		panelBoutonsPaLe.add(bLecture,gbcBoutonsPaLe);
+
+
+		GridLayout glBas = new GridLayout(1, 3);
+		glBas.setHgap(1); 
+		bas.setLayout(new GridBagLayout());
+		bas.setLayout(glBas); 
+		bas.add(panelBoutonsPaLe);
+		bas.add(vitesse);
+		bas.add(panelTauxErreur);
+
+
 
 		api.setZoom(8, new java.awt.Point(-25,40));
 		carte.add(api); 
@@ -426,6 +506,9 @@ public class IHMSimulation implements ActionListener {
 		dateActuelleDisplay.setBorder(BorderFactory.createEtchedBorder(Color.BLACK, Color.GRAY));
 
 
+		tauxErreur.setValue(new Float(0.0));
+
+
 
 		FenetreForge.fenetreForge.getContentPane().removeAll();
 		FenetreForge.fenetreForge.getContentPane().add(splitForge);
@@ -437,14 +520,15 @@ public class IHMSimulation implements ActionListener {
 	void jouer()
 	{		
 		Simulation simu = new Simulation(this.panelAPICarte.getParcours());
-		simu.jouerSimulation(this.comboBoxliaisonSerie.getSelectedItem().toString(), Integer.valueOf(this.comboBoxDebit.getSelectedItem().toString()));		
-		
-		
-		
-		ArrayList<Point> listePoint2 = this.panelAPICarte.getParcours().getListePoints();
+		simu.jouerSimulation(this.comboBoxliaisonSerie.getSelectedItem().toString(), Integer.valueOf(this.comboBoxDebit.getSelectedItem().toString()), dataTauxErreur, (float)vitesse.getValue());		
+
+
+
+		ArrayList<Point> listePoint2 = this.panelAPICarte.getParcours().genererListePointsIntermediaires(this.panelAPICarte.getParcours().getDebit(), this.panelAPICarte.getParcours().getListePoints());
 		for(int i=0;i<this.panelAPICarte.getParcours().getListePoints().size();i++)
 		{
-			this.panelAPICarte.addMapMarker(new AffichagePointInter(new Coordinate(listePoint2.get(i).getCoordonnes().getLatitude(),listePoint2.get(i).getCoordonnes().getLongitude()),"./img/MarqueurPoint.png"));	
+			this.panelAPICarte.addMapMarker(new AffichagePointInter(new Coordinate(listePoint2.get(i).getCoordonnes().getLatitude(),listePoint2.get(i).getCoordonnes().getLongitude()),"./img/MarqueurPoint.png"));
+
 			int monX = ((int) this.panelAPICarte.getMapPosition(this.panelAPICarte.getMapMarkerList().get(this.panelAPICarte.getMapMarkerList().size()-1).getCoordinate()).getX()) - AffichagePoint.MARKER_SIZE*2;
 			int monY = ((int) this.panelAPICarte.getMapPosition(this.panelAPICarte.getMapMarkerList().get(this.panelAPICarte.getMapMarkerList().size()-1).getCoordinate()).getY()) - AffichagePoint.MARKER_SIZE*3;
 			Rectangle rect = new Rectangle(monX,monY,AffichagePoint.MARKER_SIZE*6,AffichagePoint.MARKER_SIZE*6);
