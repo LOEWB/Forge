@@ -311,8 +311,7 @@ public class Parcours {
 				 temps = temp26;
 				 
 			 }
-				// while(temps.length() != 6) 
-		//	double dd = Math.point.getTemps();
+		
 			
 				trame += temps + "," 
 							
