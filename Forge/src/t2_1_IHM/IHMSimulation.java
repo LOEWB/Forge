@@ -159,7 +159,7 @@ public class IHMSimulation implements ActionListener {
 				}
 				else
 				{
-					if((float)((double) tauxErreur.getValue()) <= 1)
+					if((float)((double) tauxErreur.getValue()) <= 1f)
 					{
 						dataTauxErreur = (float)((double) tauxErreur.getValue());
 					}
@@ -219,7 +219,7 @@ public class IHMSimulation implements ActionListener {
 				}
 				else
 				{
-					if((float)((double) tauxErreur.getValue()) <= 1)
+					if((float)((double) tauxErreur.getValue()) <= 1f)
 					{
 						dataTauxErreur = (float)((double) tauxErreur.getValue());
 					}
@@ -681,9 +681,6 @@ public class IHMSimulation implements ActionListener {
 
 								if(simulation.getEtat() == EtatSimu.ARRET)
 								{
-									i=0;
-									j=0;
-									dd=0;
 									Thread.currentThread().interrupt();
 									break;
 								}
@@ -696,9 +693,6 @@ public class IHMSimulation implements ActionListener {
 									
 									if(simulation.getEtat() == EtatSimu.ARRET)
 									{
-										i=0;
-										j=0;
-										dd=0;
 										Thread.currentThread().interrupt();
 										break;
 									}
@@ -768,12 +762,12 @@ public class IHMSimulation implements ActionListener {
 									Thread.sleep(0l);
 								} catch (InterruptedException e1) {
 									throw new RuntimeException("Thread interrupted..."+e1);
+									
 								}
 							}
 
 							if(simulation.getEtat() == EtatSimu.ARRET)
 							{
-								i=0;
 								Thread.currentThread().interrupt();
 								break;
 							}
@@ -782,7 +776,6 @@ public class IHMSimulation implements ActionListener {
 							{
 								if(simulation.getEtat() == EtatSimu.ARRET)
 								{
-									i=0;
 									Thread.currentThread().interrupt();
 									break;
 								}
@@ -851,8 +844,13 @@ public class IHMSimulation implements ActionListener {
 			break;
 		case "arret":
 			if(this.simulation != null)
-				if(this.simulation.getEtat() != EtatSimu.ARRET)
+				if(this.simulation.getEtat() != EtatSimu.ARRET)					
+				{
 					this.simulation.setEtat(EtatSimu.ARRET);
+					jouer();
+					this.simulation.setEtat(EtatSimu.ARRET);
+				}
+			
 			break;
 		case "menu":
 			FenetreForge.fenetreForge.dispose();
