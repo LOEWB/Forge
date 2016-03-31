@@ -35,6 +35,7 @@ import jssc.SerialPortException;
 import org.openstreetmap.gui.jmapviewer.Coordinate;
 
 
+
 import t1_1_Model_Principal.EtatSimu;
 import t1_1_Model_Principal.Parcours;
 import t1_1_Model_Principal.Point;
@@ -617,8 +618,8 @@ public class IHMSimulation implements ActionListener {
 		{
 			NumberFormat format = NumberFormat.getInstance();
 			format.setMinimumFractionDigits(2);
-			this.vitMoyenneDisplay.setText(format.format(this.panelAPICarte.getParcours().vitesseMoyenne()));
-			this.altMoyenneDisplay.setText(format.format(this.panelAPICarte.getParcours().altitudeMoyenne()));
+			this.vitMoyenneDisplay.setText(format.format(this.panelAPICarte.getParcours().vitesseMoyenne()) + "   km/h");
+			this.altMoyenneDisplay.setText(format.format(this.panelAPICarte.getParcours().altitudeMoyenne())+ "   m");
 
 
 			//			if (this.date2.getText() != "" && this.vitActuelle.getText() != "" && this.date4.getText() != "" && this.altMoyenneDisplay.getText() != "")
@@ -818,8 +819,10 @@ public class IHMSimulation implements ActionListener {
 
 								if(i+1<panelAPICarte.getParcours().getListePoints().size())
 								{
-									vitActuelleDisplay.setText(Double.toString(panelAPICarte.getParcours().vitesseSegments(panelAPICarte.getParcours().getListePoints().get(i), panelAPICarte.getParcours().getListePoints().get(i+1))*vitesse.getValue()));
-									altActuelleDisplay.setText(Double.toString(panelAPICarte.getParcours().altitudeSegments(panelAPICarte.getParcours().getListePoints().get(i), panelAPICarte.getParcours().getListePoints().get(i+1))));
+									NumberFormat format = NumberFormat.getNumberInstance(); 
+									format.setMinimumFractionDigits(2);
+									vitActuelleDisplay.setText(format.format(((double)panelAPICarte.getParcours().vitesseSegments(panelAPICarte.getParcours().getListePoints().get(i), panelAPICarte.getParcours().getListePoints().get(i+1))*vitesse.getValue())) + "  km/h");
+									altActuelleDisplay.setText(format.format(((double)panelAPICarte.getParcours().altitudeSegments(panelAPICarte.getParcours().getListePoints().get(i), panelAPICarte.getParcours().getListePoints().get(i+1)))) + "  m");
 								}
 
 								afficherLabels();
