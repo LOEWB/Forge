@@ -170,7 +170,7 @@ public class IHMChoixFichier extends JFrame {
 				if (this.simulation == null)
 					chargeParcours(path);
 				else
-					this.simulation.importSimulation(path);
+					importeSimulation(path);					
 			} else
 				JOptionPane.showMessageDialog(this,
 						"Fichier inexistant ou format incorrect",
@@ -193,6 +193,18 @@ public class IHMChoixFichier extends JFrame {
 			this.panelAPICarte.createMarkers();
 		else
 			this.panelAPICarte.createMarkerDebutFin();
+		this.panelAPICarte.traceSegments();
+	}
+	
+	private void importeSimulation(String path){
+		this.panelAPICarte.removeSegments();
+		this.panelAPICarte.removeAllMapMarkers();
+		
+		this.simulation.importSimulation(path);
+
+		// TODO récupérer la liste de point => this.simulation.getListePointsImportes()
+		
+		this.panelAPICarte.createMarkerDebutFin();
 		this.panelAPICarte.traceSegments();
 	}
 
