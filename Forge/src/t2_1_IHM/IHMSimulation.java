@@ -58,6 +58,8 @@ public class IHMSimulation implements ActionListener {
 	private JButton bPause = new JButton("");
 
 	private JButton bLecture = new JButton("");
+	
+	private JButton bArret = new JButton("");
 
 	private JLabel vitActuelle = new JLabel("Vitesse actuelle");    
 	private JLabel vitActuelleDisplay = new JLabel("");
@@ -119,10 +121,6 @@ public class IHMSimulation implements ActionListener {
 	private Simulation simulation;
 
 	private float dataTauxErreur;
-
-	private Thread threadJouerPoints;
-
-	private Boolean boolJouerPoints = true;
 
 
 
@@ -267,7 +265,7 @@ public class IHMSimulation implements ActionListener {
 		JPanel depart = new JPanel();
 		JPanel arrivee = new JPanel();
 		JPanel plage = new JPanel();
-		JPanel panelBoutonsPaLe = new JPanel();
+		JPanel panelBoutonsPaLeAr = new JPanel();
 		JPanel panelTauxErreur = new JPanel();
 
 
@@ -331,19 +329,25 @@ public class IHMSimulation implements ActionListener {
 		arrivee.setBackground(Color.WHITE);
 		plage.setBackground(Color.WHITE);
 		panelTauxErreur.setBackground(Color.WHITE);
-		panelBoutonsPaLe.setBackground(Color.WHITE);
+		panelBoutonsPaLeAr.setBackground(Color.WHITE);
 		bPause.setBackground(Color.WHITE);
 		bPause.addActionListener(this);
 		bPause.setActionCommand("pause");
 		bLecture.setBackground(Color.WHITE);
 		bLecture.addActionListener(this);
 		bLecture.setActionCommand("lecture");
+		bArret.setBackground(Color.WHITE);
+		bArret.addActionListener(this);
+		bArret.setActionCommand("arret");
 		bPause.setBorder(null);
 		bLecture.setBorder(null);
+		bArret.setBorder(null);
 		ImageIcon imgPause = new ImageIcon("./img/Pause.png");
 		ImageIcon imgLecture = new ImageIcon("./img/Lecture.png");
+		ImageIcon imgArret = new ImageIcon("./img/Pause.png");
 		bPause.setIcon(imgPause);
 		bLecture.setIcon(imgLecture);
+		bArret.setIcon(imgArret);
 
 		Dimension dimensionAPI = new Dimension((int)(FenetreForge.width*0.8), (int)(FenetreForge.height*0.7));
 		Dimension dimensionJSlider = new Dimension((int)(FenetreForge.width*0.25), (int)(FenetreForge.height*0.1));
@@ -367,6 +371,7 @@ public class IHMSimulation implements ActionListener {
 		bMenu.setPreferredSize(dimensionBoutonsBas);
 		bPause.setPreferredSize(dimensionBoutonsBasDroite);
 		bLecture.setPreferredSize(dimensionBoutonsBasDroite);
+		bArret.setPreferredSize(dimensionBoutonsBasDroite);
 		date.setPreferredSize(dimensionDates);
 		date2.setPreferredSize(dimensionDates);
 		date3.setPreferredSize(dimensionDates);
@@ -516,20 +521,22 @@ public class IHMSimulation implements ActionListener {
 		panelTauxErreur.add(tauxErreur,gbcTauxErreur);
 
 
-		panelBoutonsPaLe.setLayout(new GridBagLayout());
+		panelBoutonsPaLeAr.setLayout(new GridBagLayout());
 		GridBagConstraints gbcBoutonsPaLe = new GridBagConstraints();
 		gbcBoutonsPaLe.gridx = 0;
 		gbcBoutonsPaLe.gridy = 0;
-		panelBoutonsPaLe.add(bPause,gbcBoutonsPaLe);
+		panelBoutonsPaLeAr.add(bPause,gbcBoutonsPaLe);
 		gbcBoutonsPaLe.gridx = 1;
-		panelBoutonsPaLe.add(bLecture,gbcBoutonsPaLe);
+		panelBoutonsPaLeAr.add(bLecture,gbcBoutonsPaLe);
+		gbcBoutonsPaLe.gridx = 2;
+		panelBoutonsPaLeAr.add(bArret,gbcBoutonsPaLe);
 
 
 		GridLayout glBas = new GridLayout(1, 3);
 		glBas.setHgap(1); 
 		bas.setLayout(new GridBagLayout());
 		bas.setLayout(glBas); 
-		bas.add(panelBoutonsPaLe);
+		bas.add(panelBoutonsPaLeAr);
 		bas.add(vitesse);
 		bas.add(panelTauxErreur);
 
@@ -600,7 +607,15 @@ public class IHMSimulation implements ActionListener {
 	void jouer()
 	{		
 		this.simulation = new Simulation(this.panelAPICarte.getParcours());
-		//this.simulation.jouerSimulation(this.comboBoxliaisonSerie.getSelectedItem().toString(), Integer.valueOf(this.comboBoxDebit.getSelectedItem().toString()), dataTauxErreur, (float)vitesse.getValue());
+		this.simulation.setEtat(EtatSimu.LECTURE);
+
+		ArrayList<Point> listePoint2 = this.panelAPICarte.getParcours().genererListePointsIntermediaires(this.panelAPICarte.getParcours().getDebit(), this.panelAPICarte.getParcours().getListePoints());
+		this.panelAPICarte.getParcours().setListePoints(listePoint2);
+		int monX2 = 0;
+		int monY2 = 5000;
+		Rectangle rect2 = new Rectangle(monX2,monY2);
+		panelAPICarte.paintImmediately(rect2);
+		
 
 		new Thread(
 				new Runnable()
@@ -623,15 +638,14 @@ public class IHMSimulation implements ActionListener {
 
 					}
 
-					public void run()
+					public void run()				
 					{
-						float tempsAttente=0;
+						
+						Float tempsAttente = (float) (panelAPICarte.getParcours().getListePoints().get(1).getTemps() - panelAPICarte.getParcours().getListePoints().get(0).getTemps());
 						PortSerie portserie = new PortSerie();
 						//portserie.setPort(comboBoxliaisonSerie.getSelectedItem().toString(),Integer.valueOf(comboBoxDebit.getSelectedItem().toString()));
-						System.out.println("coucou1 le retour");
 						int i = 0;
 
-						System.out.println(dataTauxErreur);
 
 						if(dataTauxErreur < 1f && dataTauxErreur != 0f) {
 
@@ -640,7 +654,7 @@ public class IHMSimulation implements ActionListener {
 							ArrayList<Integer> faits = new ArrayList<Integer>();
 							int j=0;
 							int dd=0;
-							
+
 							while(nbTramesfaites != nbTramesErronnees) { // bon boussie d'abord la liste de trame selon taux d'erreur avant de commencer l'envoi
 								dd = 0 + (int)(Math.random() * ((simulation.getTramesArray().size()-1 - 0) + 1));
 								if(!faits.contains(dd)) {
@@ -652,7 +666,7 @@ public class IHMSimulation implements ActionListener {
 
 							}
 
-							tempsAttente=(Float.parseFloat(simulation.getTramesArray().get(1).split(",")[1])-Float.parseFloat(simulation.getTramesArray().get(0).split(",")[1]))*1000;
+							
 
 							while(true)
 							{
@@ -661,9 +675,16 @@ public class IHMSimulation implements ActionListener {
 									try {
 										Thread.sleep(0l);
 									} catch (InterruptedException e1) {
-										// TODO Auto-generated catch block
-										e1.printStackTrace();
+										throw new RuntimeException("Thread interrupted..."+e1);
 									}
+								}
+
+								if(simulation.getEtat() == EtatSimu.ARRET)
+								{
+									i=0;
+									j=0;
+									dd=0;
+									Thread.currentThread().interrupt();
 								}
 
 								while(simulation.getEtat() == EtatSimu.PAUSE);
@@ -671,6 +692,15 @@ public class IHMSimulation implements ActionListener {
 								for(;i<simulation.getTramesArray().size();i++)
 								{
 									System.out.println(simulation.getTramesArray().get(i));
+									
+									if(simulation.getEtat() == EtatSimu.ARRET)
+									{
+										i=0;
+										j=0;
+										dd=0;
+										Thread.currentThread().interrupt();
+									}
+									
 									if(simulation.getEtat() == EtatSimu.PAUSE)
 										break;
 
@@ -689,9 +719,9 @@ public class IHMSimulation implements ActionListener {
 										}*/
 
 										try {
-											Thread.sleep((long) (tempsAttente/(float)vitesse.getValue()));
+											Thread.sleep((long)(1000*tempsAttente/vitesse.getValue()));
 										} catch (InterruptedException e) {
-											e.printStackTrace();
+											throw new RuntimeException("Thread interrupted..."+e);
 										}
 									}
 									//pour la dernière trame
@@ -717,8 +747,6 @@ public class IHMSimulation implements ActionListener {
 
 
 
-		ArrayList<Point> listePoint2 = this.panelAPICarte.getParcours().genererListePointsIntermediaires(this.panelAPICarte.getParcours().getDebit(), this.panelAPICarte.getParcours().getListePoints());
-		this.panelAPICarte.getParcours().setListePoints(listePoint2);
 
 		new Thread(
 				new Runnable() 
@@ -726,7 +754,6 @@ public class IHMSimulation implements ActionListener {
 					public void run() 
 					{
 
-						threadJouerPoints = Thread.currentThread();
 						Float tempsAttente = (float) (panelAPICarte.getParcours().getListePoints().get(1).getTemps() - panelAPICarte.getParcours().getListePoints().get(0).getTemps());
 						int i=0;
 
@@ -738,18 +765,24 @@ public class IHMSimulation implements ActionListener {
 								try {
 									Thread.sleep(0l);
 								} catch (InterruptedException e1) {
-									// TODO Auto-generated catch block
-									e1.printStackTrace();
+									throw new RuntimeException("Thread interrupted..."+e1);
 								}
 							}
 
-							//if(simulation.getEtat() == EtatSimu.ARRET)
-							//Thread.
+							if(simulation.getEtat() == EtatSimu.ARRET)
+							{
+								i=0;
+								Thread.currentThread().interrupt();
+							}
 
 							for(;i<panelAPICarte.getParcours().getListePoints().size();i++)
 							{
-
-
+								if(simulation.getEtat() == EtatSimu.ARRET)
+								{
+									i=0;
+									Thread.currentThread().interrupt();
+								}
+																
 								if(simulation.getEtat() == EtatSimu.PAUSE)
 									break;
 
@@ -811,6 +844,11 @@ public class IHMSimulation implements ActionListener {
 			if(this.simulation != null)
 				if(this.simulation.getEtat() != EtatSimu.LECTURE)
 					this.simulation.setEtat(EtatSimu.LECTURE);
+			break;
+		case "arret":
+			if(this.simulation != null)
+				if(this.simulation.getEtat() != EtatSimu.ARRET)
+					this.simulation.setEtat(EtatSimu.ARRET);
 			break;
 		case "menu":
 			FenetreForge.fenetreForge.dispose();
