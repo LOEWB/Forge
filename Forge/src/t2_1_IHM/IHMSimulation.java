@@ -725,8 +725,8 @@ public class IHMSimulation implements ActionListener {
 
 							for(;i<panelAPICarte.getParcours().getListePoints().size();i++)
 							{
-								
-								
+
+
 								if(simulation.getEtat() == EtatSimu.PAUSE)
 									break;
 
@@ -741,10 +741,15 @@ public class IHMSimulation implements ActionListener {
 										Thread.sleep((long)(1000*tempsAttente/vitesse.getValue()));
 									} catch (InterruptedException e) {
 										throw new RuntimeException("Thread interrupted..."+e);
-									}							
-									panelAPICarte.removeMapMarker(panelAPICarte.getMapMarkerList().get(panelAPICarte.getMapMarkerList().size()-1));
-									panelAPICarte.paintImmediately(rect);
+									}	
 								}
+								
+								panelAPICarte.removeMapMarker(panelAPICarte.getMapMarkerList().get(panelAPICarte.getMapMarkerList().size()-1));
+								int monX2 = 0;
+								int monY2 = 5000;
+								Rectangle rect2 = new Rectangle(monX2,monY2);
+								panelAPICarte.paintImmediately(rect2);
+
 							}
 						}
 					}
