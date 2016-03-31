@@ -43,12 +43,12 @@ public class MainTest {
    System.out.println(p+"");
   }
   
-  PortSerie testPortSerie = new PortSerie();
-  
-  ArrayList<String> listePorts = testPortSerie.getListePorts();
-
-  System.out.println("\n\nListe ports machines :\n");
-   for(int i=0; i<listePorts.size(); i++) System.out.println(listePorts.get(i));
+//  PortSerie testPortSerie = new PortSerie();
+//  
+//  ArrayList<String> listePorts = testPortSerie.getListePorts();
+//
+//  System.out.println("\n\nListe ports machines :\n");
+//   for(int i=0; i<listePorts.size(); i++) System.out.println(listePorts.get(i));
 
   
   
@@ -70,7 +70,10 @@ public class MainTest {
     float tauxErreur = Float.valueOf("0.9");
     float vitesse = Float.valueOf("2.0");
     
-    simu.jouerSimulation("COM8", 9600, tauxErreur, vitesse);
+    //simu.jouerSimulation("COM8", 9600, tauxErreur, vitesse);
+    Simulation simu3 = new Simulation();
+    simu3.importSimulation("t1.fS");
+    System.out.println(simu3.getlistePointsImportes());
     
  //  while(true) System.out.println("Coucou"); // attention boucle infinie !!!!!!!!
  }
