@@ -302,7 +302,7 @@ public class Parcours {
 			 temps = ""+hours+mins+secs;
 			 String temp26 = "";
 			
-			 System.out.println("Temps " + temps + "Longueur" + temps.length());
+		//	 System.out.println("Temps " + temps + "Longueur" + temps.length());
 			 
 			 if(temps.length() < 6) {
 				 int gg=temps.length(); 
