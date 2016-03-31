@@ -140,7 +140,7 @@ public class IHMSimulation implements ActionListener {
 
 		tauxErreur.getDocument().addDocumentListener(new DocumentListener() {
 			public void changedUpdate(DocumentEvent e) {
-
+				
 			}
 			public void removeUpdate(DocumentEvent e) {
 
@@ -153,11 +153,19 @@ public class IHMSimulation implements ActionListener {
 			{
 
 				if(tauxErreur.getValue() instanceof Float)
-					if((float) tauxErreur.getValue() <= 1)
-						dataTauxErreur = (float) tauxErreur.getValue();
-					else
-						if((float)((double) tauxErreur.getValue()) <= 1)
-							dataTauxErreur = (float)((double) tauxErreur.getValue());
+				{
+					if((float) tauxErreur.getValue() <= 1f)
+					{
+						dataTauxErreur = (float) tauxErreur.getValue();					
+					}
+				}
+				else
+				{
+					if((float)((double) tauxErreur.getValue()) <= 1)
+					{
+						dataTauxErreur = (float)((double) tauxErreur.getValue());
+					}
+				}
 			}
 		});
 
@@ -205,11 +213,19 @@ public class IHMSimulation implements ActionListener {
 			private void Data()
 			{
 				if(tauxErreur.getValue() instanceof Float)
-					if((float) tauxErreur.getValue() <= 1)
-						dataTauxErreur = (float) tauxErreur.getValue();
-					else
-						if((float)((double) tauxErreur.getValue()) <= 1)
-							dataTauxErreur = (float)((double) tauxErreur.getValue());
+				{
+					if((float) tauxErreur.getValue() <= 1f)
+					{
+						dataTauxErreur = (float) tauxErreur.getValue();					
+					}
+				}
+				else
+				{
+					if((float)((double) tauxErreur.getValue()) <= 1)
+					{
+						dataTauxErreur = (float)((double) tauxErreur.getValue());
+					}
+				}
 			}
 		});
 
@@ -563,7 +579,8 @@ public class IHMSimulation implements ActionListener {
 		dateActuelleDisplay.setBorder(BorderFactory.createEtchedBorder(Color.BLACK, Color.GRAY));
 
 
-		tauxErreur.setValue(0.0f);
+		tauxErreur.setValue(0.5f);
+		dataTauxErreur = 0.5f;
 		if(this.panelAPICarte.getParcours() != null)
 		{
 			date5.setValue(this.panelAPICarte.getParcours().getListePoints().get(0).getTemps()/3600);
@@ -608,31 +625,44 @@ public class IHMSimulation implements ActionListener {
 
 					public void run()
 					{
+						System.out.println("coucou1");
 						float tempsAttente=0;
 						PortSerie portserie = new PortSerie();
-						portserie.setPort(comboBoxliaisonSerie.getSelectedItem().toString(),Integer.valueOf(comboBoxDebit.getSelectedItem().toString()));
+						//portserie.setPort(comboBoxliaisonSerie.getSelectedItem().toString(),Integer.valueOf(comboBoxDebit.getSelectedItem().toString()));
+						System.out.println("coucou1 le retour");
 						int i = 0;
 						
-						if(dataTauxErreur > 0) {
+						System.out.println(dataTauxErreur);
+						
+						if(dataTauxErreur < 1f && dataTauxErreur != 0f) {
 							
-						int nbTramesErronnees = (int) (simulation.getTramesArray().size()/dataTauxErreur);
+						int nbTramesErronnees = (int) (simulation.getTramesArray().size()*dataTauxErreur);
 						int nbTramesfaites = 0;
 						ArrayList<Integer> faits = new ArrayList<Integer>();
 						int j=0;
 						int dd=0;
+						System.out.println("coucou2");
 
 						while(nbTramesfaites != nbTramesErronnees) { // bon boussie d'abord la liste de trame selon taux d'erreur avant de commencer l'envoi
+							System.out.println("coucou3");
+							System.out.println(nbTramesErronnees);
+							System.out.println(nbTramesfaites);
 							dd = 0 + (int)(Math.random() * ((simulation.getTramesArray().size()-1 - 0) + 1));
 							if(!faits.contains(dd)) {
 								simulation.getTramesArray().set(dd, boussierTrame(simulation.getTramesArray().get(dd).toString()));
 								faits.add(dd);
 								nbTramesfaites++;
+								
 							}
 
 						}
+						
+						tempsAttente=(Float.parseFloat(simulation.getTramesArray().get(1).split(",")[1])-Float.parseFloat(simulation.getTramesArray().get(0).split(",")[1]))*1000;
+						
 							while(true)
 							{
 
+								System.out.println("coucou4");
 								while(simulation.getEtat() == EtatSimu.PAUSE)
 								{
 									try {
@@ -647,24 +677,23 @@ public class IHMSimulation implements ActionListener {
 
 								for(;i<simulation.getTramesArray().size();i++)
 								{
+									System.out.println(simulation.getTramesArray().get(i));
 									if(simulation.getEtat() == EtatSimu.PAUSE)
 										break;
 
 									//pour toutes les trames sauf la derniere
 									if(i+1<simulation.getTramesArray().size())
 									{
-										tempsAttente=(Float.parseFloat(simulation.getTramesArray().get(i+1).split(",")[1])-Float.parseFloat(simulation.getTramesArray().get(i).split(",")[1]))*1000;
-										System.out.println(simulation.getTramesArray().get(i));
-										try {
+										/*try {
 											portserie.envoyer(simulation.getTramesArray().get(i));
-											System.out.println(simulation.getTramesArray().get(i));
+											
 										} catch (IOException e) {
 											// TODO Auto-generated catch block
 											e.printStackTrace();
 										} catch (SerialPortException e) {
 											// TODO Auto-generated catch block
 											e.printStackTrace();
-										}
+										}*/
 
 										try {
 											Thread.sleep((long) (tempsAttente/(float)vitesse.getValue()));
@@ -675,23 +704,21 @@ public class IHMSimulation implements ActionListener {
 									//pour la dernière trame
 									else
 									{
-										System.out.println(simulation.getTramesArray().get(i));
-										try {
-											portserie.envoyer(simulation.getTramesArray().get(i));
-											System.out.println(simulation.getTramesArray().get(i));
+										/*try {
+											portserie.envoyer(simulation.getTramesArray().get(i));											
 										} catch (IOException e) {
 											// TODO Auto-generated catch block
 											e.printStackTrace();
 										} catch (SerialPortException e) {
 											// TODO Auto-generated catch block
 											e.printStackTrace();
-										}
+										}*/
 									}
 								}
 							}
 						}
 					}
-				});
+				}).start();
 
 
 
@@ -722,6 +749,9 @@ public class IHMSimulation implements ActionListener {
 									e1.printStackTrace();
 								}
 							}
+							
+							//if(simulation.getEtat() == EtatSimu.ARRET)
+								//Thread.
 
 							for(;i<panelAPICarte.getParcours().getListePoints().size();i++)
 							{
