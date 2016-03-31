@@ -483,8 +483,8 @@ public class IHMSimulation implements ActionListener {
 		gbcJouerMenu.gridy = 1;
 		jouerMenu.add(bMenu,gbcJouerMenu);
 
-		vitesse.setMaximum(3);
-		vitesse.setMinimum(0);
+		vitesse.setMaximum(10);
+		vitesse.setMinimum(1);
 		vitesse.setValue(1);
 		vitesse.setPaintTicks(true);
 		vitesse.setPaintLabels(true);
@@ -630,6 +630,18 @@ public class IHMSimulation implements ActionListener {
 							while(true)
 							{
 
+								while(simulation.getEtat() == EtatSimu.PAUSE)
+								{
+									try {
+										Thread.sleep(0l);
+									} catch (InterruptedException e1) {
+										// TODO Auto-generated catch block
+										e1.printStackTrace();
+									}
+								}
+								
+								while(simulation.getEtat() == EtatSimu.PAUSE);
+
 								for(;i<simulation.getTramesArray().size();i++)
 								{
 									if(simulation.getEtat() == EtatSimu.PAUSE)
@@ -642,6 +654,7 @@ public class IHMSimulation implements ActionListener {
 										System.out.println(simulation.getTramesArray().get(i));
 										try {
 											portserie.envoyer(simulation.getTramesArray().get(i));
+											System.out.println(simulation.getTramesArray().get(i));
 										} catch (IOException e) {
 											// TODO Auto-generated catch block
 											e.printStackTrace();
@@ -662,6 +675,7 @@ public class IHMSimulation implements ActionListener {
 										System.out.println(simulation.getTramesArray().get(i));
 										try {
 											portserie.envoyer(simulation.getTramesArray().get(i));
+											System.out.println(simulation.getTramesArray().get(i));
 										} catch (IOException e) {
 											// TODO Auto-generated catch block
 											e.printStackTrace();
@@ -695,12 +709,24 @@ public class IHMSimulation implements ActionListener {
 
 						while(true)
 						{
+
+							while(simulation.getEtat() == EtatSimu.PAUSE)
+							{
+								try {
+									Thread.sleep(0l);
+								} catch (InterruptedException e1) {
+									// TODO Auto-generated catch block
+									e1.printStackTrace();
+								}
+							}
+
 							for(;i<panelAPICarte.getParcours().getListePoints().size();i++)
 							{
+								
+								
 								if(simulation.getEtat() == EtatSimu.PAUSE)
 									break;
-								panelAPICarte.removeAllMapMarkers();
-								panelAPICarte.createMarkerDebutFin();
+
 								panelAPICarte.addMapMarker(new AffichagePointInter(new Coordinate(listePoint2.get(i).getCoordonnes().getLongitude(),listePoint2.get(i).getCoordonnes().getLatitude()),"./img/MarqueurPoint.png"));
 								if(panelAPICarte.getMapPosition(panelAPICarte.getMapMarkerList().get(panelAPICarte.getMapMarkerList().size()-1).getCoordinate()) != null)
 								{
@@ -709,7 +735,7 @@ public class IHMSimulation implements ActionListener {
 									Rectangle rect = new Rectangle(monX,monY,AffichagePoint.MARKER_SIZE*6,AffichagePoint.MARKER_SIZE*6);
 									panelAPICarte.paintImmediately(rect);
 									try {
-										Thread.sleep((long)(1000*tempsAttente));
+										Thread.sleep((long)(1000*tempsAttente/vitesse.getValue()));
 									} catch (InterruptedException e) {
 										throw new RuntimeException("Thread interrupted..."+e);
 									}							
