@@ -619,7 +619,6 @@ public class IHMSimulation implements ActionListener {
 			format.setMinimumFractionDigits(2);
 			this.vitMoyenneDisplay.setText(format.format(this.panelAPICarte.getParcours().vitesseMoyenne()));
 
-			this.vitActuelleDisplay.setText(format.format(this.vitesse.getValue()*this.panelAPICarte.getParcours().vitesseMoyenne()));
 
 			if (this.date2.getText() != "" && this.vitActuelle.getText() != "" && this.date4.getText() != "" && this.heureDepartDisplay.getText() != "")
 			{
@@ -654,15 +653,15 @@ public class IHMSimulation implements ActionListener {
 					private String boussierTrame(String trame){
 
 						Simulation simulation = new Simulation();
-						
-				
+
+
 						Point point = simulation.getPoint(trame);
 						int dd = 0 + (int)(Math.random() * ((250-1 - 0) + 1));
 
 						Point point2 = new Point(point.getTemps()-dd, point.getCoordonnes(), point.getAltitude()+dd); // modification avec conneries
 						ArrayList<Point> listePoints = new ArrayList<Point>();
 						listePoints.add(point2);
-						
+
 						Parcours parcours = new Parcours(TypeSysteme.AERIEN, listePoints); // AERIEN au pif pour satisfaire constructeur....
 
 						String newTrame = parcours.genererTrames();
@@ -816,6 +815,8 @@ public class IHMSimulation implements ActionListener {
 								if(simulation.getEtat() == EtatSimu.PAUSE)
 									break;
 
+								if(i+1<panelAPICarte.getParcours().getListePoints().size())
+									vitActuelleDisplay.setText(Double.toString(panelAPICarte.getParcours().vitesseSegments(panelAPICarte.getParcours().getListePoints().get(i), panelAPICarte.getParcours().getListePoints().get(i+1))*vitesse.getValue()));
 								afficherLabels();
 
 								panelAPICarte.addMapMarker(new AffichagePointInter(new Coordinate(listePoint2.get(i).getCoordonnes().getLongitude(),listePoint2.get(i).getCoordonnes().getLatitude()),"./img/MarqueurPoint.png"));
@@ -831,13 +832,6 @@ public class IHMSimulation implements ActionListener {
 										throw new RuntimeException("Thread interrupted..."+e);
 									}	
 								}
-
-								panelAPICarte.removeMapMarker(panelAPICarte.getMapMarkerList().get(panelAPICarte.getMapMarkerList().size()-1));
-								int monX2 = 0;
-								int monY2 = 5000;
-								Rectangle rect2 = new Rectangle(monX2,monY2);
-								panelAPICarte.paintImmediately(rect2);
-
 							}
 						}
 					}
