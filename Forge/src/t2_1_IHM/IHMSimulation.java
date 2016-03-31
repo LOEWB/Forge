@@ -720,9 +720,16 @@ public class IHMSimulation implements ActionListener {
 								}
 
 								while(simulation.getEtat() == EtatSimu.PAUSE);
+								
+								for(;i<panelAPICarte.getParcours().getListePoints().size();i++)
+								{
+									if(panelAPICarte.getParcours().getListePoints().get(i).getTemps()>(double)date5.getValue()*3600)
+										break;
+								}
 
 								for(;i<simulation.getTramesArray().size();i++)
 								{
+									
 									System.out.println(simulation.getTramesArray().get(i));
 
 									if(simulation.getEtat() == EtatSimu.ARRET)
@@ -814,9 +821,25 @@ public class IHMSimulation implements ActionListener {
 								Thread.currentThread().interrupt();
 								break;
 							}
+							
+							for(;i<panelAPICarte.getParcours().getListePoints().size();i++)
+							{
+								if(panelAPICarte.getParcours().getListePoints().get(i).getTemps()>(double)date5.getValue()*3600)
+									break;
+							}
+							
 
 							for(;i<panelAPICarte.getParcours().getListePoints().size();i++)
 							{
+								
+								if(panelAPICarte.getParcours().getListePoints().get(i).getTemps()>((double)date6.getValue()*3600))
+								{
+									System.out.println(panelAPICarte.getParcours().getListePoints().get(i).getTemps());
+									System.out.println((double)date6.getValue());
+									bArret.doClick();
+									break;
+								}								
+								
 								if(simulation.getEtat() == EtatSimu.ARRET)
 								{
 									Thread.currentThread().interrupt();
