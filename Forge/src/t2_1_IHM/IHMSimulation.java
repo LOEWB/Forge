@@ -641,8 +641,8 @@ public class IHMSimulation implements ActionListener {
 		this.simulation = new Simulation(this.panelAPICarte.getParcours());
 		this.simulation.setEtat(EtatSimu.LECTURE);
 
-		ArrayList<Point> listePoint2 = this.panelAPICarte.getParcours().genererListePointsIntermediaires(this.panelAPICarte.getParcours().getDebit(), this.panelAPICarte.getParcours().getListePoints());
-		this.panelAPICarte.getParcours().setListePoints(listePoint2);
+		this.simulation.setlistePointsImportes(this.panelAPICarte.getParcours().genererListePointsIntermediaires(this.panelAPICarte.getParcours().getDebit(), this.panelAPICarte.getParcours().getListePoints()));
+		this.panelAPICarte.getParcours().setListePoints(this.simulation.getlistePointsImportes());
 		int monX2 = 0;
 		int monY2 = 5000;
 		Rectangle rect2 = new Rectangle(monX2,monY2);
@@ -859,7 +859,7 @@ public class IHMSimulation implements ActionListener {
 
 								afficherLabels();
 
-								panelAPICarte.addMapMarker(new AffichagePointInter(new Coordinate(listePoint2.get(i).getCoordonnes().getLongitude(),listePoint2.get(i).getCoordonnes().getLatitude()),"./img/MarqueurPoint.png"));
+								panelAPICarte.addMapMarker(new AffichagePointInter(new Coordinate(simulation.getlistePointsImportes().get(i).getCoordonnes().getLongitude(),simulation.getlistePointsImportes().get(i).getCoordonnes().getLatitude()),"./img/MarqueurPoint.png"));
 								if(panelAPICarte.getMapPosition(panelAPICarte.getMapMarkerList().get(panelAPICarte.getMapMarkerList().size()-1).getCoordinate()) != null)
 								{
 									int monX = ((int) panelAPICarte.getMapPosition(panelAPICarte.getMapMarkerList().get(panelAPICarte.getMapMarkerList().size()-1).getCoordinate()).getX()) - AffichagePoint.MARKER_SIZE*2;
@@ -910,8 +910,11 @@ public class IHMSimulation implements ActionListener {
 			break;
 		case "jouer":
 			if(this.panelAPICarte.getParcours() != null)
-				if(this.panelAPICarte.getParcours().getListePoints().size()>0)
-					jouer();
+				if(this.panelAPICarte.getParcours().getListePoints().size()>1)
+					if(this.simulation == null)
+						jouer();
+					else if(this.simulation.getEtat() == EtatSimu.ARRET)
+						jouer();
 			System.out.println(dataTauxErreur);
 			break;
 		case "pause":
