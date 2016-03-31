@@ -289,8 +289,8 @@ public class Simulation {
 
 	public void jouerSimulation(String port, int debit, float TauxErreur, float vitesse)
 	{
-		ThreadLecture threadLecture = new ThreadLecture(this.tramesArray, port, debit, TauxErreur, vitesse);
-		threadLecture.start();
+		Thread t1 = new ThreadLecture(this.tramesArray, port, debit, TauxErreur, vitesse);
+		t1.start();
 	}
 
 	public void setEtat(EtatSimu etat) {
