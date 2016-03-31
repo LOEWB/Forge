@@ -596,8 +596,8 @@ public class IHMSimulation implements ActionListener {
 		dateActuelleDisplay.setBorder(BorderFactory.createEtchedBorder(Color.BLACK, Color.GRAY));
 
 
-		tauxErreur.setValue(0.5f);
-		dataTauxErreur = 0.5f;
+		tauxErreur.setValue(0.0f);
+		dataTauxErreur = 0.0f;
 		if(this.panelAPICarte.getParcours() != null)
 		{
 			date5.setValue(this.panelAPICarte.getParcours().getListePoints().get(0).getTemps()/3600);
