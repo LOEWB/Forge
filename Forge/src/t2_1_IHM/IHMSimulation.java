@@ -454,7 +454,7 @@ public class IHMSimulation implements ActionListener {
 		departArriveePlage.add(plage);         
 		depart.setBorder(BorderFactory.createTitledBorder(null, "Départ",0, 0, tailletexte));
 		arrivee.setBorder(BorderFactory.createTitledBorder(null, "Arrivée",0, 0, tailletexte));
-		plage.setBorder(BorderFactory.createTitledBorder(null, "Plage Horaire relatif de la simulation (en heure)",0, 0, tailletexte));
+		plage.setBorder(BorderFactory.createTitledBorder(null, "Plage Horaire relatif (en heure)",0, 0, tailletexte));
 
 		depart.setLayout(new GridBagLayout());
 		GridBagConstraints gbcDepart = new GridBagConstraints();             
@@ -617,18 +617,18 @@ public class IHMSimulation implements ActionListener {
 		{
 			NumberFormat format = NumberFormat.getInstance();
 			format.setMinimumFractionDigits(2);
-			this.vitMoyenneDisplay.setText(""+format.format(this.panelAPICarte.getParcours().vitesseMoyenne()));
+			this.vitMoyenneDisplay.setText(format.format(this.panelAPICarte.getParcours().vitesseMoyenne()));
 
-			this.vitActuelleDisplay.setText(""+format.format(this.vitesse.getValue()*this.panelAPICarte.getParcours().vitesseMoyenne()));
+			this.vitActuelleDisplay.setText(format.format(this.vitesse.getValue()*this.panelAPICarte.getParcours().vitesseMoyenne()));
 
-			if (this.date2.getText() != "" && this.vitActuelle.getText() != "")
+			if (this.date2.getText() != "" && this.vitActuelle.getText() != "" && this.date4.getText() != "" && this.heureDepartDisplay.getText() != "")
 			{
-				this.heureDepartDisplay.setText(""+this.date2.getText());
+				this.heureDepartDisplay.setText(this.date2.getText());
 				int h1 = Integer.parseInt(this.heureDepartDisplay.getText());
 				int h2 = Integer.parseInt(this.date4.getText());
 				int heureArrivee = h1 + ((h2 - h1) / this.vitesse.getValue());
 
-				this.heureArriveeDisplay.setText(""+heureArrivee);
+				this.heureArriveeDisplay.setText(Integer.toString(heureArrivee));
 			}
 		}
 	}
@@ -814,7 +814,7 @@ public class IHMSimulation implements ActionListener {
 								if(simulation.getEtat() == EtatSimu.PAUSE)
 									break;
 
-								//afficherLabels();
+								afficherLabels();
 
 								panelAPICarte.addMapMarker(new AffichagePointInter(new Coordinate(listePoint2.get(i).getCoordonnes().getLongitude(),listePoint2.get(i).getCoordonnes().getLatitude()),"./img/MarqueurPoint.png"));
 								if(panelAPICarte.getMapPosition(panelAPICarte.getMapMarkerList().get(panelAPICarte.getMapMarkerList().size()-1).getCoordinate()) != null)
