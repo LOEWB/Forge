@@ -286,8 +286,8 @@ public class Parcours {
 			//System.out.println("Longitude 2 " + longitude); 
 
 			temps = ""+ point.getTemps() +"";
-		//	temps = temps.toString();
-		   	 long days=0;
+
+			 long days=0;
 			 long hours=0;
 			 long mins=0;
 			 long secs=0;
