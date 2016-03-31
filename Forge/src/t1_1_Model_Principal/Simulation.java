@@ -83,6 +83,8 @@ public class Simulation {
 		
 		String integerPart = "";
 		String temporaire2 = "";
+		String temps2 = "";
+		
 		int h=0;
 		int intPart=0;
 		
@@ -92,6 +94,20 @@ public class Simulation {
 		longitude = Double.valueOf(attributsTable[4]);
 		altitude =  Double.valueOf(attributsTable[7]);
 
+		temps2 = ""+ temps +"";
+
+		
+		 long hours=0;
+		 long mins=0;
+		 long secs=0;
+		 double dd = Double.parseDouble(temps2);
+		 long ee = Math.round(dd);
+		 hours = Math.round(dd / 3600);
+		 mins = Math.round((dd % 3600) / 60);
+		 secs = Math.round(dd % 60);
+		 temps = secs+(mins*60)+hours*(3600);
+		 
+		 
 		integerPart = "";
 		temporaire2 = ""+latitude+"";
 		h=0;
@@ -139,7 +155,8 @@ public class Simulation {
 		String temporaire = "";
 		String temporaire2 = "";
 		String integerPart = "";
-
+		String temps2 = "";
+		
 		i = 7;
 
 		while (parcoursBrut.charAt(i) != ',') {
@@ -148,7 +165,20 @@ public class Simulation {
 		}
 		i++;
 
-		tempsPremierPoint = Double.parseDouble(temporaire);
+		temps2 = temporaire;
+
+		 long days=0;
+		 long hours=0;
+		 long mins=0;
+		 long secs=0;
+		 double dd = Double.parseDouble(temps2);
+		 secs = Math.round(Integer.parseInt(temps2.substring(4, 5)));
+		 mins= Math.round(Integer.parseInt(temps2.substring(2, 3)));
+		 hours=Math.round(Integer.parseInt(temps2.substring(0, 1)));
+	
+		 tempsPremierPoint = secs+(mins*60)+hours*(3600);
+
+//		tempsPremierPoint = Double.parseDouble(temporaire);
 
 		temporaire = "";
 
@@ -210,7 +240,20 @@ public class Simulation {
 				}
 				i++;
 
-				tempsPoint = Double.parseDouble(temporaire);
+				temps2 = temporaire;
+
+				 days=0;
+				 hours=0;
+				 mins=0;
+				 secs=0;
+				 dd = Double.parseDouble(temps2);
+				 secs = Math.round(Integer.parseInt(temps2.substring(4, 5)));
+				 mins= Math.round(Integer.parseInt(temps2.substring(2, 3)));
+				 hours=Math.round(Integer.parseInt(temps2.substring(0, 1)));
+			
+				 tempsPoint = secs+(mins*60)+hours*(3600);
+
+			//	tempsPoint = Double.parseDouble(temporaire);
 
 				temporaire = "";
 

@@ -43,37 +43,47 @@ public class MainTest {
    System.out.println(p+"");
   }
   
-//  PortSerie testPortSerie = new PortSerie();
-//  
-//  ArrayList<String> listePorts = testPortSerie.getListePorts();
-//
-//  System.out.println("\n\nListe ports machines :\n");
-//   for(int i=0; i<listePorts.size(); i++) System.out.println(listePorts.get(i));
+  PortSerie testPortSerie = new PortSerie();
+  
+  ArrayList<String> listePorts = testPortSerie.getListePorts();
+
+  System.out.println("\n\nListe ports machines :\n");
+   for(int i=0; i<listePorts.size(); i++) System.out.println(listePorts.get(i));
 
   
   
+ //  public Parcours(TypeSysteme typeSysteme, ArrayList<Point> listePoints) {
+
+   ArrayList<Point> listePoints = new ArrayList<Point>();
+   listePoints.add(new Point(180822, new Coordonnees(45.933014,4.950892),150));
+   
+  Parcours parc = new Parcours(TypeSysteme.AERIEN, listePoints);
   
+  String tt = parc.genererTrames();
+ 
+   System.out.println("liste dd" + parc.getListePoints().toString());
+  Point td = simu.getPoint(tt);
   
+  System.out.println("tt : " + tt);
+  
+  System.out.println("\nPoint : " + td.toString());
   
   Point dd = simu.getPoint("$GPGGA,180820.0,4455.9806,N,00453.4530,E,1,6,14.6,0.0,M,47.9,M,,*57");
-  	
+   
   System.out.println(dd.toString()); // les 0 qui sont pas dans l'affichage sont du à la conversion en double, mais c'est normal...
 
   System.out.println("\n\nTest getPoints :\n");
 
-   ArrayList<Point> listePoints = simu.getPoints("$GPGGA,180820.0,4455.9806,N,00453.4530,E,1,6,12.6,0.0,M,48.9,M,,*5E$GPGGA,180821.0,4525.9806,N,00455.2534,E,1,10,19.6,75.0,M,47.9,M,,*5C$GPGGA,180822.0,4555.9806,N,00457.0534,E,1,6,4.6,150.0,M,47.9,M,,*65$GPGGA,180823.0,4541.3991,N,00440.0284,E,1,12,10.6,75.0,M,47.9,M,,*58$GPGGA,180824.0,4526.8170,N,00423.0034,E,1,6,6.6,0.0,M,47.9,M,,*6E");
+   ArrayList<Point> listePoints2 = simu.getPoints("$GPGGA,180820.0,4455.9806,N,00453.4530,E,1,6,12.6,0.0,M,48.9,M,,*5E$GPGGA,180821.0,4525.9806,N,00455.2534,E,1,10,19.6,75.0,M,47.9,M,,*5C$GPGGA,180822.0,4555.9806,N,00457.0534,E,1,6,4.6,150.0,M,47.9,M,,*65$GPGGA,180823.0,4541.3991,N,00440.0284,E,1,12,10.6,75.0,M,47.9,M,,*58$GPGGA,180824.0,4526.8170,N,00423.0034,E,1,6,6.6,0.0,M,47.9,M,,*6E");
 
-    for(int i=0; i<listePoints.size(); i++) System.out.println(listePoints.get(i).toString());
+    for(int i=0; i<listePoints2.size(); i++) System.out.println(listePoints2.get(i).toString());
   
     // jouerSimulation(String port, int debit, float TauxErreur, float vitesse)
     System.out.println("\n\nDébut simulation :");
     float tauxErreur = Float.valueOf("0.9");
     float vitesse = Float.valueOf("2.0");
     
-    //simu.jouerSimulation("COM8", 9600, tauxErreur, vitesse);
-    Simulation simu3 = new Simulation();
-    simu3.importSimulation("t1.fS");
-    System.out.println(simu3.getlistePointsImportes());
+    simu.jouerSimulation("COM1", 9600, tauxErreur, vitesse);
     
  //  while(true) System.out.println("Coucou"); // attention boucle infinie !!!!!!!!
  }
