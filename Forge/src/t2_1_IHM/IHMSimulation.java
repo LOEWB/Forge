@@ -33,7 +33,7 @@ import javax.swing.event.DocumentListener;
 import jssc.SerialPortException;
 
 import org.openstreetmap.gui.jmapviewer.Coordinate;
-import org.openstreetmap.gui.jmapviewer.DefaultMapController;
+
 
 import t1_1_Model_Principal.EtatSimu;
 import t1_1_Model_Principal.Parcours;
@@ -67,11 +67,11 @@ public class IHMSimulation implements ActionListener {
 	private JLabel vitMoyenne = new JLabel("Vitesse moyenne");
 	private JLabel vitMoyenneDisplay = new JLabel("");
 
-	private JLabel heureDepart = new JLabel("Heure de départ");
-	private JLabel heureDepartDisplay = new JLabel("");
+	private JLabel altActuelle = new JLabel("Altitude actuelle");
+	private JLabel altActuelleDisplay = new JLabel("");
 
-	private JLabel heureArrivee = new JLabel("Heure d'arrivée");
-	private JLabel heureArriveeDisplay = new JLabel("");
+	private JLabel altMoyenne = new JLabel("Altitude moyenne");
+	private JLabel altMoyenneDisplay = new JLabel("");
 
 	private JLabel heureActuelle = new JLabel("Heure actuelle");
 	private JLabel heureActuelleDisplay = new JLabel("");
@@ -389,8 +389,8 @@ public class IHMSimulation implements ActionListener {
 		date6.setPreferredSize(dimensionDates);
 		vitActuelleDisplay.setPreferredSize(dimensionInformations);
 		vitMoyenneDisplay.setPreferredSize(dimensionInformations);
-		heureDepartDisplay.setPreferredSize(dimensionInformations);
-		heureArriveeDisplay.setPreferredSize(dimensionInformations);
+		altActuelleDisplay.setPreferredSize(dimensionInformations);
+		altMoyenneDisplay.setPreferredSize(dimensionInformations);
 		heureActuelleDisplay.setPreferredSize(dimensionInformations);
 		dateActuelleDisplay.setPreferredSize(dimensionInformations);  
 		tauxErreur.setPreferredSize(dimensionTauxErreur);
@@ -398,14 +398,14 @@ public class IHMSimulation implements ActionListener {
 		Font tailletexte = new Font(null, Font.BOLD, 12);
 		vitActuelle.setFont(tailletexte);
 		vitMoyenne.setFont(tailletexte);
-		heureDepart.setFont(tailletexte);
-		heureArrivee.setFont(tailletexte);
+		altActuelle.setFont(tailletexte);
+		altMoyenne.setFont(tailletexte);
 		heureActuelle.setFont(tailletexte);
 		dateActuelle.setFont(tailletexte);
 		vitActuelleDisplay.setFont(tailletexte);
 		vitMoyenneDisplay.setFont(tailletexte);
-		heureDepartDisplay.setFont(tailletexte);
-		heureArriveeDisplay.setFont(tailletexte);
+		altActuelleDisplay.setFont(tailletexte);
+		altMoyenneDisplay.setFont(tailletexte);
 		heureActuelleDisplay.setFont(tailletexte);
 		dateActuelleDisplay.setFont(tailletexte);
 		dateLabel.setFont(tailletexte);
@@ -569,13 +569,13 @@ public class IHMSimulation implements ActionListener {
 		informations.add(vitMoyenneDisplay, gbcInformations);
 		gbcInformations.gridx = 2; 
 		gbcInformations.gridy = 0;
-		informations.add(heureDepart, gbcInformations);
+		informations.add(altActuelle, gbcInformations);
 		gbcInformations.gridy = 2;
-		informations.add(heureDepartDisplay, gbcInformations);
+		informations.add(altActuelleDisplay, gbcInformations);
 		gbcInformations.gridy = 3;
-		informations.add(heureArrivee, gbcInformations);
+		informations.add(altMoyenne, gbcInformations);
 		gbcInformations.gridy = 4;
-		informations.add(heureArriveeDisplay, gbcInformations);
+		informations.add(altMoyenneDisplay, gbcInformations);
 		gbcInformations.gridx = 3; 
 		gbcInformations.gridy = 0;
 		informations.add(heureActuelle, gbcInformations);
@@ -589,8 +589,8 @@ public class IHMSimulation implements ActionListener {
 		informations.setBorder(BorderFactory.createTitledBorder(null, "Informations",0, 0, tailletexte));
 		vitActuelleDisplay.setBorder(BorderFactory.createEtchedBorder(Color.BLACK, Color.GRAY));
 		vitMoyenneDisplay.setBorder(BorderFactory.createEtchedBorder(Color.BLACK, Color.GRAY));
-		heureDepartDisplay.setBorder(BorderFactory.createEtchedBorder(Color.BLACK, Color.GRAY));
-		heureArriveeDisplay.setBorder(BorderFactory.createEtchedBorder(Color.BLACK, Color.GRAY));
+		altActuelleDisplay.setBorder(BorderFactory.createEtchedBorder(Color.BLACK, Color.GRAY));
+		altMoyenneDisplay.setBorder(BorderFactory.createEtchedBorder(Color.BLACK, Color.GRAY));
 		heureActuelleDisplay.setBorder(BorderFactory.createEtchedBorder(Color.BLACK, Color.GRAY));
 		dateActuelleDisplay.setBorder(BorderFactory.createEtchedBorder(Color.BLACK, Color.GRAY));
 
@@ -618,17 +618,18 @@ public class IHMSimulation implements ActionListener {
 			NumberFormat format = NumberFormat.getInstance();
 			format.setMinimumFractionDigits(2);
 			this.vitMoyenneDisplay.setText(format.format(this.panelAPICarte.getParcours().vitesseMoyenne()));
+			this.altMoyenneDisplay.setText(format.format(this.panelAPICarte.getParcours().altitudeMoyenne()));
 
 
-			if (this.date2.getText() != "" && this.vitActuelle.getText() != "" && this.date4.getText() != "" && this.heureDepartDisplay.getText() != "")
-			{
-				this.heureDepartDisplay.setText(this.date2.getText());
-				int h1 = Integer.parseInt(this.heureDepartDisplay.getText());
-				int h2 = Integer.parseInt(this.date4.getText());
-				int heureArrivee = h1 + ((h2 - h1) / this.vitesse.getValue());
-
-				this.heureArriveeDisplay.setText(Integer.toString(heureArrivee));
-			}
+			//			if (this.date2.getText() != "" && this.vitActuelle.getText() != "" && this.date4.getText() != "" && this.altMoyenneDisplay.getText() != "")
+			//			{
+			//				this.altMoyenneDisplay.setText(this.date2.getText());
+			//				int h1 = Integer.parseInt(this.altMoyenneDisplay.getText());
+			//				int h2 = Integer.parseInt(this.date4.getText());
+			//				int heureArrivee = h1 + ((h2 - h1) / this.vitesse.getValue());
+			//
+			//				this.altMoyenneDisplay.setText(Integer.toString(heureArrivee));
+			//			}
 		}
 	}
 
@@ -816,7 +817,11 @@ public class IHMSimulation implements ActionListener {
 									break;
 
 								if(i+1<panelAPICarte.getParcours().getListePoints().size())
+								{
 									vitActuelleDisplay.setText(Double.toString(panelAPICarte.getParcours().vitesseSegments(panelAPICarte.getParcours().getListePoints().get(i), panelAPICarte.getParcours().getListePoints().get(i+1))*vitesse.getValue()));
+									altActuelleDisplay.setText(Double.toString(panelAPICarte.getParcours().altitudeSegments(panelAPICarte.getParcours().getListePoints().get(i), panelAPICarte.getParcours().getListePoints().get(i+1))));
+								}
+
 								afficherLabels();
 
 								panelAPICarte.addMapMarker(new AffichagePointInter(new Coordinate(listePoint2.get(i).getCoordonnes().getLongitude(),listePoint2.get(i).getCoordonnes().getLatitude()),"./img/MarqueurPoint.png"));
@@ -832,6 +837,13 @@ public class IHMSimulation implements ActionListener {
 										throw new RuntimeException("Thread interrupted..."+e);
 									}	
 								}
+
+
+								panelAPICarte.removeMapMarker(panelAPICarte.getMapMarkerList().get(panelAPICarte.getMapMarkerList().size()-1));
+								int monX2 = 0;
+								int monY2 = 5000;
+								Rectangle rect2 = new Rectangle(monX2,monY2);
+								panelAPICarte.paintImmediately(rect2);
 							}
 						}
 					}

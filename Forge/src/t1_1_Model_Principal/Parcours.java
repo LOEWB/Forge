@@ -452,6 +452,17 @@ public class Parcours {
 
 		return d/(((p2.getTemps()-p1.getTemps()))/3600);
 	}
+	
+	
+	public double altitudeSegments(Point p1, Point p2)
+	{
+				
+		double alt1=p1.getAltitude();
+		double alt2=p2.getAltitude();
+
+		return alt2+alt1/2l;
+	}
+
 
 
 	public double altitudeMoyenne() 
