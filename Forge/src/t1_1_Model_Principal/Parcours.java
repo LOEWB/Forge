@@ -432,6 +432,26 @@ public class Parcours {
 
 		return d/(((this.listePoints.get(this.listePoints.size()-1).getTemps()-this.listePoints.get(0).getTemps()))/3600);
 	}
+	
+	public double vitesseSegments(Point p1, Point p2)
+	{
+		double eQuatorialEarthRadius = 6378.1370D;
+		double d2r = (Math.PI / 180D);
+		
+		double long1=p1.getCoordonnes().getLongitude();
+		double long2=p2.getCoordonnes().getLongitude();
+		double lat1=p1.getCoordonnes().getLatitude();
+		double lat2=p2.getCoordonnes().getLatitude();
+
+
+	    double dlong = (long2 - long1) * d2r;
+	    double dlat = (lat2 - lat1) * d2r;
+	    double a = Math.pow(Math.sin(dlat / 2D), 2D) + Math.cos(lat1 * d2r) * Math.cos(lat2 * d2r) * Math.pow(Math.sin(dlong / 2D), 2D);
+	    double c = 2D * Math.atan2(Math.sqrt(a), Math.sqrt(1D - a));
+	    double d = eQuatorialEarthRadius * c;
+
+		return d/(((p2.getTemps()-p1.getTemps()))/3600);
+	}
 
 
 	public double altitudeMoyenne() 
