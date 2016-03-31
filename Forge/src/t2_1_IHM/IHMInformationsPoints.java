@@ -87,7 +87,21 @@ public class IHMInformationsPoints extends JFrame implements ActionListener{
 				Data();
 				panelAPICarte.removeSegments();
 				panelAPICarte.removeAllMapMarkers();
-				panelAPICarte.changePoint((dataHeure+((double)passageMinute.getValue()/60))*3600, point, (double)altitude.getValue());
+				if(passageHeure.getValue() instanceof Double)
+				{
+					if(passageMinute.getValue() instanceof Double)
+						panelAPICarte.changePoint(((double)passageHeure.getValue()+((double)passageMinute.getValue()/60))*3600, point,dataAltitude);
+					else
+						panelAPICarte.changePoint(((double)passageHeure.getValue()+((double)((long)passageMinute.getValue())/60))*3600, point,dataAltitude);
+				}
+				else
+				{
+					if(passageMinute.getValue() instanceof Double)
+						panelAPICarte.changePoint(((double)((long)passageHeure.getValue())+((double)passageMinute.getValue()/60))*3600, point,dataAltitude);
+					else
+						panelAPICarte.changePoint(((double)((long)passageHeure.getValue())+((double)((long)passageMinute.getValue())/60))*3600, point,dataAltitude);
+				}			
+				
 				panelAPICarte.createMarkers();	
 				panelAPICarte.traceSegments();	
 			}
@@ -116,7 +130,14 @@ public class IHMInformationsPoints extends JFrame implements ActionListener{
 				Data();
 				panelAPICarte.removeSegments();
 				panelAPICarte.removeAllMapMarkers();
-				panelAPICarte.changePoint(((double)passageHeure.getValue()+(dataMinute/60))*3600, point, (double)altitude.getValue());
+				if(passageHeure.getValue() instanceof Double)
+				{
+					panelAPICarte.changePoint(((double)passageHeure.getValue()+(dataMinute/60))*3600, point, (double)altitude.getValue());
+				}
+				else
+				{
+					panelAPICarte.changePoint(((double)((long)passageHeure.getValue())+(dataMinute/60))*3600, point, (double)altitude.getValue());
+				}				
 				panelAPICarte.createMarkers();	
 				panelAPICarte.traceSegments();	
 			}
@@ -145,7 +166,15 @@ public class IHMInformationsPoints extends JFrame implements ActionListener{
 				Data();
 				panelAPICarte.removeSegments();
 				panelAPICarte.removeAllMapMarkers();
-				panelAPICarte.changePoint(((double)passageHeure.getValue()+((double)passageMinute.getValue()/60))*3600, point,dataAltitude);
+				if(passageHeure.getValue() instanceof Double)
+				{
+					panelAPICarte.changePoint(((double)passageHeure.getValue()+((double)passageMinute.getValue()/60))*3600, point,dataAltitude);
+				}
+				else
+				{
+					panelAPICarte.changePoint(((double)((long)passageHeure.getValue())+(dataMinute/60))*3600, point, (double)altitude.getValue());
+				}		
+				
 				panelAPICarte.createMarkers();	
 				panelAPICarte.traceSegments();	
 
