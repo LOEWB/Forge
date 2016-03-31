@@ -101,7 +101,7 @@ public class IHMSimulation implements ActionListener {
 	private JFormattedTextField tauxErreur = new JFormattedTextField(NumberFormat.getPercentInstance());
 
 	private PortSerie portSerie = new PortSerie();
-	
+
 	private String[] listeLiaisonSerie = portSerie.getListePorts().toArray(new String[portSerie.getListePorts().size()]);
 
 	private JComboBox<String> comboBoxliaisonSerie = new JComboBox<String>(listeLiaisonSerie);
@@ -132,7 +132,7 @@ public class IHMSimulation implements ActionListener {
 
 		this.parcours = parcours;
 
-	
+
 		creationComposant();
 		panelAPICarte.createMarkerDebutFin();
 		panelAPICarte.traceSegments();
@@ -140,7 +140,7 @@ public class IHMSimulation implements ActionListener {
 
 		tauxErreur.getDocument().addDocumentListener(new DocumentListener() {
 			public void changedUpdate(DocumentEvent e) {
-				
+
 			}
 			public void removeUpdate(DocumentEvent e) {
 
@@ -194,8 +194,8 @@ public class IHMSimulation implements ActionListener {
 	public IHMSimulation() 
 	{
 
-	
-//		for(int i=0; i<this.listeLiaisonSerie.length; i++) System.out.println(this.listeLiaisonSerie[i]);
+
+		//		for(int i=0; i<this.listeLiaisonSerie.length; i++) System.out.println(this.listeLiaisonSerie[i]);
 		creationComposant();
 
 
@@ -631,34 +631,34 @@ public class IHMSimulation implements ActionListener {
 						//portserie.setPort(comboBoxliaisonSerie.getSelectedItem().toString(),Integer.valueOf(comboBoxDebit.getSelectedItem().toString()));
 						System.out.println("coucou1 le retour");
 						int i = 0;
-						
-						System.out.println(dataTauxErreur);
-						
-						if(dataTauxErreur < 1f && dataTauxErreur != 0f) {
-							
-						int nbTramesErronnees = (int) (simulation.getTramesArray().size()*dataTauxErreur);
-						int nbTramesfaites = 0;
-						ArrayList<Integer> faits = new ArrayList<Integer>();
-						int j=0;
-						int dd=0;
-						System.out.println("coucou2");
 
-						while(nbTramesfaites != nbTramesErronnees) { // bon boussie d'abord la liste de trame selon taux d'erreur avant de commencer l'envoi
-							System.out.println("coucou3");
-							System.out.println(nbTramesErronnees);
-							System.out.println(nbTramesfaites);
-							dd = 0 + (int)(Math.random() * ((simulation.getTramesArray().size()-1 - 0) + 1));
-							if(!faits.contains(dd)) {
-								simulation.getTramesArray().set(dd, boussierTrame(simulation.getTramesArray().get(dd).toString()));
-								faits.add(dd);
-								nbTramesfaites++;
-								
+						System.out.println(dataTauxErreur);
+
+						if(dataTauxErreur < 1f && dataTauxErreur != 0f) {
+
+							int nbTramesErronnees = (int) (simulation.getTramesArray().size()*dataTauxErreur);
+							int nbTramesfaites = 0;
+							ArrayList<Integer> faits = new ArrayList<Integer>();
+							int j=0;
+							int dd=0;
+							System.out.println("coucou2");
+
+							while(nbTramesfaites != nbTramesErronnees) { // bon boussie d'abord la liste de trame selon taux d'erreur avant de commencer l'envoi
+								System.out.println("coucou3");
+								System.out.println(nbTramesErronnees);
+								System.out.println(nbTramesfaites);
+								dd = 0 + (int)(Math.random() * ((simulation.getTramesArray().size()-1 - 0) + 1));
+								if(!faits.contains(dd)) {
+									simulation.getTramesArray().set(dd, boussierTrame(simulation.getTramesArray().get(dd).toString()));
+									faits.add(dd);
+									nbTramesfaites++;
+
+								}
+
 							}
 
-						}
-						
-						tempsAttente=(Float.parseFloat(simulation.getTramesArray().get(1).split(",")[1])-Float.parseFloat(simulation.getTramesArray().get(0).split(",")[1]))*1000;
-						
+							tempsAttente=(Float.parseFloat(simulation.getTramesArray().get(1).split(",")[1])-Float.parseFloat(simulation.getTramesArray().get(0).split(",")[1]))*1000;
+
 							while(true)
 							{
 
@@ -672,7 +672,7 @@ public class IHMSimulation implements ActionListener {
 										e1.printStackTrace();
 									}
 								}
-								
+
 								while(simulation.getEtat() == EtatSimu.PAUSE);
 
 								for(;i<simulation.getTramesArray().size();i++)
@@ -686,7 +686,7 @@ public class IHMSimulation implements ActionListener {
 									{
 										/*try {
 											portserie.envoyer(simulation.getTramesArray().get(i));
-											
+
 										} catch (IOException e) {
 											// TODO Auto-generated catch block
 											e.printStackTrace();
@@ -749,9 +749,9 @@ public class IHMSimulation implements ActionListener {
 									e1.printStackTrace();
 								}
 							}
-							
+
 							//if(simulation.getEtat() == EtatSimu.ARRET)
-								//Thread.
+							//Thread.
 
 							for(;i<panelAPICarte.getParcours().getListePoints().size();i++)
 							{
@@ -773,7 +773,7 @@ public class IHMSimulation implements ActionListener {
 										throw new RuntimeException("Thread interrupted..."+e);
 									}	
 								}
-								
+
 								panelAPICarte.removeMapMarker(panelAPICarte.getMapMarkerList().get(panelAPICarte.getMapMarkerList().size()-1));
 								int monX2 = 0;
 								int monY2 = 5000;
