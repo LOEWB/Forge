@@ -18,15 +18,15 @@ import t1_1_Model_Principal.TypeSysteme;
  *
  */
 public class IHMChoixFichier extends JFrame {
-	
+
 	private final PanelAPICarte panelAPICarte;
 
 	private final Simulation simulation;
 
 	private final String typeExtension;
-	
+
 	private String fenetre;
-	
+
 	private File directory;
 
 	/**
@@ -116,18 +116,18 @@ public class IHMChoixFichier extends JFrame {
 			// vérification de l'extension du fichier
 			if (!fichier.getName().endsWith(extension))
 				fichier = new File(fichier.getPath()+extension);
-			
+
 			String path = fichier.getAbsolutePath();
-			
+
 			// le fichier existe déjà
 			if (fichier.exists()) {
 				int reponse = JOptionPane.showConfirmDialog(null,
 						"Êtes-vous sûr de vouloir écraser le fichier ?",
 						"Fichier déjà existant", JOptionPane.YES_NO_OPTION);
 				if (reponse == JOptionPane.YES_OPTION) { // écrasement du
-															// fichier
-															// existant
-															// confirmé
+					// fichier
+					// existant
+					// confirmé
 					choixFichier.getSelectedFile().delete();
 					if (this.simulation == null)
 						this.panelAPICarte.getParcours().sauvegarderParcours(path);
@@ -143,7 +143,7 @@ public class IHMChoixFichier extends JFrame {
 				else
 					this.simulation.exportSimulation(path);
 			}
-			
+
 		} else if (retour == JFileChooser.ERROR_OPTION)
 			JOptionPane.showMessageDialog(this, "Action impossible", "Erreur",
 					JOptionPane.ERROR_MESSAGE);
@@ -160,7 +160,7 @@ public class IHMChoixFichier extends JFrame {
 		String extension = "."+this.typeExtension;
 
 		if (retour == JFileChooser.APPROVE_OPTION) { // appui sur le bouton
-														// Ouvrir
+			// Ouvrir
 			File fichier = choixFichier.getSelectedFile();
 			String path = choixFichier.getSelectedFile().getAbsolutePath();
 
@@ -183,11 +183,11 @@ public class IHMChoixFichier extends JFrame {
 	private void chargeParcours(String path) {
 		this.panelAPICarte.removeSegments();
 		this.panelAPICarte.removeAllMapMarkers();
-		
+
 		// cree parcours vide, puis charge le parcours par dessus
 		this.panelAPICarte.setParcours(new Parcours());
 		this.panelAPICarte.getParcours().chargerParcours(path);
-		
+
 		// lance depuis IHMSimulation ou IHMParcours
 		if(this.fenetre == "creation")
 			this.panelAPICarte.createMarkers();
@@ -195,17 +195,18 @@ public class IHMChoixFichier extends JFrame {
 			this.panelAPICarte.createMarkerDebutFin();
 		this.panelAPICarte.traceSegments();
 	}
-	
+
 	private void importeSimulation(String path){
 		this.panelAPICarte.removeSegments();
-		this.panelAPICarte.removeAllMapMarkers();
-		
-		this.simulation.importSimulation(path);
-
-		// TODO récupérer la liste de point => this.simulation.getListePointsImportes()
-		
+		this.panelAPICarte.removeAllMapMarkers();		
+		this.simulation.importSimulation(path);	
 		this.panelAPICarte.createMarkerDebutFin();
 		this.panelAPICarte.traceSegments();
+	}
+
+	public Simulation getSimulation() 
+	{
+		return simulation;
 	}
 
 }
