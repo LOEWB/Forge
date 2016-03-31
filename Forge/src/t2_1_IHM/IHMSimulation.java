@@ -58,7 +58,7 @@ public class IHMSimulation implements ActionListener {
 	private JButton bPause = new JButton("");
 
 	private JButton bLecture = new JButton("");
-	
+
 	private JButton bArret = new JButton("");
 
 	private JLabel vitActuelle = new JLabel("Vitesse actuelle");    
@@ -149,19 +149,21 @@ public class IHMSimulation implements ActionListener {
 
 			private void Data()
 			{
-
-				if(tauxErreur.getValue() instanceof Float)
+				if(simulation == null)
 				{
-					if((float) tauxErreur.getValue() <= 1f)
+					if(tauxErreur.getValue() instanceof Float)
 					{
-						dataTauxErreur = (float) tauxErreur.getValue();					
+						if((float) tauxErreur.getValue() <= 1f)
+						{
+							dataTauxErreur = (float) tauxErreur.getValue();					
+						}
 					}
-				}
-				else
-				{
-					if((float)((double) tauxErreur.getValue()) <= 1f)
+					else
 					{
-						dataTauxErreur = (float)((double) tauxErreur.getValue());
+						if((float)((double) tauxErreur.getValue()) <= 1f)
+						{
+							dataTauxErreur = (float)((double) tauxErreur.getValue());
+						}
 					}
 				}
 			}
@@ -210,18 +212,21 @@ public class IHMSimulation implements ActionListener {
 
 			private void Data()
 			{
-				if(tauxErreur.getValue() instanceof Float)
+				if(simulation == null)
 				{
-					if((float) tauxErreur.getValue() <= 1f)
+					if(tauxErreur.getValue() instanceof Float)
 					{
-						dataTauxErreur = (float) tauxErreur.getValue();					
+						if((float) tauxErreur.getValue() <= 1f)
+						{
+							dataTauxErreur = (float) tauxErreur.getValue();					
+						}
 					}
-				}
-				else
-				{
-					if((float)((double) tauxErreur.getValue()) <= 1f)
+					else
 					{
-						dataTauxErreur = (float)((double) tauxErreur.getValue());
+						if((float)((double) tauxErreur.getValue()) <= 1f)
+						{
+							dataTauxErreur = (float)((double) tauxErreur.getValue());
+						}
 					}
 				}
 			}
@@ -615,7 +620,7 @@ public class IHMSimulation implements ActionListener {
 		int monY2 = 5000;
 		Rectangle rect2 = new Rectangle(monX2,monY2);
 		panelAPICarte.paintImmediately(rect2);
-		
+
 
 		new Thread(
 				new Runnable()
@@ -640,7 +645,7 @@ public class IHMSimulation implements ActionListener {
 
 					public void run()				
 					{
-						
+
 						Float tempsAttente = (float) (panelAPICarte.getParcours().getListePoints().get(1).getTemps() - panelAPICarte.getParcours().getListePoints().get(0).getTemps());
 						PortSerie portserie = new PortSerie();
 						//portserie.setPort(comboBoxliaisonSerie.getSelectedItem().toString(),Integer.valueOf(comboBoxDebit.getSelectedItem().toString()));
@@ -666,7 +671,7 @@ public class IHMSimulation implements ActionListener {
 
 							}
 
-							
+
 
 							while(true)
 							{
@@ -690,13 +695,13 @@ public class IHMSimulation implements ActionListener {
 								for(;i<simulation.getTramesArray().size();i++)
 								{
 									System.out.println(simulation.getTramesArray().get(i));
-									
+
 									if(simulation.getEtat() == EtatSimu.ARRET)
 									{
 										Thread.currentThread().interrupt();
 										break;
 									}
-									
+
 									if(simulation.getEtat() == EtatSimu.PAUSE)
 										break;
 
@@ -762,7 +767,7 @@ public class IHMSimulation implements ActionListener {
 									Thread.sleep(0l);
 								} catch (InterruptedException e1) {
 									throw new RuntimeException("Thread interrupted..."+e1);
-									
+
 								}
 							}
 
@@ -779,7 +784,7 @@ public class IHMSimulation implements ActionListener {
 									Thread.currentThread().interrupt();
 									break;
 								}
-																
+
 								if(simulation.getEtat() == EtatSimu.PAUSE)
 									break;
 
@@ -831,6 +836,7 @@ public class IHMSimulation implements ActionListener {
 			if(this.panelAPICarte.getParcours() != null)
 				if(this.panelAPICarte.getParcours().getListePoints().size()>0)
 					jouer();
+			System.out.println(dataTauxErreur);
 			break;
 		case "pause":
 			if(this.simulation != null)
@@ -849,8 +855,9 @@ public class IHMSimulation implements ActionListener {
 					this.simulation.setEtat(EtatSimu.ARRET);
 					jouer();
 					this.simulation.setEtat(EtatSimu.ARRET);
+					this.simulation = null;
 				}
-			
+
 			break;
 		case "menu":
 			FenetreForge.fenetreForge.dispose();
