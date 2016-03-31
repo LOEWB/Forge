@@ -24,7 +24,7 @@ public class IHMChoixTypeSysteme extends JFrame implements ActionListener {
 	private JButton boutonLancerParcours;
 	private JPanel panel;
 	private JRadioButton rboutonTerrestre = new JRadioButton("Terrestre");
-	private JRadioButton rboutonAerien = new JRadioButton("aerien");
+	private JRadioButton rboutonAerien = new JRadioButton("Aerien");
 
 	public IHMChoixTypeSysteme() {
 		initializeWindow();
