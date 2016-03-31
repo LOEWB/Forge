@@ -52,7 +52,7 @@ public class IHMParcours implements ActionListener,MouseListener {
 	// défaut à
 	// supprimer
 
-	private String[] listeDebit = { "Débit : 1 trame/s","Débit : 1.5 trames/s","Débit : 2 trames/s" };
+	private String[] listeDebit = { "Débit : 0.5 trame/s","Débit : 1 trames/s","Débit : 1.5 trames/s","Débit : 2 trames/s" };
 
 	private JComboBox<String> comboBoxDebitTrame = new JComboBox<String>(listeDebit);
 
@@ -221,6 +221,8 @@ public class IHMParcours implements ActionListener,MouseListener {
 			altitudeMoy.setVisible(false);
 			altitudeMoyCalc.setVisible(false);
 		}
+		
+		this.panelAPICarte.getParcours().setDebit(1.0f);
 
 		FenetreForge.fenetreForge.getContentPane().removeAll();
 		FenetreForge.fenetreForge.getContentPane().add(splitForge);
@@ -296,12 +298,15 @@ public class IHMParcours implements ActionListener,MouseListener {
 			switch (comboBoxDebitTrame.getSelectedIndex())
 			{
 			case 0:
-				panelAPICarte.getParcours().setDebit(1.0f);
+				panelAPICarte.getParcours().setDebit(0.5f);
 				break;
 			case 1:
-				panelAPICarte.getParcours().setDebit(1.5f);
+				panelAPICarte.getParcours().setDebit(1f);
 				break;
 			case 2:
+				panelAPICarte.getParcours().setDebit(1.5f);
+				break;
+			case 3:
 				panelAPICarte.getParcours().setDebit(2f);
 				break;
 			}			
