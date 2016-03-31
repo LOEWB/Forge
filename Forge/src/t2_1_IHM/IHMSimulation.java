@@ -654,13 +654,15 @@ public class IHMSimulation implements ActionListener {
 					private String boussierTrame(String trame){
 
 						Simulation simulation = new Simulation();
-
+						
+				
 						Point point = simulation.getPoint(trame);
+						int dd = 0 + (int)(Math.random() * ((250-1 - 0) + 1));
 
-						Point point2 = new Point(point.getTemps()-10, point.getCoordonnes(), point.getAltitude()+90); // modification avec conneries
+						Point point2 = new Point(point.getTemps()-dd, point.getCoordonnes(), point.getAltitude()+dd); // modification avec conneries
 						ArrayList<Point> listePoints = new ArrayList<Point>();
 						listePoints.add(point2);
-
+						
 						Parcours parcours = new Parcours(TypeSysteme.AERIEN, listePoints); // AERIEN au pif pour satisfaire constructeur....
 
 						String newTrame = parcours.genererTrames();
