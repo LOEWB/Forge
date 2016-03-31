@@ -14,6 +14,7 @@ import java.awt.event.ActionListener;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
@@ -29,6 +30,7 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
 import org.openstreetmap.gui.jmapviewer.Coordinate;
+
 import t1_1_Model_Principal.Parcours;
 import t1_1_Model_Principal.Point;
 import t1_1_Model_Principal.PortSerie;
@@ -80,15 +82,15 @@ public class IHMSimulation implements ActionListener {
 
 	private JFormattedTextField date = new JFormattedTextField(new SimpleDateFormat("MM/dd/yyyy"));
 
-	private JFormattedTextField date2 = new JFormattedTextField(new SimpleDateFormat("MM/dd/yyyy"));
+	private JFormattedTextField date2 = new JFormattedTextField(NumberFormat.getNumberInstance());
 
 	private JFormattedTextField date3 = new JFormattedTextField(new SimpleDateFormat("MM/dd/yyyy"));
 
-	private JFormattedTextField date4 = new JFormattedTextField(new SimpleDateFormat("MM/dd/yyyy"));
+	private JFormattedTextField date4 = new JFormattedTextField(NumberFormat.getNumberInstance());
 
-	private JFormattedTextField date5 = new JFormattedTextField(new SimpleDateFormat("MM/dd/yyyy"));
+	private JFormattedTextField date5 = new JFormattedTextField(NumberFormat.getNumberInstance());
 
-	private JFormattedTextField date6 = new JFormattedTextField(new SimpleDateFormat("MM/dd/yyyy"));
+	private JFormattedTextField date6 = new JFormattedTextField(NumberFormat.getNumberInstance());
 
 	private JLabel tauxErreurLabel = new JLabel("Taux d'erreur :    ");
 
@@ -146,6 +148,26 @@ public class IHMSimulation implements ActionListener {
 						dataTauxErreur = (float)((double) tauxErreur.getValue());
 			}
 		});
+		
+		date2.getDocument().addDocumentListener(new DocumentListener() {
+			public void changedUpdate(DocumentEvent e) {
+
+			}
+			public void removeUpdate(DocumentEvent e) {
+
+			}
+			public void insertUpdate(DocumentEvent e) {
+				Data();
+			}
+
+			private void Data()
+			{
+				float i;
+				date3.setValue(Date.parse("11/22/1111")+Date.parse("11/22/1111"));
+				
+				
+			}
+		});
 
 	}
 
@@ -177,6 +199,26 @@ public class IHMSimulation implements ActionListener {
 				else
 					if((float)((double) tauxErreur.getValue()) <= 1)
 						dataTauxErreur = (float)((double) tauxErreur.getValue());
+			}
+		});
+		
+		date2.getDocument().addDocumentListener(new DocumentListener() {
+			public void changedUpdate(DocumentEvent e) {
+
+			}
+			public void removeUpdate(DocumentEvent e) {
+
+			}
+			public void insertUpdate(DocumentEvent e) {
+				Data();
+			}
+
+			private void Data()
+			{
+				float i;
+				date3.setValue(Date.parse("01/01/2016")+Date.parse("01"));
+				
+				
 			}
 		});
 
@@ -507,6 +549,11 @@ public class IHMSimulation implements ActionListener {
 
 
 		tauxErreur.setValue(new Float(0.0));
+		if(this.panelAPICarte.getParcours() != null)
+		{
+			date5.setValue(this.panelAPICarte.getParcours().getListePoints().get(0).getTemps()/3600);
+			date6.setValue(this.panelAPICarte.getParcours().getListePoints().get(this.panelAPICarte.getParcours().getListePoints().size()-1).getTemps()/3600);
+		}
 
 
 
@@ -524,7 +571,7 @@ public class IHMSimulation implements ActionListener {
 
 
 
-		ArrayList<Point> listePoint2 = this.panelAPICarte.getParcours().genererListePointsIntermediaires(this.panelAPICarte.getParcours().getDebit(), this.panelAPICarte.getParcours().getListePoints());
+		ArrayList<Point> listePoint2 = this.panelAPICarte.getParcours().getListePoints();
 		for(int i=0;i<this.panelAPICarte.getParcours().getListePoints().size();i++)
 		{
 			this.panelAPICarte.addMapMarker(new AffichagePointInter(new Coordinate(listePoint2.get(i).getCoordonnes().getLatitude(),listePoint2.get(i).getCoordonnes().getLongitude()),"./img/MarqueurPoint.png"));
