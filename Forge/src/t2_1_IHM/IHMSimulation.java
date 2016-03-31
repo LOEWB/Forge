@@ -612,6 +612,9 @@ public class IHMSimulation implements ActionListener {
 						PortSerie portserie = new PortSerie();
 						portserie.setPort(comboBoxliaisonSerie.getSelectedItem().toString(),Integer.valueOf(comboBoxDebit.getSelectedItem().toString()));
 						int i = 0;
+						
+						if(dataTauxErreur > 0) {
+							
 						int nbTramesErronnees = (int) (simulation.getTramesArray().size()/dataTauxErreur);
 						int nbTramesfaites = 0;
 						ArrayList<Integer> faits = new ArrayList<Integer>();
@@ -626,6 +629,7 @@ public class IHMSimulation implements ActionListener {
 								nbTramesfaites++;
 							}
 
+						}
 							while(true)
 							{
 
