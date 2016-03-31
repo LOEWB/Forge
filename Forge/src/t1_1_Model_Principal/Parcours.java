@@ -300,10 +300,22 @@ public class Parcours {
 			 mins=mins-(hours*60);
 			 hours=hours-(days*24);
 			 temps = ""+hours+mins+secs;
+			 String temp26 = "";
+			
+			 System.out.println("Temps " + temps + "Longueur" + temps.length());
+			 
+			 if(temps.length() < 6) {
+				 int gg=temps.length(); 
+				 while(gg < 6) { temp26 += "0"; gg++; }
+				 temp26 += temps;
+				 temps = temp26;
+				 
+			 }
+				// while(temps.length() != 6) 
 		//	double dd = Math.point.getTemps();
 			
 				trame += temps + "," 
-						
+							
 					
 						
 					+ latitude + "," + lat + ","
