@@ -769,6 +769,8 @@ public class IHMSimulation implements ActionListener {
 									}
 								}
 							}
+
+
 						}
 					}
 				}).start();
@@ -790,6 +792,7 @@ public class IHMSimulation implements ActionListener {
 						while(true)
 						{
 
+
 							while(simulation.getEtat() == EtatSimu.PAUSE)
 							{
 								try {
@@ -798,6 +801,12 @@ public class IHMSimulation implements ActionListener {
 									throw new RuntimeException("Thread interrupted..."+e1);
 
 								}
+							}
+
+							if(i>=panelAPICarte.getParcours().getListePoints().size())
+							{
+								bArret.doClick();
+								break;
 							}
 
 							if(simulation.getEtat() == EtatSimu.ARRET)
@@ -863,6 +872,11 @@ public class IHMSimulation implements ActionListener {
 		switch (e.getActionCommand()) {
 		case "charger":
 			new IHMChoixFichier(e.getActionCommand(), this.panelAPICarte, "simulation");
+			if(this.panelAPICarte.getParcours() != null)
+			{
+				date5.setValue(this.panelAPICarte.getParcours().getListePoints().get(0).getTemps()/3600);
+				date6.setValue(this.panelAPICarte.getParcours().getListePoints().get(this.panelAPICarte.getParcours().getListePoints().size()-1).getTemps()/3600);
+			}
 			break;
 		case "importer":
 			new IHMChoixFichier(e.getActionCommand(), this.panelAPICarte, new Simulation());
