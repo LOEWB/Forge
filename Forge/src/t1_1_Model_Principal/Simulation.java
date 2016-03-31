@@ -297,5 +297,16 @@ public class Simulation {
 		this.etat = etat;
 		
 	}
+	
+	public ArrayList<Point> getlistePointsImportes()
+	{
+		return this.listePointsImportes;
+		
+	}
+	
+	public void setlistePointsImportes(ArrayList<Point> listePointsImportes) 
+	{
+		this.listePointsImportes = listePointsImportes;		
+	}
 
 }
