@@ -16,7 +16,7 @@ public class PortSerie {
 		return this.listePorts;
 	}
 
-	boolean setPort(String port, int Debit) {
+	public boolean setPort(String port, int Debit) {
     serialPort = new SerialPort(port);
 
 try {
@@ -35,7 +35,7 @@ serialPort.setFlowControlMode(SerialPort.FLOWCONTROL_RTSCTS_IN |
 		return true;
 	}
 	
-	void envoyer(String donnees) throws IOException, SerialPortException {
+	public void envoyer(String donnees) throws IOException, SerialPortException {
 
         serialPort.writeString(donnees);
 

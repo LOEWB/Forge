@@ -223,6 +223,7 @@ public class IHMParcours implements ActionListener,MouseListener {
 		}
 		
 		this.panelAPICarte.getParcours().setDebit(1.0f);
+		this.comboBoxDebitTrame.setSelectedIndex(1);
 
 		FenetreForge.fenetreForge.getContentPane().removeAll();
 		FenetreForge.fenetreForge.getContentPane().add(splitForge);

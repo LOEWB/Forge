@@ -11,6 +11,7 @@ import java.awt.Insets;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -29,12 +30,16 @@ import javax.swing.SwingConstants;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
+import jssc.SerialPortException;
+
 import org.openstreetmap.gui.jmapviewer.Coordinate;
 
+import t1_1_Model_Principal.EtatSimu;
 import t1_1_Model_Principal.Parcours;
 import t1_1_Model_Principal.Point;
 import t1_1_Model_Principal.PortSerie;
 import t1_1_Model_Principal.Simulation;
+import t1_1_Model_Principal.TypeSysteme;
 
 
 public class IHMSimulation implements ActionListener {
@@ -558,7 +563,7 @@ public class IHMSimulation implements ActionListener {
 		dateActuelleDisplay.setBorder(BorderFactory.createEtchedBorder(Color.BLACK, Color.GRAY));
 
 
-		tauxErreur.setValue(new Float(0.0));
+		tauxErreur.setValue(0.0f);
 		if(this.panelAPICarte.getParcours() != null)
 		{
 			date5.setValue(this.panelAPICarte.getParcours().getListePoints().get(0).getTemps()/3600);
@@ -578,7 +583,99 @@ public class IHMSimulation implements ActionListener {
 	void jouer()
 	{		
 		this.simulation = new Simulation(this.panelAPICarte.getParcours());
-		this.simulation.jouerSimulation(this.comboBoxliaisonSerie.getSelectedItem().toString(), Integer.valueOf(this.comboBoxDebit.getSelectedItem().toString()), dataTauxErreur, (float)vitesse.getValue());
+		//this.simulation.jouerSimulation(this.comboBoxliaisonSerie.getSelectedItem().toString(), Integer.valueOf(this.comboBoxDebit.getSelectedItem().toString()), dataTauxErreur, (float)vitesse.getValue());
+
+		new Thread(
+				new Runnable()
+				{
+					private String boussierTrame(String trame){
+
+						Simulation simulation = new Simulation();
+
+						Point point = simulation.getPoint(trame);
+
+						Point point2 = new Point(point.getTemps()-10, point.getCoordonnes(), point.getAltitude()+90); // modification avec conneries
+						ArrayList<Point> listePoints = new ArrayList<Point>();
+						listePoints.add(point2);
+
+						Parcours parcours = new Parcours(TypeSysteme.AERIEN, listePoints); // AERIEN au pif pour satisfaire constructeur....
+
+						String newTrame = parcours.genererTrames();
+
+						return newTrame;
+
+					}
+
+					public void run()
+					{
+						float tempsAttente=0;
+						PortSerie portserie = new PortSerie();
+						portserie.setPort(comboBoxliaisonSerie.getSelectedItem().toString(),Integer.valueOf(comboBoxDebit.getSelectedItem().toString()));
+						int i = 0;
+						int nbTramesErronnees = (int) (simulation.getTramesArray().size()/dataTauxErreur);
+						int nbTramesfaites=0;
+						ArrayList<Integer> faits = new ArrayList<Integer>();
+						int j=0;
+						int dd=0;
+
+						while(nbTramesfaites != nbTramesErronnees) { // bon boussie d'abord la liste de trame selon taux d'erreur avant de commencer l'envoi
+							dd = 0 + (int)(Math.random() * ((simulation.getTramesArray().size()-1 - 0) + 1));
+							if(!faits.contains(dd)) {
+								simulation.getTramesArray().set(dd, boussierTrame(simulation.getTramesArray().get(dd).toString()));
+								faits.add(dd);
+								nbTramesfaites++;
+							}
+
+							while(true)
+							{
+
+								for(;i<simulation.getTramesArray().size();i++)
+								{
+									if(simulation.getEtat() == EtatSimu.PAUSE)
+										break;
+
+									//pour toutes les trames sauf la derniere
+									if(i+1<simulation.getTramesArray().size())
+									{
+										tempsAttente=(Float.parseFloat(simulation.getTramesArray().get(i+1).split(",")[1])-Float.parseFloat(simulation.getTramesArray().get(i).split(",")[1]))*1000;
+										System.out.println(simulation.getTramesArray().get(i));
+										try {
+											portserie.envoyer(simulation.getTramesArray().get(i));
+										} catch (IOException e) {
+											// TODO Auto-generated catch block
+											e.printStackTrace();
+										} catch (SerialPortException e) {
+											// TODO Auto-generated catch block
+											e.printStackTrace();
+										}
+
+										try {
+											Thread.sleep((long) (tempsAttente/(float)vitesse.getValue()));
+										} catch (InterruptedException e) {
+											e.printStackTrace();
+										}
+									}
+									//pour la dernière trame
+									else
+									{
+										System.out.println(simulation.getTramesArray().get(i));
+										try {
+											portserie.envoyer(simulation.getTramesArray().get(i));
+										} catch (IOException e) {
+											// TODO Auto-generated catch block
+											e.printStackTrace();
+										} catch (SerialPortException e) {
+											// TODO Auto-generated catch block
+											e.printStackTrace();
+										}
+									}
+								}
+							}
+						}
+					}
+				});
+
+
 
 
 
@@ -598,9 +695,7 @@ public class IHMSimulation implements ActionListener {
 						{
 							for(;i<panelAPICarte.getParcours().getListePoints().size();i++)
 							{
-								System.out.println();
-								running = boolJouerPoints;
-								if(running == false)
+								if(simulation.getEtat() == EtatSimu.PAUSE)
 									break;
 								panelAPICarte.addMapMarker(new AffichagePointInter(new Coordinate(listePoint2.get(i).getCoordonnes().getLatitude(),listePoint2.get(i).getCoordonnes().getLongitude()),"./img/MarqueurPoint.png"));
 								int monX = ((int) panelAPICarte.getMapPosition(panelAPICarte.getMapMarkerList().get(panelAPICarte.getMapMarkerList().size()-1).getCoordinate()).getX()) - AffichagePoint.MARKER_SIZE*2;
@@ -644,19 +739,14 @@ public class IHMSimulation implements ActionListener {
 					jouer();
 			break;
 		case "pause":
-			this.boolJouerPoints = false;
-			//			try	{  
-			//				threadJouerPoints.interrupt();
-			//			}
-			//			catch(Exception e1){
-			//				System.out.println("Exception handled "+e1);
-			//			}  
+			if(this.simulation != null)
+				if(this.simulation.getEtat() != EtatSimu.PAUSE)
+					this.simulation.setEtat(EtatSimu.PAUSE);
 			break;
 		case "lecture":
-			//if(this.simulation != null)
-			//if(this.simulation.getEtat() != EtatSimu.LECTURE)
-			//this.simulation.setEtat(EtatSimu.LECTURE);
-			this.boolJouerPoints = true;
+			if(this.simulation != null)
+				if(this.simulation.getEtat() != EtatSimu.LECTURE)
+					this.simulation.setEtat(EtatSimu.LECTURE);
 			break;
 		case "menu":
 			FenetreForge.fenetreForge.dispose();

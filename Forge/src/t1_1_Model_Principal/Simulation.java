@@ -73,7 +73,7 @@ public class Simulation {
 
 
 
-	Point getPoint(String trame) {
+	public Point getPoint(String trame) {
 		Coordonnees coordonnees;
 		double temps;
 		double altitude;
