@@ -685,6 +685,7 @@ public class IHMSimulation implements ActionListener {
 									j=0;
 									dd=0;
 									Thread.currentThread().interrupt();
+									break;
 								}
 
 								while(simulation.getEtat() == EtatSimu.PAUSE);
@@ -699,6 +700,7 @@ public class IHMSimulation implements ActionListener {
 										j=0;
 										dd=0;
 										Thread.currentThread().interrupt();
+										break;
 									}
 									
 									if(simulation.getEtat() == EtatSimu.PAUSE)
@@ -773,6 +775,7 @@ public class IHMSimulation implements ActionListener {
 							{
 								i=0;
 								Thread.currentThread().interrupt();
+								break;
 							}
 
 							for(;i<panelAPICarte.getParcours().getListePoints().size();i++)
@@ -781,6 +784,7 @@ public class IHMSimulation implements ActionListener {
 								{
 									i=0;
 									Thread.currentThread().interrupt();
+									break;
 								}
 																
 								if(simulation.getEtat() == EtatSimu.PAUSE)
