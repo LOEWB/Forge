@@ -79,14 +79,41 @@ public class Simulation {
 		double altitude;
 		double latitude;
 		double longitude;
-
-
+		double doublePart;
+		
+		String integerPart = "";
+		String temporaire2 = "";
+		int h=0;
+		int intPart=0;
+		
 		String[] attributsTable=trame.split(",");
 		temps = Double.valueOf(attributsTable[1]);
 		latitude = Double.valueOf(attributsTable[2]);
 		longitude = Double.valueOf(attributsTable[4]);
 		altitude =  Double.valueOf(attributsTable[7]);
 
+		integerPart = "";
+		temporaire2 = ""+latitude+"";
+		h=0;
+		while(temporaire2.charAt(h) != '.') h++; // recherche partie int
+		integerPart = temporaire2.substring(0, h);
+		intPart = Integer.parseInt(integerPart); // d
+		integerPart = "0." + temporaire2.substring(h+1, temporaire2.length()-1);
+		doublePart = Double.parseDouble(integerPart);
+		temporaire2 = "" + intPart + doublePart/60 + "";
+		latitude = Double.valueOf(temporaire2);
+
+		integerPart = "";
+		temporaire2 = ""+longitude+"";
+		h=0;
+		while(temporaire2.charAt(h) != '.') h++; // recherche partie int
+		integerPart = temporaire2.substring(0, h);
+		intPart = Integer.parseInt(integerPart); // d
+		integerPart = "0." + temporaire2.substring(h+1, temporaire2.length()-1);
+		doublePart = Double.parseDouble(integerPart);
+		temporaire2 = "" + intPart + doublePart/60 + "";
+		longitude = Double.valueOf(temporaire2);
+		
 		coordonnees = new Coordonnees(latitude, longitude);
 
 		return new Point(temps, coordonnees,  altitude);
