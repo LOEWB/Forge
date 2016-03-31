@@ -144,26 +144,28 @@ public class IHMSimulation implements ActionListener {
 
 			}
 			public void insertUpdate(DocumentEvent e) {
-				Data();
+				if(simulation == null)
+					Data();
+				else
+					if(simulation.getEtat() == EtatSimu.ARRET)
+						Data();
 			}
 
 			private void Data()
 			{
-				if(simulation == null)
+
+				if(tauxErreur.getValue() instanceof Float)
 				{
-					if(tauxErreur.getValue() instanceof Float)
+					if((float) tauxErreur.getValue() <= 1f)
 					{
-						if((float) tauxErreur.getValue() <= 1f)
-						{
-							dataTauxErreur = (float) tauxErreur.getValue();					
-						}
+						dataTauxErreur = (float) tauxErreur.getValue();					
 					}
-					else
+				}
+				else
+				{
+					if((float)((double) tauxErreur.getValue()) <= 1f)
 					{
-						if((float)((double) tauxErreur.getValue()) <= 1f)
-						{
-							dataTauxErreur = (float)((double) tauxErreur.getValue());
-						}
+						dataTauxErreur = (float)((double) tauxErreur.getValue());
 					}
 				}
 			}
@@ -207,26 +209,28 @@ public class IHMSimulation implements ActionListener {
 
 			}
 			public void insertUpdate(DocumentEvent e) {
-				Data();
+				if(simulation == null)
+					Data();
+				else
+					if(simulation.getEtat() == EtatSimu.ARRET)
+						Data();
 			}
 
 			private void Data()
 			{
-				if(simulation == null)
+
+				if(tauxErreur.getValue() instanceof Float)
 				{
-					if(tauxErreur.getValue() instanceof Float)
+					if((float) tauxErreur.getValue() <= 1f)
 					{
-						if((float) tauxErreur.getValue() <= 1f)
-						{
-							dataTauxErreur = (float) tauxErreur.getValue();					
-						}
+						dataTauxErreur = (float) tauxErreur.getValue();					
 					}
-					else
+				}
+				else
+				{
+					if((float)((double) tauxErreur.getValue()) <= 1f)
 					{
-						if((float)((double) tauxErreur.getValue()) <= 1f)
-						{
-							dataTauxErreur = (float)((double) tauxErreur.getValue());
-						}
+						dataTauxErreur = (float)((double) tauxErreur.getValue());
 					}
 				}
 			}
@@ -607,6 +611,28 @@ public class IHMSimulation implements ActionListener {
 
 	}
 
+	private void afficherLabels()
+	{
+		if (this.panelAPICarte.getParcours() != null)
+		{
+			NumberFormat format = NumberFormat.getInstance();
+			format.setMinimumFractionDigits(2);
+			this.vitMoyenneDisplay.setText(""+format.format(this.panelAPICarte.getParcours().vitesseMoyenne()));
+
+			this.vitActuelleDisplay.setText(""+format.format(this.vitesse.getValue()*this.panelAPICarte.getParcours().vitesseMoyenne()));
+
+			if (this.date2.getText() != "" && this.vitActuelle.getText() != "")
+			{
+				this.heureDepartDisplay.setText(""+this.date2.getText());
+				int h1 = Integer.parseInt(this.heureDepartDisplay.getText());
+				int h2 = Integer.parseInt(this.date4.getText());
+				int heureArrivee = h1 + ((h2 - h1) / this.vitesse.getValue());
+
+				this.heureArriveeDisplay.setText(""+heureArrivee);
+			}
+		}
+	}
+
 
 
 	void jouer()
@@ -788,6 +814,8 @@ public class IHMSimulation implements ActionListener {
 								if(simulation.getEtat() == EtatSimu.PAUSE)
 									break;
 
+								//afficherLabels();
+
 								panelAPICarte.addMapMarker(new AffichagePointInter(new Coordinate(listePoint2.get(i).getCoordonnes().getLongitude(),listePoint2.get(i).getCoordonnes().getLatitude()),"./img/MarqueurPoint.png"));
 								if(panelAPICarte.getMapPosition(panelAPICarte.getMapMarkerList().get(panelAPICarte.getMapMarkerList().size()-1).getCoordinate()) != null)
 								{
@@ -855,7 +883,6 @@ public class IHMSimulation implements ActionListener {
 					this.simulation.setEtat(EtatSimu.ARRET);
 					jouer();
 					this.simulation.setEtat(EtatSimu.ARRET);
-					this.simulation = null;
 				}
 
 			break;
