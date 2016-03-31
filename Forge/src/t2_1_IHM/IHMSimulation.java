@@ -353,7 +353,7 @@ public class IHMSimulation implements ActionListener {
 		bArret.setBorder(null);
 		ImageIcon imgPause = new ImageIcon("./img/Pause.png");
 		ImageIcon imgLecture = new ImageIcon("./img/Lecture.png");
-		ImageIcon imgArret = new ImageIcon("./img/Pause.png");
+		ImageIcon imgArret = new ImageIcon("./img/Arret.png");
 		bPause.setIcon(imgPause);
 		bLecture.setIcon(imgLecture);
 		bArret.setIcon(imgArret);
