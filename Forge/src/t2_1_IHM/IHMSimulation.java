@@ -902,7 +902,8 @@ public class IHMSimulation implements ActionListener {
 			}
 			break;
 		case "importer":
-			new IHMChoixFichier(e.getActionCommand(), this.panelAPICarte, new Simulation());
+			IHMChoixFichier ihmChoixFichiernew = new IHMChoixFichier(e.getActionCommand(), this.panelAPICarte, new Simulation());
+			this.simulation = ihmChoixFichiernew.getSimulation();	
 			break;
 		case "exporter":
 			Simulation simulation = new Simulation(this.panelAPICarte.getParcours());

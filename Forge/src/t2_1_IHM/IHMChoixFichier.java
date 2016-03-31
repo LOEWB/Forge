@@ -199,7 +199,8 @@ public class IHMChoixFichier extends JFrame {
 	private void importeSimulation(String path){
 		this.panelAPICarte.removeSegments();
 		this.panelAPICarte.removeAllMapMarkers();		
-		this.simulation.importSimulation(path);	
+		this.simulation.importSimulation(path);
+		this.panelAPICarte.getParcours().setListePoints(this.simulation.getlistePointsImportes());
 		this.panelAPICarte.createMarkerDebutFin();
 		this.panelAPICarte.traceSegments();
 	}
@@ -208,5 +209,5 @@ public class IHMChoixFichier extends JFrame {
 	{
 		return simulation;
 	}
-
+	
 }
