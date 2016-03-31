@@ -100,7 +100,9 @@ public class IHMSimulation implements ActionListener {
 
 	private JFormattedTextField tauxErreur = new JFormattedTextField(NumberFormat.getPercentInstance());
 
-	private String[] listeLiaisonSerie = { "Liaison série 1", "Liaison série 2", "Liaison série 3" };
+	private PortSerie portSerie = new PortSerie();
+	
+	private String[] listeLiaisonSerie = portSerie.getListePorts().toArray(new String[portSerie.getListePorts().size()]);
 
 	private JComboBox<String> comboBoxliaisonSerie = new JComboBox<String>(listeLiaisonSerie);
 
@@ -130,9 +132,7 @@ public class IHMSimulation implements ActionListener {
 
 		this.parcours = parcours;
 
-		PortSerie portSerie = new PortSerie();
-		this.listeLiaisonSerie = portSerie.getListePorts().toArray(new String[portSerie.getListePorts().size()]);
-
+	
 		creationComposant();
 		panelAPICarte.createMarkerDebutFin();
 		panelAPICarte.traceSegments();
@@ -186,9 +186,8 @@ public class IHMSimulation implements ActionListener {
 	public IHMSimulation() 
 	{
 
-		PortSerie portSerie = new PortSerie();
-		this.listeLiaisonSerie = portSerie.getListePorts().toArray(new String[portSerie.getListePorts().size()]);
-
+	
+//		for(int i=0; i<this.listeLiaisonSerie.length; i++) System.out.println(this.listeLiaisonSerie[i]);
 		creationComposant();
 
 
