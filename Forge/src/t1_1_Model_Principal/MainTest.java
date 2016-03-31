@@ -72,6 +72,6 @@ public class MainTest {
     
     simu.jouerSimulation("COM8", 9600, tauxErreur, vitesse);
     
-   while(true) System.out.println("Coucou"); // attention boucle infinie !!!!!!!!
+ //  while(true) System.out.println("Coucou"); // attention boucle infinie !!!!!!!!
  }
 }

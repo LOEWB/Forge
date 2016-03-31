@@ -286,6 +286,20 @@ public class Parcours {
 			//System.out.println("Longitude 2 " + longitude); 
 
 			temps = ""+ point.getTemps() +"";
+		//	temps = temps.toString();
+		   	 long days=0;
+			 long hours=0;
+			 long mins=0;
+			 long secs=0;
+			 double dd = Double.parseDouble(temps);
+			 secs = Math.round(dd);
+			 mins=secs/60; 
+			 hours=mins/60;
+			 days=hours/24; 
+			 secs=secs-(mins*60);
+			 mins=mins-(hours*60);
+			 hours=hours-(days*24);
+			 temps = ""+hours+mins+secs;
 		//	double dd = Math.point.getTemps();
 			
 				trame += temps + "," 
