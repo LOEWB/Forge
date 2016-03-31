@@ -38,7 +38,7 @@ public class Simulation {
 		this.vitesse -= 0.5;
 	}
 
-	EtatSimu getEtat() {
+	public EtatSimu getEtat() {
 		return this.etat;
 	}
 	/*
@@ -291,6 +291,11 @@ public class Simulation {
 	{
 		ThreadLecture threadLecture = new ThreadLecture(this.tramesArray, port, debit, TauxErreur, vitesse);
 		threadLecture.start();
+	}
+
+	public void setEtat(EtatSimu etat) {
+		this.etat = etat;
+		
 	}
 
 }
