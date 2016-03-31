@@ -19,7 +19,7 @@ import t1_1_Model_Principal.TypeSysteme;
  */
 public class IHMChoixFichier extends JFrame {
 
-	private final PanelAPICarte panelAPICarte;
+	private PanelAPICarte panelAPICarte;
 
 	private final Simulation simulation;
 
@@ -200,14 +200,20 @@ public class IHMChoixFichier extends JFrame {
 		this.panelAPICarte.removeSegments();
 		this.panelAPICarte.removeAllMapMarkers();		
 		this.simulation.importSimulation(path);
-		this.panelAPICarte.getParcours().setListePoints(this.simulation.getlistePointsImportes());
-		this.panelAPICarte.createMarkerDebutFin();
-		this.panelAPICarte.traceSegments();
+		Parcours parcours = new Parcours();
+		parcours.setListePoints(this.simulation.getlistePointsImportes());
+		this.panelAPICarte = new PanelAPICarte(parcours);
+		
 	}
 
 	public Simulation getSimulation() 
 	{
-		return simulation;
+		return this.simulation;
+	}
+	
+	public PanelAPICarte getPanelAPICarte() 
+	{
+		return this.panelAPICarte;
 	}
 	
 }

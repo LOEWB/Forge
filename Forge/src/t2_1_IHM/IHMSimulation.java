@@ -36,6 +36,7 @@ import org.openstreetmap.gui.jmapviewer.Coordinate;
 
 
 
+
 import t1_1_Model_Principal.EtatSimu;
 import t1_1_Model_Principal.Parcours;
 import t1_1_Model_Principal.Point;
@@ -903,7 +904,12 @@ public class IHMSimulation implements ActionListener {
 			break;
 		case "importer":
 			IHMChoixFichier ihmChoixFichiernew = new IHMChoixFichier(e.getActionCommand(), this.panelAPICarte, new Simulation());
-			this.simulation = ihmChoixFichiernew.getSimulation();	
+			this.simulation = ihmChoixFichiernew.getSimulation();
+			this.panelAPICarte = ihmChoixFichiernew.getPanelAPICarte();
+			System.out.println(this.panelAPICarte.getParcours().getListePoints());
+			System.out.println(this.simulation.getlistePointsImportes());
+			this.panelAPICarte.createMarkerDebutFin();
+			this.panelAPICarte.traceSegments();
 			break;
 		case "exporter":
 			Simulation simulation = new Simulation(this.panelAPICarte.getParcours());
