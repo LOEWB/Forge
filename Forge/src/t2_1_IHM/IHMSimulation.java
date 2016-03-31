@@ -625,7 +625,6 @@ public class IHMSimulation implements ActionListener {
 
 					public void run()
 					{
-						System.out.println("coucou1");
 						float tempsAttente=0;
 						PortSerie portserie = new PortSerie();
 						//portserie.setPort(comboBoxliaisonSerie.getSelectedItem().toString(),Integer.valueOf(comboBoxDebit.getSelectedItem().toString()));
@@ -641,12 +640,8 @@ public class IHMSimulation implements ActionListener {
 							ArrayList<Integer> faits = new ArrayList<Integer>();
 							int j=0;
 							int dd=0;
-							System.out.println("coucou2");
-
+							
 							while(nbTramesfaites != nbTramesErronnees) { // bon boussie d'abord la liste de trame selon taux d'erreur avant de commencer l'envoi
-								System.out.println("coucou3");
-								System.out.println(nbTramesErronnees);
-								System.out.println(nbTramesfaites);
 								dd = 0 + (int)(Math.random() * ((simulation.getTramesArray().size()-1 - 0) + 1));
 								if(!faits.contains(dd)) {
 									simulation.getTramesArray().set(dd, boussierTrame(simulation.getTramesArray().get(dd).toString()));
@@ -661,8 +656,6 @@ public class IHMSimulation implements ActionListener {
 
 							while(true)
 							{
-
-								System.out.println("coucou4");
 								while(simulation.getEtat() == EtatSimu.PAUSE)
 								{
 									try {
