@@ -15,6 +15,7 @@ import java.io.IOException;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 
 import javax.swing.BorderFactory;
@@ -33,6 +34,7 @@ import javax.swing.event.DocumentListener;
 import jssc.SerialPortException;
 
 import org.openstreetmap.gui.jmapviewer.Coordinate;
+
 
 
 
@@ -173,7 +175,7 @@ public class IHMSimulation implements ActionListener {
 			}
 		});
 
-		date2.getDocument().addDocumentListener(new DocumentListener() {
+		date.getDocument().addDocumentListener(new DocumentListener() {
 			public void changedUpdate(DocumentEvent e) {
 
 			}
@@ -186,10 +188,28 @@ public class IHMSimulation implements ActionListener {
 
 			private void Data()
 			{
-				//float i;
-				//date3.setValue(Date.parse("11/22/1111")+Date.parse("11/22/1111"));
+				if(date2.getValue() == null)
+					date3.setValue(date.getValue());
+				else
+				{
+					Calendar cal = Calendar.getInstance();
+					cal.setTime((Date) date.getValue());
+					System.out.println(cal.getTime());
+					if(panelAPICarte != null)
+					{
+						int tempsSimuH = (int)((double)panelAPICarte.getParcours().getListePoints().get(panelAPICarte.getParcours().getListePoints().size()-1).getTemps()/3600);
+						System.out.println(tempsSimuH);
+						cal.add(Calendar.HOUR, tempsSimuH);
+						int tempsSimuM = (int)((double)panelAPICarte.getParcours().getListePoints().get(panelAPICarte.getParcours().getListePoints().size()-1).getTemps()-(tempsSimuH*60))/60;
+						System.out.println((double)panelAPICarte.getParcours().getListePoints().get(panelAPICarte.getParcours().getListePoints().size()-1).getTemps());
+						cal.add(Calendar.MINUTE, tempsSimuM);
+						date3.setValue(cal.getTime());
+						int hour = cal.get(Calendar.HOUR_OF_DAY);
+						int min = cal.get(Calendar.MINUTE);
+						date4.setValue((double)(hour+(min/60)));
+					}
 
-
+				}
 			}
 		});
 
@@ -238,7 +258,7 @@ public class IHMSimulation implements ActionListener {
 			}
 		});
 
-		date2.getDocument().addDocumentListener(new DocumentListener() {
+		date.getDocument().addDocumentListener(new DocumentListener() {
 			public void changedUpdate(DocumentEvent e) {
 
 			}
@@ -251,10 +271,22 @@ public class IHMSimulation implements ActionListener {
 
 			private void Data()
 			{
-				//float i;
-				//date3.setValue(Date.parse("01/01/2016")+Date.parse("01"));
+				if(date2.getValue() == null)
+					date3.setValue(date.getValue());
+				else
+				{
+					Calendar cal = Calendar.getInstance();
+					cal.setTime((Date) date.getValue());
+					cal.add(Calendar.HOUR, (int)((long) date2.getValue()));
+					if(panelAPICarte != null)
+					{
+						int tempsSimu = (int)((double)panelAPICarte.getParcours().getListePoints().get(panelAPICarte.getParcours().getListePoints().size()-1).getTemps());
+						cal.add(Calendar.HOUR, (int) (tempsSimu+(cal.getTimeInMillis()*3600)));
+						date3.setValue(cal.getTime());
+						System.out.println(date3.getValue());
+					}
 
-
+				}
 			}
 		});
 
@@ -597,6 +629,10 @@ public class IHMSimulation implements ActionListener {
 		dateActuelleDisplay.setBorder(BorderFactory.createEtchedBorder(Color.BLACK, Color.GRAY));
 
 
+		java.util.Date dateactuelle = new java.util.Date();
+		date.setValue(dateactuelle);
+		date3.setValue(dateactuelle);
+		
 		tauxErreur.setValue(0.0f);
 		dataTauxErreur = 0.0f;
 		if(this.panelAPICarte.getParcours() != null)
