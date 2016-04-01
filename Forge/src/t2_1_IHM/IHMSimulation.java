@@ -1001,7 +1001,7 @@ public class IHMSimulation implements ActionListener {
 
 						Float tempsAttente = (float) (panelAPICarte.getParcours().getListePoints().get(1).getTemps() - panelAPICarte.getParcours().getListePoints().get(0).getTemps());
 						PortSerie portserie = new PortSerie();
-						//portserie.setPort(comboBoxliaisonSerie.getSelectedItem().toString(),Integer.valueOf(comboBoxDebit.getSelectedItem().toString()));
+						portserie.setPort(comboBoxliaisonSerie.getSelectedItem().toString(),Integer.valueOf(comboBoxDebit.getSelectedItem().toString()));
 						int i = 0;
 
 
@@ -1068,7 +1068,8 @@ public class IHMSimulation implements ActionListener {
 									//pour toutes les trames sauf la derniere
 									if(i+1<simulation.getTramesArray().size())
 									{
-										/*try {
+										try {
+											System.out.println(simulation.getTramesArray().get(i));
 											portserie.envoyer(simulation.getTramesArray().get(i));
 
 										} catch (IOException e) {
@@ -1077,7 +1078,7 @@ public class IHMSimulation implements ActionListener {
 										} catch (SerialPortException e) {
 											// TODO Auto-generated catch block
 											e.printStackTrace();
-										}*/
+										}
 
 										try {
 											Thread.sleep((long)(1000*tempsAttente/vitesse.getValue()));
@@ -1088,7 +1089,7 @@ public class IHMSimulation implements ActionListener {
 									//pour la dernière trame
 									else
 									{
-										/*try {
+										try {
 											portserie.envoyer(simulation.getTramesArray().get(i));											
 										} catch (IOException e) {
 											// TODO Auto-generated catch block
@@ -1096,7 +1097,7 @@ public class IHMSimulation implements ActionListener {
 										} catch (SerialPortException e) {
 											// TODO Auto-generated catch block
 											e.printStackTrace();
-										}*/
+										}
 									}
 								}
 							}

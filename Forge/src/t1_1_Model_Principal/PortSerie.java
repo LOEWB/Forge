@@ -21,7 +21,7 @@ public class PortSerie {
 
 try {
     serialPort.openPort();
-	   serialPort.setParams(Integer.valueOf(Debit), // baudrate à mettre en dynamique après
+	   serialPort.setParams(Integer.valueOf(Debit),
                SerialPort.DATABITS_8,
                SerialPort.STOPBITS_1,
                SerialPort.PARITY_NONE);
@@ -30,7 +30,7 @@ serialPort.setFlowControlMode(SerialPort.FLOWCONTROL_RTSCTS_IN |
                         SerialPort.FLOWCONTROL_RTSCTS_OUT);
 
 } catch (SerialPortException ex) {
-    System.out.println("Error in writing data to port: " + ex);
+    System.out.println("Erreur ecriture : " + ex);
 }
 		return true;
 	}

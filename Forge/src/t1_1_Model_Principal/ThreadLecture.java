@@ -11,7 +11,6 @@ public class ThreadLecture extends Thread
 	PortSerie portSerie;
 	float tauxErreur;
 	float vitesse;
-	// penser à ajouter vitesse
 
 	public ThreadLecture(ArrayList<String> listeTrames, String Port, int Debit, float TauxErreur, float Vitesse)
 	{
@@ -21,8 +20,6 @@ public class ThreadLecture extends Thread
 		this.tauxErreur = TauxErreur;
 		this.vitesse = Vitesse;
 	}
-
-	//  public Point(double sec, Coordonnees coor, double altitude) {
 
 	private String boussierTrame(String trame){
 
@@ -51,7 +48,7 @@ public class ThreadLecture extends Thread
 		int j=0;
 		int dd=0;
 
-		while(nbTramesfaites != nbTramesErronnees) { // bon boussie d'abord la liste de trame selon taux d'erreur avant de commencer l'envoi
+		while(nbTramesfaites != nbTramesErronnees) { // on boussie d'abord la liste de trame selon taux d'erreur avant de commencer l'envoi
 			dd = 0 + (int)(Math.random() * ((this.listeTrames.size()-1 - 0) + 1));
 			if(!faits.contains(dd)) {
 				this.listeTrames.set(dd, boussierTrame(this.listeTrames.get(dd).toString()));
@@ -66,7 +63,6 @@ public class ThreadLecture extends Thread
 			if(i+1<this.listeTrames.size())
 			{
 				tempsAttente=(Float.parseFloat(this.listeTrames.get(i+1).split(",")[1])-Float.parseFloat(this.listeTrames.get(i).split(",")[1]))*1000;
-				System.out.println(this.listeTrames.get(i));
 				try {
 					this.portSerie.envoyer(this.listeTrames.get(i));
 				} catch (IOException e) {
@@ -86,7 +82,6 @@ public class ThreadLecture extends Thread
 			//pour la dernière trame
 			else
 			{
-				System.out.println(this.listeTrames.get(i));
 				try {
 					this.portSerie.envoyer(this.listeTrames.get(i));
 				} catch (IOException e) {

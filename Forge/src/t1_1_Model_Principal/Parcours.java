@@ -1,4 +1,4 @@
-package t1_1_Model_Principal;
+	package t1_1_Model_Principal;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -48,17 +48,7 @@ public class Parcours {
 	}
 
 	public void ajouterPoint(Point p) {
-//		int index = 0;
-//
-//		if (this.listePoints.size() == 0)
-//			this.listePoints.add(p);
-//		else {
-//			while (index <= this.listePoints.size()
-//					&& this.listePoints.get(index).getTemps() > p.getTemps()) {
-//				index++;
-//			}
-//			this.listePoints.add(index + 1, p);
-//		}
+
 		this.listePoints.add(p);
 
 	}
@@ -72,8 +62,7 @@ public class Parcours {
 
 		Random rand = new Random();
 
-		// nextInt excludes the top value so we have to add 1 to include the top
-		// value
+		
 		int randomNum = rand.nextInt((max - min) + 1) + min;
 
 		return randomNum;
@@ -103,109 +92,6 @@ public class Parcours {
 		long secondes;
 		double doublePart;
 		for (int i = 0; i < listePoints.size(); i++) {
-			/*
-			trame = "$GPGGA,";
-			point = listePoints.get(i);
-			h=0;
-			tempString = "";
-			tempString2 = "";
-			
-			if(point.getCoordonnes().getLatitude() < 0) lat = "S";
-			else lat = "N";
-			if(point.getCoordonnes().getLongitude() < 0) longi = "W";
-			else longi = "E";
-			temp = Math.abs(point.getCoordonnes().getLatitude());
-
-			// latitude 4, 4
-			// longitude 5, 4
-			latitude = "" + temp + "";
-			while(latitude.charAt(h) != '.') h++; // recherche partie int
-			integerPart = latitude.substring(0, h);
-			intPart = Integer.parseInt(integerPart); // d
-			integerPart = "0." + latitude.substring(h+1, latitude.length()-1);
-			doublePart = Double.parseDouble(integerPart);
-			latitude = "" + intPart + doublePart*60 + "";
-			//System.out.println("Latitude pre trame : " + latitude);
-			if(latitude.length() > 9) latitude = latitude.substring(0, 9); // on coupe si trop long
-			//System.out.println("Latitude pre trame 1 : " + latitude);
-			
-			while(latitude.charAt(h) != '.') h++;
-			tempString2 = latitude.substring(0, h);
-			//System.out.println("Latitude pre trame 2 : " + tempString2);
-		//	if(latitude.length() > 4) latitude = latitude.substring(4, latitude.length()-1);
-		//	if(tempString2.length() != 4) for(int m = tempString2.length(); m<4; m++) tempString += "0";
-			tempString += tempString2;
-			//System.out.println("Latitude : " + tempString);
-
-			tempString2 = latitude.substring(h+1, latitude.length());
-			if(tempString2.length() > 4) tempString2 = tempString2.substring(0, 3); 
-			//System.out.println("Latitude : " + tempString);
-			tempString += ".";
-			//System.out.println("Longueur : " + tempString2.length());
-		//	if(tempString2.length() != 4) for(int m = tempString2.length(); m<5; m++) tempString += "0";
-			tempString += tempString2;
-			latitude = tempString;
-			//System.out.println("Latitude 2 " + latitude); 
-
-			temp = Math.abs(point.getCoordonnes().getLongitude());
-			
-			longitude = "" + temp + "";
-			h=0;
-			tempString = "";
-			tempString2 = "";
-			//System.out.println("Longitude brut : " + longitude);
-			while(longitude.charAt(h) != '.') h++; // recherche partie int
-			integerPart = longitude.substring(0, h);
-			intPart = Integer.parseInt(integerPart); // d
-			integerPart = "0." + longitude.substring(h+1, longitude.length()-1);
-			doublePart = Double.parseDouble(integerPart);
-			longitude = "" + intPart + doublePart*60 + "";
-			//System.out.println("Longitude pre trame : " + longitude);
-//			if(longitude.length() > 10) longitude = longitude.substring(0, 9); // on coupe si trop long
-			//System.out.println("Longitude pre trame 1 : " + longitude);
-			
-			while(longitude.charAt(h) != '.') h++;
-			tempString2 = longitude.substring(0, h);
-			//System.out.println("Longitude pre trame 2 : " + tempString2);
-		//	if(latitude.length() > 4) latitude = latitude.substring(4, latitude.length()-1);
-			//if(tempString2.length() != 5) for(int m = tempString2.length(); m<5; m++) tempString += "0";
-			tempString += tempString2;
-			//System.out.println("Longi : " + tempString);
-
-			tempString2 = longitude.substring(h+1, longitude.length());
-			if(tempString2.length() > 4) tempString2 = tempString2.substring(0, 3); 
-			//System.out.println("Longi : " + tempString);
-			tempString += ".";
-			//System.out.println("Longueur : " + tempString2.length());
-		//	if(tempString2.length() != 4) for(int m = tempString2.length(); m<4; m++) tempString += "0";
-			tempString += tempString2;
-			longitude = tempString;
-			//System.out.println("Longitude 2 " + longitude); 
-
-
-			
-			temps = ""+ point.getTemps() +"";
-		//	double dd = Math.point.getTemps();
-			
-				trame += temps + "," 
-						
-					
-					+ latitude + "," + lat + ","
-					+ longitude + "," + longi + ",1,"
-					+ randomInteger(3, 12) + "," + (0.6 + randomInteger(0, 19))
-					+ "," + point.getAltitude() + ",M,"
-					+ (46.9 + randomInteger(1, 3)) + "46.9,M, , ";
-				trame = trame.toString();
-					int checksum = 0;
-			for (int j = 1; j < trame.length(); j++) {
-				checksum = checksum ^ Character.codePointAt(trame, j);
-				
-			}
-			checksumString = "" + Integer.toHexString(checksum) + "";
-			trame += "*" + checksumString.toUpperCase();
-			trames += trame;
-
-			*/
 			
 			 
 			 			trame = "$GPGGA,";
@@ -219,36 +105,28 @@ public class Parcours {
 			else longi = "E";
 			temp = Math.abs(point.getCoordonnes().getLongitude());
 
-			// latitude 4, 4
-			// longitude 5, 4
+		
 			latitude = "" + temp + "";
 			while(latitude.charAt(h) != '.') h++; // recherche partie int
 			integerPart = latitude.substring(0, h);
-			intPart = Integer.parseInt(integerPart); // d
+			intPart = Integer.parseInt(integerPart);
 			integerPart = "0." + latitude.substring(h+1, latitude.length()-1);
 			doublePart = Double.parseDouble(integerPart);
 			latitude = "" + intPart + doublePart*60 + "";
-			//System.out.println("Latitude pre trame : " + latitude);
 			if(latitude.length() > 9) latitude = latitude.substring(0, 9); // on coupe si trop long
-			//System.out.println("Latitude pre trame 1 : " + latitude);
 			
 			while(latitude.charAt(h) != '.') h++;
 			tempString2 = latitude.substring(0, h);
-			//System.out.println("Latitude pre trame 2 : " + tempString2);
-		//	if(latitude.length() > 4) latitude = latitude.substring(4, latitude.length()-1);
+			
 			if(tempString2.length() != 4) for(int m = tempString2.length(); m<4; m++) tempString += "0";
 			tempString += tempString2;
-			//System.out.println("Latitude : " + tempString);
 
 			tempString2 = latitude.substring(h+1, latitude.length());
 			if(tempString2.length() > 4) tempString2 = tempString2.substring(0, 3); 
-			//System.out.println("Latitude : " + tempString);
 			tempString += ".";
-			//System.out.println("Longueur : " + tempString2.length());
 			tempString += tempString2;
 			if(tempString2.length() != 4) for(int m = tempString2.length(); m<4; m++) tempString += "0";
 			latitude = tempString;
-			//System.out.println("Latitude 2 " + latitude); 
 
 			temp = Math.abs(point.getCoordonnes().getLatitude());
 			
@@ -257,34 +135,24 @@ public class Parcours {
 			h=0;
 			tempString = "";
 			tempString2 = "";
-			//System.out.println("Longitude brut : " + longitude);
 			while(longitude.charAt(h) != '.') h++; // recherche partie int
 			integerPart = longitude.substring(0, h);
 			intPart = Integer.parseInt(integerPart); // d
 			integerPart = "0." + longitude.substring(h+1, longitude.length()-1);
 			doublePart = Double.parseDouble(integerPart);
 			longitude = "" + intPart + doublePart*60 + "";
-			//System.out.println("Longitude pre trame : " + longitude);
-//			if(longitude.length() > 10) longitude = longitude.substring(0, 9); // on coupe si trop long
-			//System.out.println("Longitude pre trame 1 : " + longitude);
 			
 			while(longitude.charAt(h) != '.') h++;
 			tempString2 = longitude.substring(0, h);
-			//System.out.println("Longitude pre trame 2 : " + tempString2);
-		//	if(latitude.length() > 4) latitude = latitude.substring(4, latitude.length()-1);
 			if(tempString2.length() != 5) for(int m = tempString2.length(); m<5; m++) tempString += "0";
 			tempString += tempString2;
-			//System.out.println("Longi : " + tempString);
 
 			tempString2 = longitude.substring(h+1, longitude.length());
 			if(tempString2.length() > 4) tempString2 = tempString2.substring(0, 3); 
-			//System.out.println("Longi : " + tempString);
 			tempString += ".";
 			tempString += tempString2;
-			//System.out.println("Longueur : " + tempString2.length());
 			if(tempString2.length() != 4) for(int m = tempString2.length(); m<4; m++) tempString += "0";
 			longitude = tempString;
-			//System.out.println("Longitude 2 " + longitude); 
 
 			temps = ""+ point.getTemps() +"";
 
@@ -294,7 +162,7 @@ public class Parcours {
 			 long secs=0;
 			 double dd = Double.parseDouble(temps);
 			 secs = Math.round(dd);
-			 System.out.println("Secs" + secs);
+			// System.out.println("Secs" + secs);
 			   hours = Math.round(secs / 3600);
 			  
 			   mins = Math.round((secs % 3600) / 60);
