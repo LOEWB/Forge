@@ -185,12 +185,9 @@ public class Simulation {
 		}
 		i++;
 
-		doubleTemp = Double.valueOf(temporaire);
-
 		
-		long mp = Math.round(doubleTemp);
 		
-		temps2 = ""+ mp +"";
+		temps2 = temporaire;
 //		System.out.println("Trames " + temps2);
 		long secs = Integer.parseInt(temps2.substring(4, 6));
 		long mins =  Integer.parseInt(temps2.substring(2, 4));
@@ -265,12 +262,8 @@ public class Simulation {
 				}
 				i++;
 
-				doubleTemp = Double.valueOf(temporaire);
 
-				
-				mp = Math.round(doubleTemp);
-				
-				temps2 = ""+ mp +"";
+				temps2 = temporaire;
 //				System.out.println("Trames " + temps2);
 				secs = Integer.parseInt(temps2.substring(4, 6));
 				mins =  Integer.parseInt(temps2.substring(2, 4));
