@@ -94,42 +94,62 @@ public class Simulation {
 		longitude = Double.valueOf(attributsTable[4]);
 		altitude =  Double.valueOf(attributsTable[7]);
 
-		temps2 = ""+ temps +"";
+	//	System.out.println("Trame get " + trame);
 
+	//	System.out.println("\nlatitude get " + latitude);
+
+	//	System.out.println("\nlongitude get " + longitude);
 		
-		 long hours=0;
-		 long mins=0;
-		 long secs=0;
-		 double dd = Double.parseDouble(temps2);
-		 long ee = Math.round(dd);
-		 hours = Math.round(dd / 3600);
-		 mins = Math.round((dd % 3600) / 60);
-		 secs = Math.round(dd % 60);
-		 temps = secs+(mins*60)+hours*(3600);
+		
+		temps2 = ""+ Math.round(temps) +"";
+//		System.out.println("Trames " + temps2);
+		long secs = Integer.parseInt(temps2.substring(4, 6));
+		long mins =  Integer.parseInt(temps2.substring(2, 4));
+		long hours = Integer.parseInt(temps2.substring(0, 2));
+/*		System.out.println("Secs get " + secs);
+		System.out.println("\nMins get " + mins);
+		System.out.println("\nHours get " + hours);
+	*/	
+		
+		temps = secs+(mins*60)+hours*(3600);
 		 
-		 
+
 		integerPart = "";
 		temporaire2 = ""+latitude+"";
+		//System.out.println("Trame get06 " + temporaire2);
+
 		h=0;
 		while(temporaire2.charAt(h) != '.') h++; // recherche partie int
-		integerPart = temporaire2.substring(0, h);
-		intPart = Integer.parseInt(integerPart); // d
-		integerPart = "0." + temporaire2.substring(h+1, temporaire2.length()-1);
-		doublePart = Double.parseDouble(integerPart);
-		temporaire2 = "" + intPart + doublePart/60 + "";
-		latitude = Double.valueOf(temporaire2);
+		integerPart = temporaire2.substring(0, 2);
+		//System.out.println("\nInteger part" + integerPart);
 
+		intPart = Integer.parseInt(integerPart); // d
+		integerPart = temporaire2.substring(2, temporaire2.length());
+		//System.out.println("\nInteger part" + integerPart);
+
+		doublePart = Double.parseDouble(integerPart);
+		doublePart = intPart + doublePart/60;
+		temporaire2 = "" + doublePart + "";
+		latitude = Double.valueOf(temporaire2);
 		integerPart = "";
 		temporaire2 = ""+longitude+"";
+	//	System.out.println("Trame get06 " + temporaire2);
+
 		h=0;
 		while(temporaire2.charAt(h) != '.') h++; // recherche partie int
-		integerPart = temporaire2.substring(0, h);
+		integerPart = temporaire2.substring(0, 2);
+	//	System.out.println("\nInteger part" + integerPart);
+
 		intPart = Integer.parseInt(integerPart); // d
-		integerPart = "0." + temporaire2.substring(h+1, temporaire2.length()-1);
+		integerPart = temporaire2.substring(2, temporaire2.length());
+	//	System.out.println("\nInteger part" + integerPart);
+
 		doublePart = Double.parseDouble(integerPart);
-		temporaire2 = "" + intPart + doublePart/60 + "";
+		doublePart = intPart + doublePart/60;
+		temporaire2 = "" + doublePart + "";
 		longitude = Double.valueOf(temporaire2);
-		
+	//	System.out.println("Longitude get23 " + longitude);
+
 		coordonnees = new Coordonnees(latitude, longitude);
 
 		return new Point(temps, coordonnees,  altitude);
@@ -150,6 +170,7 @@ public class Simulation {
 		double longitude;
 		double latitude;
 		float altitude = 0;
+		double doubleTemp;
 
 		String parcoursBrut = trames;
 		String temporaire = "";
@@ -165,19 +186,24 @@ public class Simulation {
 		}
 		i++;
 
-		temps2 = temporaire;
+		doubleTemp = Double.valueOf(temporaire);
 
-		 long days=0;
-		 long hours=0;
-		 long mins=0;
-		 long secs=0;
-		 double dd = Double.parseDouble(temps2);
-		 secs = Math.round(Integer.parseInt(temps2.substring(4, 5)));
-		 mins= Math.round(Integer.parseInt(temps2.substring(2, 3)));
-		 hours=Math.round(Integer.parseInt(temps2.substring(0, 1)));
-	
-		 tempsPremierPoint = secs+(mins*60)+hours*(3600);
+		
+		long mp = Math.round(doubleTemp);
+		
+		temps2 = ""+ mp +"";
+//		System.out.println("Trames " + temps2);
+		long secs = Integer.parseInt(temps2.substring(4, 6));
+		long mins =  Integer.parseInt(temps2.substring(2, 4));
+		long hours = Integer.parseInt(temps2.substring(0, 2));
+/*		System.out.println("Secs get " + secs);
+		System.out.println("\nMins get " + mins);
+		System.out.println("\nHours get " + hours);
+	*/	
+		
+		tempsPremierPoint = secs+(mins*60)+hours*(3600);
 
+		
 //		tempsPremierPoint = Double.parseDouble(temporaire);
 
 		temporaire = "";
@@ -240,18 +266,22 @@ public class Simulation {
 				}
 				i++;
 
-				temps2 = temporaire;
+				doubleTemp = Double.valueOf(temporaire);
 
-				 days=0;
-				 hours=0;
-				 mins=0;
-				 secs=0;
-				 dd = Double.parseDouble(temps2);
-				 secs = Math.round(Integer.parseInt(temps2.substring(4, 5)));
-				 mins= Math.round(Integer.parseInt(temps2.substring(2, 3)));
-				 hours=Math.round(Integer.parseInt(temps2.substring(0, 1)));
-			
-				 tempsPoint = secs+(mins*60)+hours*(3600);
+				
+				mp = Math.round(doubleTemp);
+				
+				temps2 = ""+ mp +"";
+//				System.out.println("Trames " + temps2);
+				secs = Integer.parseInt(temps2.substring(4, 6));
+				mins =  Integer.parseInt(temps2.substring(2, 4));
+				hours = Integer.parseInt(temps2.substring(0, 2));
+		/*		System.out.println("Secs get " + secs);
+				System.out.println("\nMins get " + mins);
+				System.out.println("\nHours get " + hours);
+			*/	
+				
+				tempsPoint = secs+(mins*60)+hours*(3600);
 
 			//	tempsPoint = Double.parseDouble(temporaire);
 
@@ -303,24 +333,37 @@ public class Simulation {
 
 				integerPart = "";
 				temporaire2 = ""+latitude+"";
+				//System.out.println("Trame get06 " + temporaire2);
+
 				h=0;
 				while(temporaire2.charAt(h) != '.') h++; // recherche partie int
-				integerPart = temporaire2.substring(0, h);
-				intPart = Integer.parseInt(integerPart); // d
-				integerPart = "0." + temporaire2.substring(h+1, temporaire2.length()-1);
-				doublePart = Double.parseDouble(integerPart);
-				temporaire2 = "" + intPart + doublePart/60 + "";
-				latitude = Double.valueOf(temporaire2);
+				integerPart = temporaire2.substring(0, 2);
+				//System.out.println("\nInteger part" + integerPart);
 
+				intPart = Integer.parseInt(integerPart); // d
+				integerPart = temporaire2.substring(2, temporaire2.length());
+				//System.out.println("\nInteger part" + integerPart);
+
+				doublePart = Double.parseDouble(integerPart);
+				doublePart = intPart + doublePart/60;
+				temporaire2 = "" + doublePart + "";
+				latitude = Double.valueOf(temporaire2);
 				integerPart = "";
 				temporaire2 = ""+longitude+"";
+			//	System.out.println("Trame get06 " + temporaire2);
+
 				h=0;
 				while(temporaire2.charAt(h) != '.') h++; // recherche partie int
-				integerPart = temporaire2.substring(0, h);
+				integerPart = temporaire2.substring(0, 2);
+			//	System.out.println("\nInteger part" + integerPart);
+
 				intPart = Integer.parseInt(integerPart); // d
-				integerPart = "0." + temporaire2.substring(h+1, temporaire2.length()-1);
+				integerPart = temporaire2.substring(2, temporaire2.length());
+			//	System.out.println("\nInteger part" + integerPart);
+
 				doublePart = Double.parseDouble(integerPart);
-				temporaire2 = "" + intPart + doublePart/60 + "";
+				doublePart = intPart + doublePart/60;
+				temporaire2 = "" + doublePart + "";
 				longitude = Double.valueOf(temporaire2);
 
 

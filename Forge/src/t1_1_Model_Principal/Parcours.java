@@ -293,10 +293,11 @@ public class Parcours {
 			 long secs=0;
 			 double dd = Double.parseDouble(temps);
 			 secs = Math.round(dd);
-			   hours = Math.round(dd / 3600);
-			   hours=hours%24;
-			   mins = Math.round((dd % 3600) / 60);
-			   secs = Math.round(dd % 60);
+			 System.out.println("Secs" + secs);
+			   hours = Math.round(secs / 3600);
+			  
+			   mins = Math.round((secs % 3600) / 60);
+			   secs = Math.round(secs % 60);
 			   temps = Long.toString(hours)+Long.toString(mins)+Long.toString(secs);
 			 String temp26 = "";
 			
