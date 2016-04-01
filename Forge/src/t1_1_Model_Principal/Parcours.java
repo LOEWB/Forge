@@ -485,7 +485,7 @@ public class Parcours {
 		double alt1=p1.getAltitude();
 		double alt2=p2.getAltitude();
 
-		return alt2+alt1/2l;
+		return (alt2+alt1)/2l;
 	}
 
 
