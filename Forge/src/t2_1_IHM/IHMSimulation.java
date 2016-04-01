@@ -213,7 +213,9 @@ public class IHMSimulation implements ActionListener {
 					else
 						cal.add(Calendar.MINUTE, tempsSimuM + (int)((long)date2.getValue()*60));
 
-					date3.setValue(cal.getTime());
+					Date dateA = cal.getTime();
+
+					date3.setValue(dateA);
 					int hour = cal.get(Calendar.HOUR_OF_DAY);
 					int min = cal.get(Calendar.MINUTE);
 					date4.setValue((double)(hour+(min/60)));
@@ -257,7 +259,9 @@ public class IHMSimulation implements ActionListener {
 					else
 						cal.add(Calendar.MINUTE, tempsSimuM + (int)((long)date2.getValue()*60));
 
-					date3.setValue(cal.getTime());
+					Date dateA = cal.getTime();
+
+					date3.setValue(dateA);
 					int hour = cal.get(Calendar.HOUR_OF_DAY);
 					int min = cal.get(Calendar.MINUTE);
 					date4.setValue((double)(hour+(min/60)));
@@ -268,7 +272,7 @@ public class IHMSimulation implements ActionListener {
 		});
 
 
-		date3.getDocument().addDocumentListener(new DocumentListener() {
+		/*date3.getDocument().addDocumentListener(new DocumentListener() {
 			public void changedUpdate(DocumentEvent e) {
 
 			}
@@ -305,7 +309,9 @@ public class IHMSimulation implements ActionListener {
 					else
 						cal.add(Calendar.MINUTE, tempsSimuM + (int)((long)date4.getValue()*60));
 
-					date.setValue(cal.getTime());
+					Date dateA = cal.getTime();
+
+					date.setValue(dateA);
 					int hour = cal.get(Calendar.HOUR_OF_DAY);
 					int min = cal.get(Calendar.MINUTE);
 					date2.setValue((double)(hour+(min/60)));
@@ -350,14 +356,16 @@ public class IHMSimulation implements ActionListener {
 					else
 						cal.add(Calendar.MINUTE, tempsSimuM + (int)((long)date4.getValue()*60));
 
-					date.setValue(cal.getTime());
+					Date dateA = cal.getTime();
+
+					date.setValue(dateA);
 					int hour = cal.get(Calendar.HOUR_OF_DAY);
 					int min = cal.get(Calendar.MINUTE);
 					date2.setValue((double)(hour+(min/60)));
 
 				}
 			}
-		});
+		});*/
 
 	}
 
@@ -497,7 +505,7 @@ public class IHMSimulation implements ActionListener {
 		});
 
 
-		date3.getDocument().addDocumentListener(new DocumentListener() {
+		/*date3.getDocument().addDocumentListener(new DocumentListener() {
 			public void changedUpdate(DocumentEvent e) {
 
 			}
@@ -586,7 +594,7 @@ public class IHMSimulation implements ActionListener {
 
 				}
 			}
-		});
+		});*/
 
 	}
 
@@ -973,6 +981,23 @@ public class IHMSimulation implements ActionListener {
 
 
 		}
+	}
+
+	private String secToHoursMinSec(int t)
+	{
+		int h = t/3600;
+		int m = (t%3600)/60;
+		int s = t % 60;
+		return h+":"+m+":"+s+" h:min:s";
+	}
+
+	private int hoursMinSecToSec(String str)
+	{
+		String[] time = (str.split(" "))[0].split(":");
+		int h = Integer.parseInt(time[0]);
+		int m = Integer.parseInt(time[1]);
+		int s = Integer.parseInt(time[2]);
+		return h*3600+m*60+s;
 	}
 
 
