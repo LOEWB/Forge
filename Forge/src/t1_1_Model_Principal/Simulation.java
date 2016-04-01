@@ -89,7 +89,7 @@ public class Simulation {
 		int intPart=0;
 		
 		String[] attributsTable=trame.split(",");
-		temps = Double.valueOf(attributsTable[1]);
+		temps2 = attributsTable[1];
 		latitude = Double.valueOf(attributsTable[2]);
 		longitude = Double.valueOf(attributsTable[4]);
 		altitude =  Double.valueOf(attributsTable[7]);
@@ -101,8 +101,7 @@ public class Simulation {
 	//	System.out.println("\nlongitude get " + longitude);
 		
 		
-		temps2 = ""+ Math.round(temps) +"";
-//		System.out.println("Trames " + temps2);
+		//System.out.println("Trames " + temps2);
 		long secs = Integer.parseInt(temps2.substring(4, 6));
 		long mins =  Integer.parseInt(temps2.substring(2, 4));
 		long hours = Integer.parseInt(temps2.substring(0, 2));
