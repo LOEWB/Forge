@@ -25,6 +25,7 @@ public class Parcours {
 	}
 	
 	public Parcours() {
+		this.typeSysteme = TypeSysteme.TERRESTRE;
 	}
 	
 	public boolean verifierParcours() {
@@ -372,7 +373,7 @@ public class Parcours {
 		
 		String[] attributsTable=parcoursBrut.split("#");
 		//type systeme
-		if(attributsTable[0]!="1")
+		if(!attributsTable[0].equals("1"))
 			this.typeSysteme=TypeSysteme.TERRESTRE;
 		else
 			this.typeSysteme=TypeSysteme.AERIEN;
