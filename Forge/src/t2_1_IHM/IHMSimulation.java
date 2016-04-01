@@ -193,32 +193,21 @@ public class IHMSimulation implements ActionListener {
 				else
 				{
 					int tempsSimuH = 0;
-					int tempsSimuM = 0;
 					Calendar cal = Calendar.getInstance();
 					cal.setTime((Date) date.getValue());
 					if(panelAPICarte.getParcours() != null)
 					{
 						tempsSimuH = (int)((double)panelAPICarte.getParcours().getListePoints().get(panelAPICarte.getParcours().getListePoints().size()-1).getTemps()/3600);
-						tempsSimuM = (int)((double)panelAPICarte.getParcours().getListePoints().get(panelAPICarte.getParcours().getListePoints().size()-1).getTemps()-(tempsSimuH*3600))/60;
-					}				
+					}
 
 					if(date2.getValue() instanceof Double)
-						cal.add(Calendar.HOUR, (tempsSimuH + (int)((double)date2.getValue())));
+						cal.add(Calendar.HOUR, (tempsSimuH + (int)((double)date2.getValue()-(cal.get(Calendar.HOUR_OF_DAY)))));
 					else
-						cal.add(Calendar.HOUR, (tempsSimuH + (int)((long)date2.getValue())));
+						cal.add(Calendar.HOUR, (tempsSimuH + (int)((long)date2.getValue()-(cal.get(Calendar.HOUR_OF_DAY)))));
 
-
-					if(date2.getValue() instanceof Double)
-						cal.add(Calendar.MINUTE, tempsSimuM + (int)((double)date2.getValue()*60));
-					else
-						cal.add(Calendar.MINUTE, tempsSimuM + (int)((long)date2.getValue()*60));
-
-					Date dateA = cal.getTime();
-
-					date3.setValue(dateA);
+					date3.setValue(cal.getTime());
 					int hour = cal.get(Calendar.HOUR_OF_DAY);
-					int min = cal.get(Calendar.MINUTE);
-					date4.setValue((double)(hour+(min/60)));
+					date4.setValue((double)(hour));
 
 				}
 			}
@@ -240,31 +229,21 @@ public class IHMSimulation implements ActionListener {
 				if(date.getValue() != null)
 				{
 					int tempsSimuH = 0;
-					int tempsSimuM = 0;
 					Calendar cal = Calendar.getInstance();
 					cal.setTime((Date) date.getValue());
 					if(panelAPICarte.getParcours() != null)
 					{
 						tempsSimuH = (int)((double)panelAPICarte.getParcours().getListePoints().get(panelAPICarte.getParcours().getListePoints().size()-1).getTemps()/3600);
-						tempsSimuM = (int)((double)panelAPICarte.getParcours().getListePoints().get(panelAPICarte.getParcours().getListePoints().size()-1).getTemps()-(tempsSimuH*3600))/60;
 					}
 					if(date2.getValue() instanceof Double)
-						cal.add(Calendar.HOUR, (tempsSimuH + (int)((double)date2.getValue())));
+						cal.add(Calendar.HOUR, (tempsSimuH + (int)((double)date2.getValue()-(cal.get(Calendar.HOUR_OF_DAY)))));
 					else
-						cal.add(Calendar.HOUR, (tempsSimuH + (int)((long)date2.getValue())));
+						cal.add(Calendar.HOUR, (tempsSimuH + (int)((long)date2.getValue()-(cal.get(Calendar.HOUR_OF_DAY)))));
 
 
-					if(date2.getValue() instanceof Double)
-						cal.add(Calendar.MINUTE, tempsSimuM + (int)((double)date2.getValue()*60));
-					else
-						cal.add(Calendar.MINUTE, tempsSimuM + (int)((long)date2.getValue()*60));
-
-					Date dateA = cal.getTime();
-
-					date3.setValue(dateA);
+					date3.setValue(cal.getTime());
 					int hour = cal.get(Calendar.HOUR_OF_DAY);
-					int min = cal.get(Calendar.MINUTE);
-					date4.setValue((double)(hour+(min/60)));
+					date4.setValue((double)(hour));
 
 
 				}
@@ -430,30 +409,21 @@ public class IHMSimulation implements ActionListener {
 				else
 				{
 					int tempsSimuH = 0;
-					int tempsSimuM = 0;
 					Calendar cal = Calendar.getInstance();
 					cal.setTime((Date) date.getValue());
 					if(panelAPICarte.getParcours() != null)
 					{
 						tempsSimuH = (int)((double)panelAPICarte.getParcours().getListePoints().get(panelAPICarte.getParcours().getListePoints().size()-1).getTemps()/3600);
-						tempsSimuM = (int)((double)panelAPICarte.getParcours().getListePoints().get(panelAPICarte.getParcours().getListePoints().size()-1).getTemps()-(tempsSimuH*3600))/60;
-					}				
+					}
 
 					if(date2.getValue() instanceof Double)
-						cal.add(Calendar.HOUR, (tempsSimuH + (int)((double)date2.getValue())));
+						cal.add(Calendar.HOUR, (tempsSimuH + (int)((double)date2.getValue()-(cal.get(Calendar.HOUR_OF_DAY)))));
 					else
-						cal.add(Calendar.HOUR, (tempsSimuH + (int)((long)date2.getValue())));
-
-
-					if(date2.getValue() instanceof Double)
-						cal.add(Calendar.MINUTE, tempsSimuM + (int)((double)date2.getValue()*60));
-					else
-						cal.add(Calendar.MINUTE, tempsSimuM + (int)((long)date2.getValue()*60));
+						cal.add(Calendar.HOUR, (tempsSimuH + (int)((long)date2.getValue()-(cal.get(Calendar.HOUR_OF_DAY)))));
 
 					date3.setValue(cal.getTime());
 					int hour = cal.get(Calendar.HOUR_OF_DAY);
-					int min = cal.get(Calendar.MINUTE);
-					date4.setValue((double)(hour+(min/60)));
+					date4.setValue((double)(hour));
 
 				}
 			}
@@ -475,35 +445,26 @@ public class IHMSimulation implements ActionListener {
 				if(date.getValue() != null)
 				{
 					int tempsSimuH = 0;
-					int tempsSimuM = 0;
 					Calendar cal = Calendar.getInstance();
 					cal.setTime((Date) date.getValue());
 					if(panelAPICarte.getParcours() != null)
 					{
 						tempsSimuH = (int)((double)panelAPICarte.getParcours().getListePoints().get(panelAPICarte.getParcours().getListePoints().size()-1).getTemps()/3600);
-						tempsSimuM = (int)((double)panelAPICarte.getParcours().getListePoints().get(panelAPICarte.getParcours().getListePoints().size()-1).getTemps()-(tempsSimuH*3600))/60;
 					}
 					if(date2.getValue() instanceof Double)
-						cal.add(Calendar.HOUR, (tempsSimuH + (int)((double)date2.getValue())));
+						cal.add(Calendar.HOUR, (tempsSimuH + (int)((double)date2.getValue()-(cal.get(Calendar.HOUR_OF_DAY)))));
 					else
-						cal.add(Calendar.HOUR, (tempsSimuH + (int)((long)date2.getValue())));
+						cal.add(Calendar.HOUR, (tempsSimuH + (int)((long)date2.getValue()-(cal.get(Calendar.HOUR_OF_DAY)))));
 
-
-					if(date2.getValue() instanceof Double)
-						cal.add(Calendar.MINUTE, tempsSimuM + (int)((double)date2.getValue()*60));
-					else
-						cal.add(Calendar.MINUTE, tempsSimuM + (int)((long)date2.getValue()*60));
 
 					date3.setValue(cal.getTime());
 					int hour = cal.get(Calendar.HOUR_OF_DAY);
-					int min = cal.get(Calendar.MINUTE);
-					date4.setValue((double)(hour+(min/60)));
+					date4.setValue((double)(hour));
 
 
 				}
 			}
 		});
-
 
 		/*date3.getDocument().addDocumentListener(new DocumentListener() {
 			public void changedUpdate(DocumentEvent e) {
@@ -945,13 +906,10 @@ public class IHMSimulation implements ActionListener {
 		{
 			int tempsSimuH = (int)((double)panelAPICarte.getParcours().getListePoints().get(panelAPICarte.getParcours().getListePoints().size()-1).getTemps()/3600);
 			cal.add(Calendar.HOUR, (tempsSimuH));		
-			int tempsSimuM = (int)((double)panelAPICarte.getParcours().getListePoints().get(panelAPICarte.getParcours().getListePoints().size()-1).getTemps()-(tempsSimuH*3600))/60;			
-			cal.add(Calendar.MINUTE, tempsSimuM);
 		}
 		date3.setValue(cal.getTime());
 		int hour = cal.get(Calendar.HOUR_OF_DAY);
-		int min = cal.get(Calendar.MINUTE);
-		date4.setValue((double)(hour+(min/60)));
+		date4.setValue((double)(hour));
 
 
 		tauxErreur.setValue(0.0f);
