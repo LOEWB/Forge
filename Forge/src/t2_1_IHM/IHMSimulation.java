@@ -1155,6 +1155,22 @@ public class IHMSimulation implements ActionListener {
 
 							for(;i<panelAPICarte.getParcours().getListePoints().size();i++)
 							{
+								if(date5.getValue() instanceof Double)
+								{
+									if(panelAPICarte.getParcours().getListePoints().get(i).getTemps()>(double)date5.getValue()*3600)
+										break;
+								}
+								else
+								{
+									if(panelAPICarte.getParcours().getListePoints().get(i).getTemps()>(long)date5.getValue()*3600)
+										break;
+								}
+										
+							}
+
+
+							for(;i<panelAPICarte.getParcours().getListePoints().size();i++)
+							{
 
 								if(panelAPICarte.getParcours().getListePoints().get(i).getTemps()>((double)date6.getValue()*3600))
 								{
@@ -1179,6 +1195,20 @@ public class IHMSimulation implements ActionListener {
 									format.setMinimumFractionDigits(2);
 									vitActuelleDisplay.setText(format.format(((double)panelAPICarte.getParcours().vitesseSegments(panelAPICarte.getParcours().getListePoints().get(i), panelAPICarte.getParcours().getListePoints().get(i+1))*vitesse.getValue())) + "  km/h");
 									altActuelleDisplay.setText(format.format(((double)panelAPICarte.getParcours().altitudeSegments(panelAPICarte.getParcours().getListePoints().get(i), panelAPICarte.getParcours().getListePoints().get(i+1)))) + "  m");
+									
+									SimpleDateFormat ft = new SimpleDateFormat("MM/dd/yyyy");
+									int tempsSimuH = 0;
+									Calendar cal = Calendar.getInstance();
+									cal.setTime((Date) date.getValue());
+									tempsSimuH = (int)((double)panelAPICarte.getParcours().getListePoints().get(i).getTemps()/3600);
+									if(date2.getValue() instanceof Double)
+										cal.add(Calendar.HOUR, (tempsSimuH + (int)((double)date2.getValue()-(cal.get(Calendar.HOUR_OF_DAY)))));
+									else
+										cal.add(Calendar.HOUR, (tempsSimuH + (int)((long)date2.getValue()-(cal.get(Calendar.HOUR_OF_DAY)))));
+									int hour = cal.get(Calendar.HOUR_OF_DAY);									
+									heureActuelleDisplay.setText(format.format((long)date2.getValue())+(panelAPICarte.getParcours().getListePoints().get(i).getTemps()*100));
+									dateActuelleDisplay.setText(ft.format(date3.getValue()));
+									
 								}
 
 								afficherLabels();
